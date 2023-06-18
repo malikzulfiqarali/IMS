@@ -40,6 +40,13 @@
             this.narrationTextBox = new System.Windows.Forms.TextBox();
             this.dateDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.crvDataGridView = new System.Windows.Forms.DataGridView();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PartyCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Remarks = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RemoveColumnButton = new System.Windows.Forms.DataGridViewButtonColumn();
             this.saveButton = new System.Windows.Forms.Button();
             this.updateButton = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
@@ -53,13 +60,6 @@
             this.previousButton = new System.Windows.Forms.Button();
             this.firstButton = new System.Windows.Forms.Button();
             this.nextButton = new System.Windows.Forms.Button();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PartyCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Remarks = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RemoveColumnButton = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.crvDataGridView)).BeginInit();
             this.SuspendLayout();
@@ -177,10 +177,64 @@
             this.crvDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.crvDataGridView_CellEndEdit);
             this.crvDataGridView.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.crvDataGridView_CellEnter);
             this.crvDataGridView.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.crvDataGridView_CellLeave);
+            this.crvDataGridView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.crvDataGridView_CellValidating);
             this.crvDataGridView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.crvDataGridView_EditingControlShowing);
             this.crvDataGridView.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.crvDataGridView_RowLeave);
             this.crvDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.crvDataGridView_KeyDown);
             this.crvDataGridView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.crvDataGridView_KeyPress);
+            // 
+            // ID
+            // 
+            this.ID.DataPropertyName = "VoucherID";
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            this.ID.Visible = false;
+            // 
+            // Code
+            // 
+            this.Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Code.DataPropertyName = "VoucherCategoryID";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Code.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Code.HeaderText = "Code";
+            this.Code.Name = "Code";
+            this.Code.Width = 76;
+            // 
+            // Description
+            // 
+            this.Description.DataPropertyName = "Description";
+            this.Description.HeaderText = "Description";
+            this.Description.Name = "Description";
+            this.Description.Width = 345;
+            // 
+            // PartyCode
+            // 
+            this.PartyCode.DataPropertyName = "VoucherCategoryCode";
+            this.PartyCode.HeaderText = "Party Code";
+            this.PartyCode.Name = "PartyCode";
+            // 
+            // Amount
+            // 
+            this.Amount.DataPropertyName = "Credit";
+            this.Amount.HeaderText = "Amount";
+            this.Amount.Name = "Amount";
+            // 
+            // Remarks
+            // 
+            this.Remarks.DataPropertyName = "Remarks";
+            this.Remarks.HeaderText = "Remarks";
+            this.Remarks.Name = "Remarks";
+            this.Remarks.Width = 350;
+            // 
+            // RemoveColumnButton
+            // 
+            this.RemoveColumnButton.HeaderText = "Romove";
+            this.RemoveColumnButton.Name = "RemoveColumnButton";
+            this.RemoveColumnButton.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.RemoveColumnButton.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.RemoveColumnButton.Text = "Remove";
+            this.RemoveColumnButton.UseColumnTextForButtonValue = true;
             // 
             // saveButton
             // 
@@ -323,59 +377,6 @@
             this.nextButton.Text = ">";
             this.nextButton.UseVisualStyleBackColor = true;
             this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
-            // 
-            // ID
-            // 
-            this.ID.DataPropertyName = "VoucherID";
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            this.ID.Visible = false;
-            // 
-            // Code
-            // 
-            this.Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Code.DataPropertyName = "VoucherCategoryID";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Code.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Code.HeaderText = "Code";
-            this.Code.Name = "Code";
-            this.Code.Width = 76;
-            // 
-            // Description
-            // 
-            this.Description.DataPropertyName = "Description";
-            this.Description.HeaderText = "Description";
-            this.Description.Name = "Description";
-            this.Description.Width = 345;
-            // 
-            // PartyCode
-            // 
-            this.PartyCode.DataPropertyName = "VoucherCategoryCode";
-            this.PartyCode.HeaderText = "Party Code";
-            this.PartyCode.Name = "PartyCode";
-            // 
-            // Amount
-            // 
-            this.Amount.DataPropertyName = "Credit";
-            this.Amount.HeaderText = "Amount";
-            this.Amount.Name = "Amount";
-            // 
-            // Remarks
-            // 
-            this.Remarks.DataPropertyName = "Remarks";
-            this.Remarks.HeaderText = "Remarks";
-            this.Remarks.Name = "Remarks";
-            this.Remarks.Width = 350;
-            // 
-            // RemoveColumnButton
-            // 
-            this.RemoveColumnButton.HeaderText = "Romove";
-            this.RemoveColumnButton.Name = "RemoveColumnButton";
-            this.RemoveColumnButton.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.RemoveColumnButton.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.RemoveColumnButton.Text = "Remove";
-            this.RemoveColumnButton.UseColumnTextForButtonValue = true;
             // 
             // CashReceiptVoucher
             // 

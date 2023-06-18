@@ -17,8 +17,8 @@ namespace IMS
     {
         SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
 
-        
-       
+
+
         public CashReceiptVoucher()
         {
             InitializeComponent();
@@ -38,11 +38,11 @@ namespace IMS
         {
             foreach (TextBox textBox in this.Controls.OfType<TextBox>())
             {
-                
+
                 {
                     textBox.Clear();
                 }
-                
+
             }
             foreach (ComboBox comboBox in this.Controls.OfType<ComboBox>())
             {
@@ -58,39 +58,39 @@ namespace IMS
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            if (crvTextBox.Text.Trim()==string.Empty)
+            if (crvTextBox.Text.Trim() == string.Empty)
             {
-                MessageBox.Show("Cash Receipt Voucher Field is require","Message",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Cash Receipt Voucher Field is require", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 crvTextBox.Focus();
                 return;
             }
-            if (categoryComboBox.SelectedIndex==-1)
+            if (categoryComboBox.SelectedIndex == -1)
             {
                 MessageBox.Show("Please select item from Category Field", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 categoryComboBox.Focus();
                 return;
 
             }
-            if (narrationTextBox.Text.Trim()==string.Empty)
+            if (narrationTextBox.Text.Trim() == string.Empty)
             {
                 MessageBox.Show("Narration field is required", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 narrationTextBox.Focus();
                 return;
 
             }
-            if (cashCodeTextBox.Text.Trim()==string.Empty)
+            if (cashCodeTextBox.Text.Trim() == string.Empty)
             {
-                MessageBox.Show("Cash Field is required. You must enter cash Code which is 10002","Message",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Cash Field is required. You must enter cash Code which is 10002", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 cashCodeTextBox.Focus();
                 return;
             }
-            if (crvDataGridView.Rows.Count==0)
+            if (crvDataGridView.Rows.Count == 0)
             {
-                MessageBox.Show("Cannot save empty voucher","Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Cannot save empty voucher", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 crvDataGridView.Focus();
                 return;
             }
-           
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString))
@@ -113,7 +113,7 @@ namespace IMS
                         cmd.Parameters.AddWithValue("@VoucherCategoryID", row.Cells["Code"].Value);
                         cmd.Parameters.AddWithValue("@VoucherCategory", categoryComboBox.SelectedItem.ToString().Trim());
                         cmd.Parameters.AddWithValue("@VoucherCategoryCode", row.Cells["PartyCode"].Value ?? DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Description", row.Cells["Description"].Value??DBNull.Value);
+                        cmd.Parameters.AddWithValue("@Description", row.Cells["Description"].Value ?? DBNull.Value);
                         cmd.Parameters.AddWithValue("@Credit", Convert.ToDecimal(row.Cells["Amount"].Value));
                         cmd.Parameters.AddWithValue("@Remarks", row.Cells["Remarks"].Value ?? DBNull.Value);
                         int result = cmd.ExecuteNonQuery();
@@ -176,7 +176,7 @@ namespace IMS
                 connection.Close();
             }
         }
-          
+
 
         private void crvDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -197,10 +197,10 @@ namespace IMS
         }
         private int getDebitTotal()
         {
-            int Total=0;
+            int Total = 0;
             foreach (DataGridViewRow row in crvDataGridView.Rows)
             {
-                Total += Convert.ToInt32( row.Cells["Debit"].Value );
+                Total += Convert.ToInt32(row.Cells["Debit"].Value);
             }
             return Total;
         }
@@ -217,13 +217,13 @@ namespace IMS
         {
             try
             {
-                using (SqlConnection connection=new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString))
+                using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString))
                 {
-                    using (SqlDataAdapter da=new SqlDataAdapter("SELECT MAX(VoucherCode) FROM TransactionTable WHERE VoucherType='"+crvLabel.Text.Trim()+"'", connection))
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT DISTINCT MAX(VoucherCode) FROM TransactionTable WHERE VoucherType='" + crvLabel.Text.Trim() + "'", connection))
                     {
                         DataTable dt = new DataTable();
                         da.Fill(dt);
-                        int maxNumber = Convert.ToInt32( dt.Rows[0][0]);
+                        int maxNumber = Convert.ToInt32(dt.Rows[0][0]);
                         int incrementNumber = maxNumber + 1;
                         crvTextBox.Text = incrementNumber.ToString().Trim();
 
@@ -234,6 +234,10 @@ namespace IMS
             {
 
                 MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
@@ -254,10 +258,10 @@ namespace IMS
             catch (Exception ex)
             {
 
-                MessageBox.Show("Please remove this field from remove button"+ex.Message,"Message",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Please remove this field from remove button" + ex.Message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            
-            
+
+
         }
 
         private void crvDataGridView_KeyPress(object sender, KeyPressEventArgs e)
@@ -280,7 +284,7 @@ namespace IMS
             try
             {
                 SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
-                SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM TransactionTable WHERE VoucherCategoryID <> '"+10002+"' and VoucherType='"+crvLabel.Text.Trim()+"'and VoucherCode='" + crvTextBox.Text.Trim() + "'", connection);
+                SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM TransactionTable WHERE VoucherCategoryID <> '" + 10002 + "' and VoucherType='" + crvLabel.Text.Trim() + "'and VoucherCode='" + crvTextBox.Text.Trim() + "'", connection);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
@@ -309,7 +313,7 @@ namespace IMS
                     //MessageBox.Show("Requested Record Does not Exist","Message",MessageBoxButtons.OK,MessageBoxIcon.Information);
                     clearButton.PerformClick();
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -326,11 +330,11 @@ namespace IMS
         private void nextButton_Click(object sender, EventArgs e)
         {
             int voucherNumber = Convert.ToInt32(crvTextBox.Text.Trim());
-            int newNumber = voucherNumber+1;
+            int newNumber = voucherNumber + 1;
             crvTextBox.Text = newNumber.ToString();
-            crvTextBox_Leave(sender,e);
+            crvTextBox_Leave(sender, e);
             saveButton.Enabled = false;
-            if (dateDateTimePicker.Value.Date==System.DateTime.Today.Date)
+            if (dateDateTimePicker.Value.Date == System.DateTime.Today.Date)
             {
                 updateButton.Enabled = true;
             }
@@ -338,17 +342,17 @@ namespace IMS
             {
                 updateButton.Enabled = false;
             }
-            
+
         }
 
         private void previousButton_Click(object sender, EventArgs e)
         {
             int voucherNumber = Convert.ToInt32(crvTextBox.Text.Trim());
-            int newNumber = voucherNumber-1;
+            int newNumber = voucherNumber - 1;
             crvTextBox.Text = newNumber.ToString();
             crvTextBox_Leave(sender, e);
             saveButton.Enabled = false;
-            if (dateDateTimePicker.Value.Date==System.DateTime.Today.Date)
+            if (dateDateTimePicker.Value.Date == System.DateTime.Today.Date)
             {
                 updateButton.Enabled = true;
             }
@@ -361,7 +365,7 @@ namespace IMS
 
         private void crvDataGridView_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode==Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 FetchDataForm fetchDataForm = new FetchDataForm();
                 fetchDataForm.ShowDialog();
@@ -375,6 +379,7 @@ namespace IMS
             crvDataGridView.CurrentRow.Cells["Code"].Value = FetchDataForm.SetCode;
             crvDataGridView.CurrentRow.Cells["Description"].Value = FetchDataForm.SetName;
             creditTotalTextBox.Text = getCreditTotal().ToString();
+
         }
         private void updateButton_Click(object sender, EventArgs e)
         {
@@ -413,9 +418,9 @@ namespace IMS
                     if (row.IsNewRow) continue;
                     SqlCommand cmd = new SqlCommand("SP_UPDATE_VOUCHER", connection);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@VoucherID",Convert.ToInt32(row.Cells["ID"].Value));
+                    cmd.Parameters.AddWithValue("@VoucherID", Convert.ToInt32(row.Cells["ID"].Value));
                     cmd.Parameters.AddWithValue("@VoucherCategoryID", row.Cells["Code"].Value);
-                    cmd.Parameters.AddWithValue("@Description", row.Cells["Description"].Value??DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Description", row.Cells["Description"].Value ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@VoucherCategoryCode", row.Cells["PartyCode"].Value ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@Credit", row.Cells["Amount"].Value ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@Remarks", row.Cells["Remarks"].Value ?? DBNull.Value);
@@ -455,13 +460,13 @@ namespace IMS
                         success = false;
                     }
                 }
-                if (success==true)
+                if (success == true)
                 {
-                  MessageBox.Show("Records are updated successfully","Success",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    MessageBox.Show("Records are updated successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                   MessageBox.Show("Records are not updated successfully", "failure", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Records are not updated successfully", "failure", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
 
@@ -519,13 +524,13 @@ namespace IMS
             //    // Restore the value of the previous cell
             //    currentCell.Value = previousValue;
             //}
-            
+
         }
 
         private void crvDataGridView_RowLeave(object sender, DataGridViewCellEventArgs e)
         {
-                FetchDataForm.SetCode = 0;
-                FetchDataForm.SetName = string.Empty;
+            FetchDataForm.SetCode = 0;
+            FetchDataForm.SetName = string.Empty;
         }
 
         private void crvDataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -549,5 +554,19 @@ namespace IMS
                 e.Handled = true;
             }
         }
+
+        private void crvDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            //if (!string.IsNullOrEmpty(e.FormattedValue?.ToString()))
+            //{
+            //    // Cancel the event to prevent the default action
+            //    e.Cancel = true;
+            //        crvDataGridView.CellValidating += crvDataGridView_CellValidating;
+
+
+            //}
+        }
     }
 }
+    
+

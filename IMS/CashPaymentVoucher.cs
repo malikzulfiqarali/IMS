@@ -201,7 +201,7 @@ namespace IMS
             {
                 using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString))
                 {
-                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT MAX(VoucherCode) FROM TransactionTable WHERE VoucherType='" + cpvLabel.Text.Trim() + "'", connection))
+                    using (SqlDataAdapter da = new SqlDataAdapter("SELECT DISTINCT MAX(VoucherCode) FROM TransactionTable WHERE VoucherType='" + cpvLabel.Text.Trim() + "'", connection))
                     {
                         DataTable dt = new DataTable();
                         da.Fill(dt);
@@ -216,6 +216,10 @@ namespace IMS
             {
 
                 MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
@@ -303,6 +307,10 @@ namespace IMS
 
                 MessageBox.Show(ex.Message);
             }
+            finally
+            {
+                connection.Close();
+            }
         }
 
         private void cpvDataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -326,6 +334,41 @@ namespace IMS
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void previousButton_Click(object sender, EventArgs e)
+        {
+            int voucherNumber = Convert.ToInt32(cpvTextBox.Text.Trim());
+            int newNumber = voucherNumber - 1;
+            cpvTextBox.Text = newNumber.ToString();
+            cpvTextBox_Leave(sender, e);
+            saveButton.Enabled = false;
+            if (dateDateTimePicker.Value.Date == System.DateTime.Today.Date)
+            {
+                updateButton.Enabled = true;
+            }
+            else
+            {
+                updateButton.Enabled = false;
+
+            }
+        }
+
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            int voucherNumber = Convert.ToInt32(cpvTextBox.Text.Trim());
+            int newNumber = voucherNumber + 1;
+            cpvTextBox.Text = newNumber.ToString();
+            cpvTextBox_Leave(sender, e);
+            saveButton.Enabled = false;
+            if (dateDateTimePicker.Value.Date == System.DateTime.Today.Date)
+            {
+                updateButton.Enabled = true;
+            }
+            else
+            {
+                updateButton.Enabled = false;
             }
         }
     }
