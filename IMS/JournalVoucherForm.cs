@@ -248,6 +248,87 @@ namespace IMS
             return Total;
         }
 
+        private void jrvTextBox_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                connection.Open();
+                SqlDataAdapter da = new SqlDataAdapter("Select * from TransactionTable where VoucherCode='" + jrvTextBox.Text.Trim() + "' and VoucherType='"+jrvLabel.Text.Trim()+"'", connection);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count > 0)
+                {
+                    dateDateTimePicker.Value = (DateTime)dt.Rows[0]["VoucherDate"];
+                    narrationTextBox.Text = dt.Rows[0]["Narration"].ToString();
+                    categoryComboBox.SelectedItem = dt.Rows[0]["VoucherCategory"];
+                    jrvDataGridView.Rows.Clear();
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        
+                        jrvDataGridView.Rows.Add();
+                        jrvDataGridView.Rows[i].Cells["Code"].Value = dt.Rows[i]["VoucherCategoryID"];
+                        jrvDataGridView.Rows[i].Cells["Description"].Value = dt.Rows[i]["Description"];
+                        jrvDataGridView.Rows[i].Cells["PartyCode"].Value = dt.Rows[i]["VoucherCategoryCode"];
+                        jrvDataGridView.Rows[i].Cells["Debit"].Value = dt.Rows[i]["Debit"]==DBNull.Value? "0": dt.Rows[i]["Debit"];
+                        jrvDataGridView.Rows[i].Cells["Credit"].Value = dt.Rows[i]["Credit"]==DBNull.Value? "0": dt.Rows[i]["Credit"];
+                        jrvDataGridView.Rows[i].Cells["Remarks"].Value = dt.Rows[i]["Remarks"];
 
+                    }
+
+                    creditTextBox.Text= getCreditTotal().ToString();
+                    debitTextBox.Text = getDebitTotal().ToString();
+                }
+                //else
+                //{
+                //    MessageBox.Show("Data not found","Failure",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                //}
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        private void previousButton_Click(object sender, EventArgs e)
+        {
+            int voucherNumber = Convert.ToInt32(jrvTextBox.Text.Trim());
+            int newNumber = voucherNumber - 1;
+            jrvTextBox.Text = newNumber.ToString();
+            jrvTextBox_Leave(sender, e);
+            saveButton.Enabled = false;
+            if (dateDateTimePicker.Value.Date == System.DateTime.Today.Date)
+            {
+                updateButton.Enabled = true;
+            }
+            else
+            {
+                updateButton.Enabled = false;
+
+            }
+        }
+
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            int voucherNumber = Convert.ToInt32(jrvTextBox.Text.Trim());
+            int newNumber = voucherNumber + 1;
+            jrvTextBox.Text = newNumber.ToString();
+            jrvTextBox_Leave(sender, e);
+            saveButton.Enabled = false;
+            if (dateDateTimePicker.Value.Date == System.DateTime.Today.Date)
+            {
+                updateButton.Enabled = true;
+            }
+            else
+            {
+                updateButton.Enabled = false;
+
+            }
+        }
     }
 }

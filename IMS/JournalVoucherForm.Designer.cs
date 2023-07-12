@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.categoryComboBox = new System.Windows.Forms.ComboBox();
             this.creditTextBox = new System.Windows.Forms.TextBox();
             this.closeButton = new System.Windows.Forms.Button();
@@ -38,13 +38,6 @@
             this.updateButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.jrvTextBox = new System.Windows.Forms.TextBox();
-            this.RemoveColumnButton = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.Remarks = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Credit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Debit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PartyCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.jrvDataGridView = new System.Windows.Forms.DataGridView();
             this.dateDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.narrationTextBox = new System.Windows.Forms.TextBox();
@@ -57,6 +50,17 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.ReversalJVTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.nextButton = new System.Windows.Forms.Button();
+            this.firstButton = new System.Windows.Forms.Button();
+            this.previousButton = new System.Windows.Forms.Button();
+            this.lastButton = new System.Windows.Forms.Button();
+            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PartyCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Debit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Credit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Remarks = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RemoveColumnButton = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.jrvDataGridView)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -133,63 +137,18 @@
             this.jrvTextBox.Name = "jrvTextBox";
             this.jrvTextBox.Size = new System.Drawing.Size(100, 29);
             this.jrvTextBox.TabIndex = 0;
-            // 
-            // RemoveColumnButton
-            // 
-            this.RemoveColumnButton.HeaderText = "Romove";
-            this.RemoveColumnButton.Name = "RemoveColumnButton";
-            this.RemoveColumnButton.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.RemoveColumnButton.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.RemoveColumnButton.Text = "Remove";
-            this.RemoveColumnButton.UseColumnTextForButtonValue = true;
-            // 
-            // Remarks
-            // 
-            this.Remarks.HeaderText = "Remarks";
-            this.Remarks.Name = "Remarks";
-            this.Remarks.Width = 250;
-            // 
-            // Credit
-            // 
-            this.Credit.HeaderText = "Credit";
-            this.Credit.Name = "Credit";
-            // 
-            // Debit
-            // 
-            this.Debit.HeaderText = "Debit";
-            this.Debit.Name = "Debit";
-            // 
-            // PartyCode
-            // 
-            this.PartyCode.HeaderText = "Party Code";
-            this.PartyCode.Name = "PartyCode";
-            // 
-            // Description
-            // 
-            this.Description.HeaderText = "Description";
-            this.Description.Name = "Description";
-            this.Description.Width = 345;
-            // 
-            // Code
-            // 
-            this.Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Code.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Code.HeaderText = "Code";
-            this.Code.Name = "Code";
-            this.Code.Width = 76;
+            this.jrvTextBox.Leave += new System.EventHandler(this.jrvTextBox_Leave);
             // 
             // jrvDataGridView
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.jrvDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.jrvDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.jrvDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.jrvDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Code,
@@ -202,9 +161,9 @@
             this.jrvDataGridView.Location = new System.Drawing.Point(42, 291);
             this.jrvDataGridView.MultiSelect = false;
             this.jrvDataGridView.Name = "jrvDataGridView";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.jrvDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.jrvDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
             this.jrvDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.jrvDataGridView.Size = new System.Drawing.Size(1114, 274);
             this.jrvDataGridView.TabIndex = 5;
@@ -320,11 +279,99 @@
             this.label2.TabIndex = 17;
             this.label2.Text = "Reveral JV No.";
             // 
+            // nextButton
+            // 
+            this.nextButton.Location = new System.Drawing.Point(313, 97);
+            this.nextButton.Name = "nextButton";
+            this.nextButton.Size = new System.Drawing.Size(54, 29);
+            this.nextButton.TabIndex = 18;
+            this.nextButton.Text = ">";
+            this.nextButton.UseVisualStyleBackColor = true;
+            this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
+            // 
+            // firstButton
+            // 
+            this.firstButton.Location = new System.Drawing.Point(364, 97);
+            this.firstButton.Name = "firstButton";
+            this.firstButton.Size = new System.Drawing.Size(54, 29);
+            this.firstButton.TabIndex = 19;
+            this.firstButton.Text = ">>";
+            this.firstButton.UseVisualStyleBackColor = true;
+            // 
+            // previousButton
+            // 
+            this.previousButton.Location = new System.Drawing.Point(262, 97);
+            this.previousButton.Name = "previousButton";
+            this.previousButton.Size = new System.Drawing.Size(54, 29);
+            this.previousButton.TabIndex = 20;
+            this.previousButton.Text = "<";
+            this.previousButton.UseVisualStyleBackColor = true;
+            this.previousButton.Click += new System.EventHandler(this.previousButton_Click);
+            // 
+            // lastButton
+            // 
+            this.lastButton.Location = new System.Drawing.Point(213, 97);
+            this.lastButton.Name = "lastButton";
+            this.lastButton.Size = new System.Drawing.Size(54, 29);
+            this.lastButton.TabIndex = 21;
+            this.lastButton.Text = "<<";
+            this.lastButton.UseVisualStyleBackColor = true;
+            // 
+            // Code
+            // 
+            this.Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Code.DefaultCellStyle = dataGridViewCellStyle8;
+            this.Code.HeaderText = "Code";
+            this.Code.Name = "Code";
+            this.Code.Width = 76;
+            // 
+            // Description
+            // 
+            this.Description.HeaderText = "Description";
+            this.Description.Name = "Description";
+            this.Description.Width = 345;
+            // 
+            // PartyCode
+            // 
+            this.PartyCode.HeaderText = "Party Code";
+            this.PartyCode.Name = "PartyCode";
+            // 
+            // Debit
+            // 
+            this.Debit.HeaderText = "Debit";
+            this.Debit.Name = "Debit";
+            // 
+            // Credit
+            // 
+            this.Credit.HeaderText = "Credit";
+            this.Credit.Name = "Credit";
+            // 
+            // Remarks
+            // 
+            this.Remarks.HeaderText = "Remarks";
+            this.Remarks.Name = "Remarks";
+            this.Remarks.Width = 250;
+            // 
+            // RemoveColumnButton
+            // 
+            this.RemoveColumnButton.HeaderText = "Romove";
+            this.RemoveColumnButton.Name = "RemoveColumnButton";
+            this.RemoveColumnButton.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.RemoveColumnButton.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.RemoveColumnButton.Text = "Remove";
+            this.RemoveColumnButton.UseColumnTextForButtonValue = true;
+            // 
             // JournalVoucherForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1171, 646);
+            this.Controls.Add(this.nextButton);
+            this.Controls.Add(this.firstButton);
+            this.Controls.Add(this.previousButton);
+            this.Controls.Add(this.lastButton);
             this.Controls.Add(this.categoryComboBox);
             this.Controls.Add(this.creditTextBox);
             this.Controls.Add(this.closeButton);
@@ -367,13 +414,6 @@
         private System.Windows.Forms.Button updateButton;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.TextBox jrvTextBox;
-        private System.Windows.Forms.DataGridViewButtonColumn RemoveColumnButton;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Remarks;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Credit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Debit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PartyCode;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Description;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Code;
         public System.Windows.Forms.DataGridView jrvDataGridView;
         private System.Windows.Forms.DateTimePicker dateDateTimePicker;
         private System.Windows.Forms.TextBox narrationTextBox;
@@ -386,5 +426,16 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox ReversalJVTextBox;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button nextButton;
+        private System.Windows.Forms.Button firstButton;
+        private System.Windows.Forms.Button previousButton;
+        private System.Windows.Forms.Button lastButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Code;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Description;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PartyCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Debit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Credit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Remarks;
+        private System.Windows.Forms.DataGridViewButtonColumn RemoveColumnButton;
     }
 }
