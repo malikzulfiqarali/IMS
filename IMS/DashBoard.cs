@@ -92,5 +92,11 @@ namespace IMS
             CashPaymentVoucher cashPaymentVoucher = new CashPaymentVoucher();
             cashPaymentVoucher.ShowDialog();
         }
+
+        private void salesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaleForm saleForm = new SaleForm();
+            saleForm.ShowDialog();
+        }
     }
 }

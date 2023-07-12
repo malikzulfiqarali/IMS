@@ -21,3 +21,4 @@ E:\InstallmentManagementSystem\IMS\IMS\obj\Debug\IMS.CashReceiptVoucher.resource
 E:\InstallmentManagementSystem\IMS\IMS\obj\Debug\IMS.FetchDataForm.resources
 E:\InstallmentManagementSystem\IMS\IMS\obj\Debug\IMS.JournalVoucherForm.resources
 E:\InstallmentManagementSystem\IMS\IMS\obj\Debug\IMS.CashPaymentVoucher.resources
+E:\InstallmentManagementSystem\IMS\IMS\obj\Debug\IMS.SaleForm.resources
