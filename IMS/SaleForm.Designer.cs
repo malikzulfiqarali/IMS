@@ -55,6 +55,27 @@
             this.label6 = new System.Windows.Forms.Label();
             this.saleCategoryComboBox = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.saveButton = new System.Windows.Forms.Button();
+            this.updateButton = new System.Windows.Forms.Button();
+            this.addNewButton = new System.Windows.Forms.Button();
+            this.closeButton = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.monthTextBox = new System.Windows.Forms.TextBox();
+            this.installmentTextBox = new System.Windows.Forms.TextBox();
+            this.totalTextBox = new System.Windows.Forms.TextBox();
+            this.advanceTextBox = new System.Windows.Forms.TextBox();
+            this.PID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Product = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CurrentStock = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SaleQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Rate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Remove = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,10 +88,19 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.PID,
+            this.Product,
+            this.CurrentStock,
+            this.SaleQty,
+            this.Rate,
+            this.Amount,
+            this.Remove});
             this.dataGridView1.Location = new System.Drawing.Point(12, 247);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(960, 370);
+            this.dataGridView1.Size = new System.Drawing.Size(960, 304);
             this.dataGridView1.TabIndex = 1;
             // 
             // salNumber
@@ -238,13 +268,14 @@
             // 
             // addButton
             // 
-            this.addButton.BackColor = System.Drawing.Color.Lime;
+            this.addButton.BackColor = System.Drawing.Color.Transparent;
+            this.addButton.BackgroundImage = global::IMS.Properties.Resources.download;
+            this.addButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.addButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.addButton.Location = new System.Drawing.Point(884, 218);
+            this.addButton.Location = new System.Drawing.Point(876, 165);
             this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(75, 23);
+            this.addButton.Size = new System.Drawing.Size(83, 76);
             this.addButton.TabIndex = 12;
-            this.addButton.Text = "ADD";
             this.addButton.UseVisualStyleBackColor = false;
             // 
             // textBox1
@@ -306,11 +337,191 @@
             this.label7.TabIndex = 18;
             this.label7.Text = "Sale Category";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(394, 50);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(101, 16);
+            this.label8.TabIndex = 19;
+            this.label8.Text = "Customer Code";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox2.Location = new System.Drawing.Point(513, 44);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(154, 22);
+            this.textBox2.TabIndex = 20;
+            // 
+            // saveButton
+            // 
+            this.saveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveButton.Location = new System.Drawing.Point(32, 604);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(141, 50);
+            this.saveButton.TabIndex = 21;
+            this.saveButton.Text = "Save";
+            this.saveButton.UseVisualStyleBackColor = true;
+            // 
+            // updateButton
+            // 
+            this.updateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.updateButton.Location = new System.Drawing.Point(192, 607);
+            this.updateButton.Name = "updateButton";
+            this.updateButton.Size = new System.Drawing.Size(141, 50);
+            this.updateButton.TabIndex = 21;
+            this.updateButton.Text = "Update";
+            this.updateButton.UseVisualStyleBackColor = true;
+            // 
+            // addNewButton
+            // 
+            this.addNewButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addNewButton.Location = new System.Drawing.Point(355, 607);
+            this.addNewButton.Name = "addNewButton";
+            this.addNewButton.Size = new System.Drawing.Size(141, 50);
+            this.addNewButton.TabIndex = 21;
+            this.addNewButton.Text = "Add New";
+            this.addNewButton.UseVisualStyleBackColor = true;
+            // 
+            // closeButton
+            // 
+            this.closeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.closeButton.Location = new System.Drawing.Point(513, 607);
+            this.closeButton.Name = "closeButton";
+            this.closeButton.Size = new System.Drawing.Size(141, 50);
+            this.closeButton.TabIndex = 21;
+            this.closeButton.Text = "Close";
+            this.closeButton.UseVisualStyleBackColor = true;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(688, 603);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(62, 16);
+            this.label9.TabIndex = 22;
+            this.label9.Text = "Advance";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(688, 576);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(87, 16);
+            this.label10.TabIndex = 23;
+            this.label10.Text = "Total Amount";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(688, 635);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(51, 16);
+            this.label11.TabIndex = 24;
+            this.label11.Text = "Months";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(688, 666);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(71, 16);
+            this.label12.TabIndex = 25;
+            this.label12.Text = "Installment";
+            // 
+            // monthTextBox
+            // 
+            this.monthTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.monthTextBox.Location = new System.Drawing.Point(786, 635);
+            this.monthTextBox.Name = "monthTextBox";
+            this.monthTextBox.Size = new System.Drawing.Size(117, 22);
+            this.monthTextBox.TabIndex = 26;
+            // 
+            // installmentTextBox
+            // 
+            this.installmentTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.installmentTextBox.Location = new System.Drawing.Point(786, 663);
+            this.installmentTextBox.Name = "installmentTextBox";
+            this.installmentTextBox.Size = new System.Drawing.Size(117, 22);
+            this.installmentTextBox.TabIndex = 27;
+            // 
+            // totalTextBox
+            // 
+            this.totalTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.totalTextBox.Location = new System.Drawing.Point(786, 576);
+            this.totalTextBox.Name = "totalTextBox";
+            this.totalTextBox.Size = new System.Drawing.Size(117, 22);
+            this.totalTextBox.TabIndex = 26;
+            // 
+            // advanceTextBox
+            // 
+            this.advanceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.advanceTextBox.Location = new System.Drawing.Point(786, 604);
+            this.advanceTextBox.Name = "advanceTextBox";
+            this.advanceTextBox.Size = new System.Drawing.Size(117, 22);
+            this.advanceTextBox.TabIndex = 27;
+            // 
+            // PID
+            // 
+            this.PID.HeaderText = "Product ID";
+            this.PID.Name = "PID";
+            // 
+            // Product
+            // 
+            this.Product.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Product.HeaderText = "Product";
+            this.Product.Name = "Product";
+            // 
+            // CurrentStock
+            // 
+            this.CurrentStock.HeaderText = "Current Stock";
+            this.CurrentStock.Name = "CurrentStock";
+            // 
+            // SaleQty
+            // 
+            this.SaleQty.HeaderText = "Sale Quantity";
+            this.SaleQty.Name = "SaleQty";
+            // 
+            // Rate
+            // 
+            this.Rate.HeaderText = "Price";
+            this.Rate.Name = "Rate";
+            // 
+            // Amount
+            // 
+            this.Amount.HeaderText = "Amount";
+            this.Amount.Name = "Amount";
+            // 
+            // Remove
+            // 
+            this.Remove.HeaderText = "Remove";
+            this.Remove.Name = "Remove";
+            // 
             // SaleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 711);
+            this.Controls.Add(this.advanceTextBox);
+            this.Controls.Add(this.installmentTextBox);
+            this.Controls.Add(this.totalTextBox);
+            this.Controls.Add(this.monthTextBox);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.closeButton);
+            this.Controls.Add(this.addNewButton);
+            this.Controls.Add(this.updateButton);
+            this.Controls.Add(this.saveButton);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.saleCategoryComboBox);
             this.Controls.Add(this.totalAmountTextBox);
@@ -379,5 +590,26 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox saleCategoryComboBox;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button updateButton;
+        private System.Windows.Forms.Button addNewButton;
+        private System.Windows.Forms.Button closeButton;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox monthTextBox;
+        private System.Windows.Forms.TextBox installmentTextBox;
+        private System.Windows.Forms.TextBox totalTextBox;
+        private System.Windows.Forms.TextBox advanceTextBox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Product;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CurrentStock;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SaleQty;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Rate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
+        private System.Windows.Forms.DataGridViewButtonColumn Remove;
     }
 }
