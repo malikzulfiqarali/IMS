@@ -384,6 +384,7 @@
             this.customerCodeTextBox.Size = new System.Drawing.Size(154, 22);
             this.customerCodeTextBox.TabIndex = 2;
             this.customerCodeTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.customerCodeTextBox_KeyDown);
+            this.customerCodeTextBox.Leave += new System.EventHandler(this.customerCodeTextBox_Leave);
             // 
             // saveButton
             // 

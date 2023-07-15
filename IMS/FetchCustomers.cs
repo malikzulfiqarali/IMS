@@ -15,6 +15,12 @@ namespace IMS
 {
     public partial class FetchCustomers : Form
     {
+        public static int SetCode { get; set; }
+        public static string SetName { get; set; }
+        public static string SetFatherName { get; set; }
+        public static string SetCNIC { get; set; }
+        public static string SetMobile { get; set; }
+        public static string SetAddress { get; set; }
         public FetchCustomers()
         {
             InitializeComponent();
@@ -47,6 +53,42 @@ namespace IMS
             {
                 (customerInfoDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Empty;
 
+            }
+        }
+
+        private void customerInfoDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            SetCode = Convert.ToInt32(customerInfoDataGridView.CurrentRow.Cells["Code"].Value);
+            SetName = customerInfoDataGridView.CurrentRow.Cells["Party"].Value.ToString();
+            SetFatherName = customerInfoDataGridView.CurrentRow.Cells["Father"].Value.ToString();
+            SetCNIC = customerInfoDataGridView.CurrentRow.Cells["CNIC"].Value.ToString();
+            SetMobile = customerInfoDataGridView.CurrentRow.Cells["Mobile"].Value.ToString();
+            SetAddress = customerInfoDataGridView.CurrentRow.Cells["Address"].Value.ToString();
+            this.Hide();
+        }
+
+        private void customerInfoDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Get the current cursor position row index
+                int rowIndex = customerInfoDataGridView.CurrentCell.RowIndex;
+
+                // Get the data from the selected row
+                SetCode = Convert.ToInt32(customerInfoDataGridView.CurrentRow.Cells["Code"].Value);
+                SetName = customerInfoDataGridView.CurrentRow.Cells["Party"].Value.ToString();
+                SetFatherName = customerInfoDataGridView.CurrentRow.Cells["Father"].Value.ToString();
+                SetCNIC = customerInfoDataGridView.CurrentRow.Cells["CNIC"].Value.ToString();
+                SetMobile = customerInfoDataGridView.CurrentRow.Cells["Mobile"].Value.ToString();
+                SetAddress = customerInfoDataGridView.CurrentRow.Cells["Address"].Value.ToString();
+                // ...
+
+                // Do something with the row data, for example, display it in a message box
+                //MessageBox.Show($"Selected row data: {value1}, {value2}, ...");
+
+                // Prevent the Enter key from being processed further
+                e.Handled = true;
+                this.Hide();
             }
         }
     }

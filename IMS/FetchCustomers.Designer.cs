@@ -64,6 +64,8 @@
             this.customerInfoDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.customerInfoDataGridView.Size = new System.Drawing.Size(664, 589);
             this.customerInfoDataGridView.TabIndex = 4;
+            this.customerInfoDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.customerInfoDataGridView_CellDoubleClick);
+            this.customerInfoDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.customerInfoDataGridView_KeyDown);
             // 
             // FetchCustomers
             // 

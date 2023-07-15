@@ -35,5 +35,15 @@ namespace IMS
                 fetchCustomers.ShowDialog();
             }
         }
+
+        private void customerCodeTextBox_Leave(object sender, EventArgs e)
+        {
+            customerCodeTextBox.Text = FetchCustomers.SetCode.ToString();
+            customerNameTextBox.Text = FetchCustomers.SetName;
+            fatherTextBox.Text = FetchCustomers.SetFatherName;
+            cnicTextBox.Text = FetchCustomers.SetCNIC;
+            mobileTextBox.Text = FetchCustomers.SetMobile;
+            addressTextBox.Text = FetchCustomers.SetAddress;
+        }
     }
 }
