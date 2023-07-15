@@ -21,5 +21,19 @@ namespace IMS
         {
             this.Close();
         }
+
+        private void productIdTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+          
+        }
+
+        private void customerCodeTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode==Keys.Enter)
+            {
+                FetchCustomers fetchCustomers = new FetchCustomers();
+                fetchCustomers.ShowDialog();
+            }
+        }
     }
 }

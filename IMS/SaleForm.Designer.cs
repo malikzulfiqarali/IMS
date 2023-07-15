@@ -55,7 +55,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.saleQtyTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.addButton = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.totalAmountTextBox = new System.Windows.Forms.TextBox();
@@ -63,7 +62,7 @@
             this.saleCategoryComboBox = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.customerCodeTextBox = new System.Windows.Forms.TextBox();
             this.saveButton = new System.Windows.Forms.Button();
             this.updateButton = new System.Windows.Forms.Button();
             this.addNewButton = new System.Windows.Forms.Button();
@@ -78,6 +77,9 @@
             this.advanceTextBox = new System.Windows.Forms.TextBox();
             this.balanceTextBox = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.fatherTextBox = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.addButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -145,7 +147,7 @@
             // 
             this.salNumber.AutoSize = true;
             this.salNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.salNumber.Location = new System.Drawing.Point(29, 19);
+            this.salNumber.Location = new System.Drawing.Point(29, 26);
             this.salNumber.Name = "salNumber";
             this.salNumber.Size = new System.Drawing.Size(33, 16);
             this.salNumber.TabIndex = 2;
@@ -155,7 +157,7 @@
             // 
             this.customerName.AutoSize = true;
             this.customerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customerName.Location = new System.Drawing.Point(29, 50);
+            this.customerName.Location = new System.Drawing.Point(29, 61);
             this.customerName.Name = "customerName";
             this.customerName.Size = new System.Drawing.Size(45, 16);
             this.customerName.TabIndex = 2;
@@ -165,7 +167,7 @@
             // 
             this.cnicNumber.AutoSize = true;
             this.cnicNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cnicNumber.Location = new System.Drawing.Point(29, 81);
+            this.cnicNumber.Location = new System.Drawing.Point(29, 139);
             this.cnicNumber.Name = "cnicNumber";
             this.cnicNumber.Size = new System.Drawing.Size(39, 16);
             this.cnicNumber.TabIndex = 2;
@@ -175,7 +177,7 @@
             // 
             this.mobileNumber.AutoSize = true;
             this.mobileNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mobileNumber.Location = new System.Drawing.Point(29, 106);
+            this.mobileNumber.Location = new System.Drawing.Point(29, 174);
             this.mobileNumber.Name = "mobileNumber";
             this.mobileNumber.Size = new System.Drawing.Size(49, 16);
             this.mobileNumber.TabIndex = 2;
@@ -185,7 +187,7 @@
             // 
             this.customerAddress.AutoSize = true;
             this.customerAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customerAddress.Location = new System.Drawing.Point(29, 138);
+            this.customerAddress.Location = new System.Drawing.Point(425, 87);
             this.customerAddress.Name = "customerAddress";
             this.customerAddress.Size = new System.Drawing.Size(59, 16);
             this.customerAddress.TabIndex = 2;
@@ -202,7 +204,7 @@
             // cnicTextBox
             // 
             this.cnicTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cnicTextBox.Location = new System.Drawing.Point(117, 72);
+            this.cnicTextBox.Location = new System.Drawing.Point(117, 132);
             this.cnicTextBox.Name = "cnicTextBox";
             this.cnicTextBox.Size = new System.Drawing.Size(146, 22);
             this.cnicTextBox.TabIndex = 3;
@@ -210,7 +212,7 @@
             // customerNameTextBox
             // 
             this.customerNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customerNameTextBox.Location = new System.Drawing.Point(117, 44);
+            this.customerNameTextBox.Location = new System.Drawing.Point(117, 56);
             this.customerNameTextBox.Name = "customerNameTextBox";
             this.customerNameTextBox.Size = new System.Drawing.Size(146, 22);
             this.customerNameTextBox.TabIndex = 3;
@@ -218,7 +220,7 @@
             // addressTextBox
             // 
             this.addressTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addressTextBox.Location = new System.Drawing.Point(117, 132);
+            this.addressTextBox.Location = new System.Drawing.Point(513, 81);
             this.addressTextBox.Multiline = true;
             this.addressTextBox.Name = "addressTextBox";
             this.addressTextBox.Size = new System.Drawing.Size(285, 52);
@@ -227,7 +229,7 @@
             // mobileTextBox
             // 
             this.mobileTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mobileTextBox.Location = new System.Drawing.Point(117, 103);
+            this.mobileTextBox.Location = new System.Drawing.Point(117, 170);
             this.mobileTextBox.Name = "mobileTextBox";
             this.mobileTextBox.Size = new System.Drawing.Size(146, 22);
             this.mobileTextBox.TabIndex = 3;
@@ -249,6 +251,7 @@
             this.productIdTextBox.Name = "productIdTextBox";
             this.productIdTextBox.Size = new System.Drawing.Size(92, 22);
             this.productIdTextBox.TabIndex = 3;
+            this.productIdTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.productIdTextBox_KeyUp);
             // 
             // productTextBox
             // 
@@ -303,18 +306,6 @@
             this.label4.Size = new System.Drawing.Size(87, 16);
             this.label4.TabIndex = 10;
             this.label4.Text = "Sale Quantity";
-            // 
-            // addButton
-            // 
-            this.addButton.BackColor = System.Drawing.Color.Transparent;
-            this.addButton.BackgroundImage = global::IMS.Properties.Resources.download;
-            this.addButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.addButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.addButton.Location = new System.Drawing.Point(876, 165);
-            this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(83, 76);
-            this.addButton.TabIndex = 9;
-            this.addButton.UseVisualStyleBackColor = false;
             // 
             // textBox1
             // 
@@ -385,13 +376,14 @@
             this.label8.TabIndex = 19;
             this.label8.Text = "Customer Code";
             // 
-            // textBox2
+            // customerCodeTextBox
             // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(513, 44);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(154, 22);
-            this.textBox2.TabIndex = 2;
+            this.customerCodeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customerCodeTextBox.Location = new System.Drawing.Point(513, 44);
+            this.customerCodeTextBox.Name = "customerCodeTextBox";
+            this.customerCodeTextBox.Size = new System.Drawing.Size(154, 22);
+            this.customerCodeTextBox.TabIndex = 2;
+            this.customerCodeTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.customerCodeTextBox_KeyDown);
             // 
             // saveButton
             // 
@@ -524,11 +516,43 @@
             this.label13.TabIndex = 28;
             this.label13.Text = "Balance";
             // 
+            // fatherTextBox
+            // 
+            this.fatherTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fatherTextBox.Location = new System.Drawing.Point(117, 94);
+            this.fatherTextBox.Name = "fatherTextBox";
+            this.fatherTextBox.Size = new System.Drawing.Size(146, 22);
+            this.fatherTextBox.TabIndex = 30;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(29, 99);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(46, 16);
+            this.label14.TabIndex = 29;
+            this.label14.Text = "Father";
+            // 
+            // addButton
+            // 
+            this.addButton.BackColor = System.Drawing.Color.Transparent;
+            this.addButton.BackgroundImage = global::IMS.Properties.Resources.download;
+            this.addButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.addButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addButton.Location = new System.Drawing.Point(876, 165);
+            this.addButton.Name = "addButton";
+            this.addButton.Size = new System.Drawing.Size(83, 76);
+            this.addButton.TabIndex = 9;
+            this.addButton.UseVisualStyleBackColor = false;
+            // 
             // SaleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 711);
+            this.Controls.Add(this.fatherTextBox);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.balanceTextBox);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.advanceTextBox);
@@ -543,7 +567,7 @@
             this.Controls.Add(this.addNewButton);
             this.Controls.Add(this.updateButton);
             this.Controls.Add(this.saveButton);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.customerCodeTextBox);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.saleCategoryComboBox);
@@ -614,7 +638,7 @@
         private System.Windows.Forms.ComboBox saleCategoryComboBox;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox customerCodeTextBox;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button updateButton;
         private System.Windows.Forms.Button addNewButton;
@@ -636,5 +660,7 @@
         private System.Windows.Forms.DataGridViewButtonColumn Remove;
         private System.Windows.Forms.TextBox balanceTextBox;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox fatherTextBox;
+        private System.Windows.Forms.Label label14;
     }
 }
