@@ -30,13 +30,6 @@
         {
             this.invoiceDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.productDataGridView = new System.Windows.Forms.DataGridView();
-            this.PID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Product = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CurrentStock = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SaleQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Rate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Remove = new System.Windows.Forms.DataGridViewButtonColumn();
             this.salNumber = new System.Windows.Forms.Label();
             this.customerName = new System.Windows.Forms.Label();
             this.cnicNumber = new System.Windows.Forms.Label();
@@ -80,6 +73,13 @@
             this.fatherTextBox = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.addButton = new System.Windows.Forms.Button();
+            this.PID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Product = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CurrentStock = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SaleQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Rate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Remove = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.productDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -106,42 +106,6 @@
             this.productDataGridView.Name = "productDataGridView";
             this.productDataGridView.Size = new System.Drawing.Size(960, 288);
             this.productDataGridView.TabIndex = 1;
-            // 
-            // PID
-            // 
-            this.PID.HeaderText = "Product ID";
-            this.PID.Name = "PID";
-            // 
-            // Product
-            // 
-            this.Product.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Product.HeaderText = "Product";
-            this.Product.Name = "Product";
-            // 
-            // CurrentStock
-            // 
-            this.CurrentStock.HeaderText = "Current Stock";
-            this.CurrentStock.Name = "CurrentStock";
-            // 
-            // SaleQty
-            // 
-            this.SaleQty.HeaderText = "Sale Quantity";
-            this.SaleQty.Name = "SaleQty";
-            // 
-            // Rate
-            // 
-            this.Rate.HeaderText = "Price";
-            this.Rate.Name = "Rate";
-            // 
-            // Amount
-            // 
-            this.Amount.HeaderText = "Amount";
-            this.Amount.Name = "Amount";
-            // 
-            // Remove
-            // 
-            this.Remove.HeaderText = "Remove";
-            this.Remove.Name = "Remove";
             // 
             // salNumber
             // 
@@ -299,6 +263,8 @@
             this.saleQtyTextBox.Name = "saleQtyTextBox";
             this.saleQtyTextBox.Size = new System.Drawing.Size(87, 22);
             this.saleQtyTextBox.TabIndex = 6;
+            this.saleQtyTextBox.Enter += new System.EventHandler(this.saleQtyTextBox_Enter);
+            this.saleQtyTextBox.Leave += new System.EventHandler(this.saleQtyTextBox_Leave);
             // 
             // label4
             // 
@@ -317,6 +283,7 @@
             this.priceTextBox.Name = "priceTextBox";
             this.priceTextBox.Size = new System.Drawing.Size(98, 22);
             this.priceTextBox.TabIndex = 7;
+            this.priceTextBox.Leave += new System.EventHandler(this.priceTextBox_Leave);
             // 
             // label5
             // 
@@ -550,6 +517,45 @@
             this.addButton.Size = new System.Drawing.Size(83, 76);
             this.addButton.TabIndex = 9;
             this.addButton.UseVisualStyleBackColor = false;
+            this.addButton.Click += new System.EventHandler(this.addButton_Click);
+            // 
+            // PID
+            // 
+            this.PID.HeaderText = "Product ID";
+            this.PID.Name = "PID";
+            // 
+            // Product
+            // 
+            this.Product.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Product.HeaderText = "Product";
+            this.Product.Name = "Product";
+            // 
+            // CurrentStock
+            // 
+            this.CurrentStock.HeaderText = "Current Stock";
+            this.CurrentStock.Name = "CurrentStock";
+            // 
+            // SaleQty
+            // 
+            this.SaleQty.HeaderText = "Sale Quantity";
+            this.SaleQty.Name = "SaleQty";
+            // 
+            // Rate
+            // 
+            this.Rate.HeaderText = "Price";
+            this.Rate.Name = "Rate";
+            // 
+            // Amount
+            // 
+            this.Amount.HeaderText = "Amount";
+            this.Amount.Name = "Amount";
+            // 
+            // Remove
+            // 
+            this.Remove.HeaderText = "Remove";
+            this.Remove.Name = "Remove";
+            this.Remove.Text = "Remove";
+            this.Remove.UseColumnTextForButtonValue = true;
             // 
             // SaleForm
             // 
@@ -657,6 +663,10 @@
         private System.Windows.Forms.TextBox installmentTextBox;
         private System.Windows.Forms.TextBox totalTextBox;
         private System.Windows.Forms.TextBox advanceTextBox;
+        private System.Windows.Forms.TextBox balanceTextBox;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox fatherTextBox;
+        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.DataGridViewTextBoxColumn PID;
         private System.Windows.Forms.DataGridViewTextBoxColumn Product;
         private System.Windows.Forms.DataGridViewTextBoxColumn CurrentStock;
@@ -664,9 +674,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Rate;
         private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
         private System.Windows.Forms.DataGridViewButtonColumn Remove;
-        private System.Windows.Forms.TextBox balanceTextBox;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox fatherTextBox;
-        private System.Windows.Forms.Label label14;
     }
 }

@@ -110,5 +110,37 @@ namespace IMS
 
 
         }
+
+        private void saleQtyTextBox_Enter(object sender, EventArgs e)
+        {
+        }
+
+        private void saleQtyTextBox_Leave(object sender, EventArgs e)
+        {
+            totalAmountTextBox.Text = (Convert.ToInt32(saleQtyTextBox.Text.Trim()) * Convert.ToDecimal(priceTextBox.Text.Trim())).ToString();
+
+        }
+
+        private void priceTextBox_Leave(object sender, EventArgs e)
+        {
+            totalAmountTextBox.Text = (Convert.ToInt32(saleQtyTextBox.Text.Trim()) * Convert.ToDecimal(priceTextBox.Text.Trim())).ToString();
+
+        }
+
+        private void addButton_Click(object sender, EventArgs e)
+        {
+            productDataGridView.Rows.Add(productIdTextBox.Text.Trim(),productTextBox.Text.Trim(),currentStockTextBox.Text.Trim(),saleQtyTextBox.Text.Trim(),priceTextBox.Text.Trim(),totalAmountTextBox.Text.Trim());
+            productIdTextBox.Text = string.Empty;
+            productTextBox.Text = string.Empty;
+            currentStockTextBox.Text = string.Empty;
+            saleQtyTextBox.Text = string.Empty;
+            priceTextBox.Text = string.Empty;
+            totalAmountTextBox.Text = string.Empty;
+            foreach (DataGridViewRow row in productDataGridView.Rows)
+            {
+                
+            }
+
+        }
     }
 }
