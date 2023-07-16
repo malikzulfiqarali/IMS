@@ -136,11 +136,17 @@ namespace IMS
             saleQtyTextBox.Text = string.Empty;
             priceTextBox.Text = string.Empty;
             totalAmountTextBox.Text = string.Empty;
+            totalTextBox.Text = GetTotal().ToString();
+
+        }
+        private decimal GetTotal()
+        {
+            decimal Total = 0;
             foreach (DataGridViewRow row in productDataGridView.Rows)
             {
-                
+              Total += Convert.ToDecimal( row.Cells["Amount"].Value);
             }
-
+            return Total;
         }
     }
 }
