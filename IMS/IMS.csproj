@@ -113,6 +113,12 @@
     <Compile Include="FetchDataForm.Designer.cs">
       <DependentUpon>FetchDataForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FetchProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FetchProduct.Designer.cs">
+      <DependentUpon>FetchProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="JournalVoucherForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -178,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FetchDataForm.resx">
       <DependentUpon>FetchDataForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FetchProduct.resx">
+      <DependentUpon>FetchProduct.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JournalVoucherForm.resx">
       <DependentUpon>JournalVoucherForm.cs</DependentUpon>

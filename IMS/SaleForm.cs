@@ -84,5 +84,31 @@ namespace IMS
             ClearAllData();
             GetMaxNumber();
         }
+
+        private void productIdTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode==Keys.Enter)
+            {
+                FetchProduct fetchProduct = new FetchProduct();
+                fetchProduct.ShowDialog();
+
+            }
+        }
+
+        private void productIdTextBox_DoubleClick(object sender, EventArgs e)
+        {
+            FetchProduct fetchProduct = new FetchProduct();
+            fetchProduct.ShowDialog();
+        }
+
+        private void productIdTextBox_Leave(object sender, EventArgs e)
+        {
+            productIdTextBox.Text = FetchProduct.SetCode.ToString();
+            productTextBox.Text = FetchProduct.SetDescription;
+            currentStockTextBox.Text = FetchProduct.SetQuantity.ToString();
+            priceTextBox.Text = FetchProduct.SetPrice.ToString();
+
+
+        }
     }
 }

@@ -55,7 +55,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.saleQtyTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.priceTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.totalAmountTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -251,7 +251,10 @@
             this.productIdTextBox.Name = "productIdTextBox";
             this.productIdTextBox.Size = new System.Drawing.Size(92, 22);
             this.productIdTextBox.TabIndex = 3;
+            this.productIdTextBox.DoubleClick += new System.EventHandler(this.productIdTextBox_DoubleClick);
+            this.productIdTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.productIdTextBox_KeyDown);
             this.productIdTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.productIdTextBox_KeyUp);
+            this.productIdTextBox.Leave += new System.EventHandler(this.productIdTextBox_Leave);
             // 
             // productTextBox
             // 
@@ -307,13 +310,13 @@
             this.label4.TabIndex = 10;
             this.label4.Text = "Sale Quantity";
             // 
-            // textBox1
+            // priceTextBox
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(536, 218);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(98, 22);
-            this.textBox1.TabIndex = 7;
+            this.priceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.priceTextBox.Location = new System.Drawing.Point(536, 218);
+            this.priceTextBox.Name = "priceTextBox";
+            this.priceTextBox.Size = new System.Drawing.Size(98, 22);
+            this.priceTextBox.TabIndex = 7;
             // 
             // label5
             // 
@@ -575,7 +578,7 @@
             this.Controls.Add(this.saleCategoryComboBox);
             this.Controls.Add(this.totalAmountTextBox);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.priceTextBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.saleQtyTextBox);
@@ -634,7 +637,7 @@
         private System.Windows.Forms.TextBox saleQtyTextBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button addButton;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox priceTextBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox totalAmountTextBox;
         private System.Windows.Forms.Label label6;
