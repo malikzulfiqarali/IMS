@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.invoiceDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.productDataGridView = new System.Windows.Forms.DataGridView();
             this.PID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Product = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CurrentStock = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -80,7 +80,7 @@
             this.fatherTextBox = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.addButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.productDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // invoiceDateTimePicker
@@ -90,11 +90,11 @@
             this.invoiceDateTimePicker.Size = new System.Drawing.Size(200, 20);
             this.invoiceDateTimePicker.TabIndex = 0;
             // 
-            // dataGridView1
+            // productDataGridView
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.productDataGridView.AllowUserToAddRows = false;
+            this.productDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.productDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.PID,
             this.Product,
             this.CurrentStock,
@@ -102,10 +102,10 @@
             this.Rate,
             this.Amount,
             this.Remove});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 246);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(960, 288);
-            this.dataGridView1.TabIndex = 1;
+            this.productDataGridView.Location = new System.Drawing.Point(12, 246);
+            this.productDataGridView.Name = "productDataGridView";
+            this.productDataGridView.Size = new System.Drawing.Size(960, 288);
+            this.productDataGridView.TabIndex = 1;
             // 
             // PID
             // 
@@ -415,6 +415,7 @@
             this.addNewButton.TabIndex = 17;
             this.addNewButton.Text = "Add New";
             this.addNewButton.UseVisualStyleBackColor = true;
+            this.addNewButton.Click += new System.EventHandler(this.addNewButton_Click);
             // 
             // closeButton
             // 
@@ -595,7 +596,7 @@
             this.Controls.Add(this.cnicNumber);
             this.Controls.Add(this.customerName);
             this.Controls.Add(this.salNumber);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.productDataGridView);
             this.Controls.Add(this.invoiceDateTimePicker);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -603,7 +604,8 @@
             this.Name = "SaleForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Sale Invoice";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.Load += new System.EventHandler(this.SaleForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.productDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -612,7 +614,7 @@
         #endregion
 
         private System.Windows.Forms.DateTimePicker invoiceDateTimePicker;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView productDataGridView;
         private System.Windows.Forms.Label salNumber;
         private System.Windows.Forms.Label customerName;
         private System.Windows.Forms.Label cnicNumber;
