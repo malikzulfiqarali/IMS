@@ -30,6 +30,13 @@
         {
             this.invoiceDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.productDataGridView = new System.Windows.Forms.DataGridView();
+            this.PID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Product = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CurrentStock = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SaleQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Rate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Remove = new System.Windows.Forms.DataGridViewButtonColumn();
             this.salNumber = new System.Windows.Forms.Label();
             this.customerName = new System.Windows.Forms.Label();
             this.cnicNumber = new System.Windows.Forms.Label();
@@ -73,13 +80,6 @@
             this.fatherTextBox = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.addButton = new System.Windows.Forms.Button();
-            this.PID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Product = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CurrentStock = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SaleQty = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Rate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Remove = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.productDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -106,6 +106,45 @@
             this.productDataGridView.Name = "productDataGridView";
             this.productDataGridView.Size = new System.Drawing.Size(960, 288);
             this.productDataGridView.TabIndex = 1;
+            this.productDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.productDataGridView_CellClick);
+            // 
+            // PID
+            // 
+            this.PID.HeaderText = "Product ID";
+            this.PID.Name = "PID";
+            // 
+            // Product
+            // 
+            this.Product.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Product.HeaderText = "Product";
+            this.Product.Name = "Product";
+            // 
+            // CurrentStock
+            // 
+            this.CurrentStock.HeaderText = "Current Stock";
+            this.CurrentStock.Name = "CurrentStock";
+            // 
+            // SaleQty
+            // 
+            this.SaleQty.HeaderText = "Sale Quantity";
+            this.SaleQty.Name = "SaleQty";
+            // 
+            // Rate
+            // 
+            this.Rate.HeaderText = "Price";
+            this.Rate.Name = "Rate";
+            // 
+            // Amount
+            // 
+            this.Amount.HeaderText = "Amount";
+            this.Amount.Name = "Amount";
+            // 
+            // Remove
+            // 
+            this.Remove.HeaderText = "Remove";
+            this.Remove.Name = "Remove";
+            this.Remove.Text = "Remove";
+            this.Remove.UseColumnTextForButtonValue = true;
             // 
             // salNumber
             // 
@@ -211,10 +250,11 @@
             // productIdTextBox
             // 
             this.productIdTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.productIdTextBox.Location = new System.Drawing.Point(32, 219);
+            this.productIdTextBox.Location = new System.Drawing.Point(32, 217);
             this.productIdTextBox.Name = "productIdTextBox";
             this.productIdTextBox.Size = new System.Drawing.Size(92, 22);
             this.productIdTextBox.TabIndex = 3;
+            this.productIdTextBox.TextChanged += new System.EventHandler(this.productIdTextBox_TextChanged);
             this.productIdTextBox.DoubleClick += new System.EventHandler(this.productIdTextBox_DoubleClick);
             this.productIdTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.productIdTextBox_KeyDown);
             this.productIdTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.productIdTextBox_KeyUp);
@@ -225,6 +265,7 @@
             this.productTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.productTextBox.Location = new System.Drawing.Point(140, 218);
             this.productTextBox.Name = "productTextBox";
+            this.productTextBox.ReadOnly = true;
             this.productTextBox.Size = new System.Drawing.Size(169, 22);
             this.productTextBox.TabIndex = 4;
             // 
@@ -243,6 +284,7 @@
             this.currentStockTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.currentStockTextBox.Location = new System.Drawing.Point(330, 218);
             this.currentStockTextBox.Name = "currentStockTextBox";
+            this.currentStockTextBox.ReadOnly = true;
             this.currentStockTextBox.Size = new System.Drawing.Size(87, 22);
             this.currentStockTextBox.TabIndex = 5;
             // 
@@ -300,8 +342,10 @@
             this.totalAmountTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.totalAmountTextBox.Location = new System.Drawing.Point(649, 218);
             this.totalAmountTextBox.Name = "totalAmountTextBox";
+            this.totalAmountTextBox.ReadOnly = true;
             this.totalAmountTextBox.Size = new System.Drawing.Size(98, 22);
             this.totalAmountTextBox.TabIndex = 8;
+            this.totalAmountTextBox.TextChanged += new System.EventHandler(this.totalAmountTextBox_TextChanged);
             // 
             // label6
             // 
@@ -445,12 +489,14 @@
             this.monthTextBox.Name = "monthTextBox";
             this.monthTextBox.Size = new System.Drawing.Size(117, 22);
             this.monthTextBox.TabIndex = 13;
+            this.monthTextBox.Leave += new System.EventHandler(this.monthTextBox_Leave);
             // 
             // installmentTextBox
             // 
             this.installmentTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.installmentTextBox.Location = new System.Drawing.Point(786, 668);
             this.installmentTextBox.Name = "installmentTextBox";
+            this.installmentTextBox.ReadOnly = true;
             this.installmentTextBox.Size = new System.Drawing.Size(117, 22);
             this.installmentTextBox.TabIndex = 14;
             // 
@@ -459,6 +505,7 @@
             this.totalTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.totalTextBox.Location = new System.Drawing.Point(786, 556);
             this.totalTextBox.Name = "totalTextBox";
+            this.totalTextBox.ReadOnly = true;
             this.totalTextBox.Size = new System.Drawing.Size(117, 22);
             this.totalTextBox.TabIndex = 10;
             // 
@@ -469,12 +516,14 @@
             this.advanceTextBox.Name = "advanceTextBox";
             this.advanceTextBox.Size = new System.Drawing.Size(117, 22);
             this.advanceTextBox.TabIndex = 11;
+            this.advanceTextBox.Leave += new System.EventHandler(this.advanceTextBox_Leave);
             // 
             // balanceTextBox
             // 
             this.balanceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.balanceTextBox.Location = new System.Drawing.Point(786, 612);
             this.balanceTextBox.Name = "balanceTextBox";
+            this.balanceTextBox.ReadOnly = true;
             this.balanceTextBox.Size = new System.Drawing.Size(117, 22);
             this.balanceTextBox.TabIndex = 12;
             // 
@@ -518,44 +567,6 @@
             this.addButton.TabIndex = 9;
             this.addButton.UseVisualStyleBackColor = false;
             this.addButton.Click += new System.EventHandler(this.addButton_Click);
-            // 
-            // PID
-            // 
-            this.PID.HeaderText = "Product ID";
-            this.PID.Name = "PID";
-            // 
-            // Product
-            // 
-            this.Product.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Product.HeaderText = "Product";
-            this.Product.Name = "Product";
-            // 
-            // CurrentStock
-            // 
-            this.CurrentStock.HeaderText = "Current Stock";
-            this.CurrentStock.Name = "CurrentStock";
-            // 
-            // SaleQty
-            // 
-            this.SaleQty.HeaderText = "Sale Quantity";
-            this.SaleQty.Name = "SaleQty";
-            // 
-            // Rate
-            // 
-            this.Rate.HeaderText = "Price";
-            this.Rate.Name = "Rate";
-            // 
-            // Amount
-            // 
-            this.Amount.HeaderText = "Amount";
-            this.Amount.Name = "Amount";
-            // 
-            // Remove
-            // 
-            this.Remove.HeaderText = "Remove";
-            this.Remove.Name = "Remove";
-            this.Remove.Text = "Remove";
-            this.Remove.UseColumnTextForButtonValue = true;
             // 
             // SaleForm
             // 

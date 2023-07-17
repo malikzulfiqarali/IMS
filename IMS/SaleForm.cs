@@ -66,6 +66,7 @@ namespace IMS
         {
             ClearAllData();
             GetMaxNumber();
+            AddButtonEnabled();
         }
         private void GetMaxNumber()
         {
@@ -81,6 +82,7 @@ namespace IMS
 
         private void SaleForm_Load(object sender, EventArgs e)
         {
+            addButton.Enabled = false; 
             ClearAllData();
             GetMaxNumber();
         }
@@ -107,8 +109,6 @@ namespace IMS
             productTextBox.Text = FetchProduct.SetDescription;
             currentStockTextBox.Text = FetchProduct.SetQuantity.ToString();
             priceTextBox.Text = FetchProduct.SetPrice.ToString();
-
-
         }
 
         private void saleQtyTextBox_Enter(object sender, EventArgs e)
@@ -117,13 +117,19 @@ namespace IMS
 
         private void saleQtyTextBox_Leave(object sender, EventArgs e)
         {
-            totalAmountTextBox.Text = (Convert.ToInt32(saleQtyTextBox.Text.Trim()) * Convert.ToDecimal(priceTextBox.Text.Trim())).ToString();
+            if (saleQtyTextBox.Text.Trim()!=string.Empty && priceTextBox.Text.Trim()!=string.Empty)
+            {
+                totalAmountTextBox.Text = (Convert.ToDecimal(saleQtyTextBox.Text.Trim()) * Convert.ToDecimal(priceTextBox.Text.Trim())).ToString(); 
+            }
 
         }
 
         private void priceTextBox_Leave(object sender, EventArgs e)
         {
-            totalAmountTextBox.Text = (Convert.ToInt32(saleQtyTextBox.Text.Trim()) * Convert.ToDecimal(priceTextBox.Text.Trim())).ToString();
+            if (saleQtyTextBox.Text.Trim() != string.Empty && priceTextBox.Text.Trim() != string.Empty )
+            {
+                totalAmountTextBox.Text = (Convert.ToDecimal (saleQtyTextBox.Text.Trim()) * Convert.ToDecimal(priceTextBox.Text.Trim())).ToString(); 
+            }
 
         }
 
@@ -137,6 +143,11 @@ namespace IMS
             priceTextBox.Text = string.Empty;
             totalAmountTextBox.Text = string.Empty;
             totalTextBox.Text = GetTotal().ToString();
+            AdvanceAmountAndBalaneAmountCalculation();
+            InstallmentCalculation();
+           
+            
+            
 
         }
         private decimal GetTotal()
@@ -146,7 +157,84 @@ namespace IMS
             {
               Total += Convert.ToDecimal( row.Cells["Amount"].Value);
             }
-            return Total;
+            return Math.Round( Total,0);
+        }
+
+        private void productDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (productDataGridView.Columns[e.ColumnIndex].HeaderText == "Remove")
+                {
+                    productDataGridView.Rows.RemoveAt(e.RowIndex);
+                }
+                if (e.RowIndex>0)
+                {
+                    totalTextBox.Text = GetTotal().ToString();
+                    AdvanceAmountAndBalaneAmountCalculation();
+                    InstallmentCalculation();
+
+                }
+                else
+                {
+                    totalTextBox.Text = string.Empty;
+                    advanceTextBox.Text = string.Empty;
+                    monthTextBox.Text = string.Empty;
+                    balanceTextBox.Text=string.Empty;
+                    installmentTextBox.Text=string.Empty;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Please remove this field from remove button" + ex.Message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+           
+        }
+
+        private void advanceTextBox_Leave(object sender, EventArgs e)
+        {
+            AdvanceAmountAndBalaneAmountCalculation();
+        }
+
+        private void AdvanceAmountAndBalaneAmountCalculation()
+        {
+            if (totalTextBox.Text.Trim() != string.Empty && advanceTextBox.Text.Trim() != string.Empty)
+            {
+                balanceTextBox.Text = (Convert.ToDecimal(totalTextBox.Text.Trim()) - Convert.ToDecimal(advanceTextBox.Text.Trim())).ToString();
+            }
+        }
+
+        private void monthTextBox_Leave(object sender, EventArgs e)
+        {
+            InstallmentCalculation();
+        }
+
+        private void InstallmentCalculation()
+        {
+            if (balanceTextBox.Text != string.Empty)
+            {
+                installmentTextBox.Text = (Math.Round((Convert.ToDecimal(balanceTextBox.Text.Trim())) / Convert.ToDecimal(monthTextBox.Text.Trim()),0)).ToString();
+            }
+        }
+
+        private void productIdTextBox_TextChanged(object sender, EventArgs e)
+        {
+            AddButtonEnabled();
+
+        }
+
+        private void AddButtonEnabled()
+        {
+            if (productIdTextBox.Text.Trim() != String.Empty && saleQtyTextBox.Text.Trim() != string.Empty && priceTextBox.Text.Trim() != string.Empty && totalAmountTextBox.Text.Trim() != string.Empty)
+            {
+                addButton.Enabled = true;
+            }
+        }
+
+        private void totalAmountTextBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
