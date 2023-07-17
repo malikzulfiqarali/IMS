@@ -305,6 +305,7 @@
             this.saleQtyTextBox.Name = "saleQtyTextBox";
             this.saleQtyTextBox.Size = new System.Drawing.Size(87, 22);
             this.saleQtyTextBox.TabIndex = 6;
+            this.saleQtyTextBox.TextChanged += new System.EventHandler(this.saleQtyTextBox_TextChanged);
             this.saleQtyTextBox.Enter += new System.EventHandler(this.saleQtyTextBox_Enter);
             this.saleQtyTextBox.Leave += new System.EventHandler(this.saleQtyTextBox_Leave);
             // 
@@ -325,6 +326,7 @@
             this.priceTextBox.Name = "priceTextBox";
             this.priceTextBox.Size = new System.Drawing.Size(98, 22);
             this.priceTextBox.TabIndex = 7;
+            this.priceTextBox.TextChanged += new System.EventHandler(this.priceTextBox_TextChanged);
             this.priceTextBox.Leave += new System.EventHandler(this.priceTextBox_Leave);
             // 
             // label5

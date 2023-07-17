@@ -220,21 +220,42 @@ namespace IMS
 
         private void productIdTextBox_TextChanged(object sender, EventArgs e)
         {
-            AddButtonEnabled();
+            CheckTextBoxes();
 
         }
 
         private void AddButtonEnabled()
         {
-            if (productIdTextBox.Text.Trim() != String.Empty && saleQtyTextBox.Text.Trim() != string.Empty && priceTextBox.Text.Trim() != string.Empty && totalAmountTextBox.Text.Trim() != string.Empty)
-            {
-                addButton.Enabled = true;
-            }
+            //if (productIdTextBox.Text.Trim() != String.Empty && saleQtyTextBox.Text.Trim() != string.Empty && priceTextBox.Text.Trim() != string.Empty && totalAmountTextBox.Text.Trim() != string.Empty)
+            //{
+            //    addButton.Enabled = true;
+            //}
         }
 
         private void totalAmountTextBox_TextChanged(object sender, EventArgs e)
         {
+            CheckTextBoxes();
+        }
+        private void CheckTextBoxes()
+        {
+            if (!string.IsNullOrWhiteSpace(productIdTextBox.Text) && !string.IsNullOrWhiteSpace(saleQtyTextBox.Text) && !string.IsNullOrWhiteSpace(priceTextBox.Text) && !string.IsNullOrWhiteSpace(productIdTextBox.Text) && !string.IsNullOrWhiteSpace(totalAmountTextBox.Text))
+            {
+                addButton.Enabled = true;
+            }
+            else
+            {
+                addButton.Enabled = false;
+            }
+        }
 
+        private void saleQtyTextBox_TextChanged(object sender, EventArgs e)
+        {
+            CheckTextBoxes();
+        }
+
+        private void priceTextBox_TextChanged(object sender, EventArgs e)
+        {
+            CheckTextBoxes();
         }
     }
 }
