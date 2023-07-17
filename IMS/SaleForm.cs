@@ -167,22 +167,23 @@ namespace IMS
                 if (productDataGridView.Columns[e.ColumnIndex].HeaderText == "Remove")
                 {
                     productDataGridView.Rows.RemoveAt(e.RowIndex);
-                }
-                if (e.RowIndex>0)
-                {
-                    totalTextBox.Text = GetTotal().ToString();
-                    AdvanceAmountAndBalaneAmountCalculation();
-                    InstallmentCalculation();
+                    if (e.RowIndex > 0)
+                    {
+                        totalTextBox.Text = GetTotal().ToString();
+                        AdvanceAmountAndBalaneAmountCalculation();
+                        InstallmentCalculation();
 
+                    }
+                    else
+                    {
+                        totalTextBox.Text = string.Empty;
+                        advanceTextBox.Text = string.Empty;
+                        monthTextBox.Text = string.Empty;
+                        balanceTextBox.Text = string.Empty;
+                        installmentTextBox.Text = string.Empty;
+                    }
                 }
-                else
-                {
-                    totalTextBox.Text = string.Empty;
-                    advanceTextBox.Text = string.Empty;
-                    monthTextBox.Text = string.Empty;
-                    balanceTextBox.Text=string.Empty;
-                    installmentTextBox.Text=string.Empty;
-                }
+                
             }
             catch (Exception ex)
             {
@@ -256,6 +257,12 @@ namespace IMS
         private void priceTextBox_TextChanged(object sender, EventArgs e)
         {
             CheckTextBoxes();
+        }
+
+        private void customerCodeTextBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            FetchCustomers fetchCustomers = new FetchCustomers();
+            fetchCustomers.ShowDialog();
         }
     }
 }

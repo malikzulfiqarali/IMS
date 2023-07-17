@@ -104,6 +104,7 @@
             this.Remove});
             this.productDataGridView.Location = new System.Drawing.Point(12, 246);
             this.productDataGridView.Name = "productDataGridView";
+            this.productDataGridView.ReadOnly = true;
             this.productDataGridView.Size = new System.Drawing.Size(960, 288);
             this.productDataGridView.TabIndex = 1;
             this.productDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.productDataGridView_CellClick);
@@ -401,6 +402,7 @@
             this.customerCodeTextBox.TabIndex = 2;
             this.customerCodeTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.customerCodeTextBox_KeyDown);
             this.customerCodeTextBox.Leave += new System.EventHandler(this.customerCodeTextBox_Leave);
+            this.customerCodeTextBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.customerCodeTextBox_MouseDoubleClick);
             // 
             // saveButton
             // 
