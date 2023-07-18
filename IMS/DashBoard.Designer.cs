@@ -305,7 +305,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::IMS.Properties.Resources.Consumer_Goods_Photo_KGA_1;
+            this.BackgroundImage = global::IMS.Properties.Resources.ApliancesElectronics;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1284, 781);
             this.Controls.Add(this.menuStrip1);

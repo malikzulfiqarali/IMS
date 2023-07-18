@@ -63,7 +63,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.customerCodeTextBox = new System.Windows.Forms.TextBox();
-            this.saveButton = new System.Windows.Forms.Button();
             this.updateButton = new System.Windows.Forms.Button();
             this.addNewButton = new System.Windows.Forms.Button();
             this.closeButton = new System.Windows.Forms.Button();
@@ -79,6 +78,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.fatherTextBox = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
+            this.saveButton = new System.Windows.Forms.Button();
             this.addButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.productDataGridView)).BeginInit();
             this.SuspendLayout();
@@ -407,19 +407,10 @@
             this.customerCodeTextBox.Name = "customerCodeTextBox";
             this.customerCodeTextBox.Size = new System.Drawing.Size(154, 22);
             this.customerCodeTextBox.TabIndex = 2;
+            this.customerCodeTextBox.TextChanged += new System.EventHandler(this.customerCodeTextBox_TextChanged);
             this.customerCodeTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.customerCodeTextBox_KeyDown);
             this.customerCodeTextBox.Leave += new System.EventHandler(this.customerCodeTextBox_Leave);
             this.customerCodeTextBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.customerCodeTextBox_MouseDoubleClick);
-            // 
-            // saveButton
-            // 
-            this.saveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveButton.Location = new System.Drawing.Point(32, 604);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(141, 50);
-            this.saveButton.TabIndex = 15;
-            this.saveButton.Text = "Save";
-            this.saveButton.UseVisualStyleBackColor = true;
             // 
             // updateButton
             // 
@@ -571,10 +562,24 @@
             this.label14.TabIndex = 29;
             this.label14.Text = "Father";
             // 
+            // saveButton
+            // 
+            this.saveButton.BackgroundImage = global::IMS.Properties.Resources.save_button_png_no_background;
+            this.saveButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.saveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveButton.Location = new System.Drawing.Point(12, 556);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(153, 151);
+            this.saveButton.TabIndex = 15;
+            this.saveButton.Text = "Save";
+            this.saveButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
             // addButton
             // 
             this.addButton.BackColor = System.Drawing.Color.Transparent;
-            this.addButton.BackgroundImage = global::IMS.Properties.Resources.download;
+            this.addButton.BackgroundImage = global::IMS.Properties.Resources.images;
             this.addButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.addButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addButton.Location = new System.Drawing.Point(876, 165);

@@ -250,5 +250,14 @@
   <ItemGroup>
     <None Include="Resources\download.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AddImage.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\images.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save-button-png-no-background.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

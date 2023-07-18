@@ -250,7 +250,7 @@ namespace IMS
         }
         private void CheckTextBoxes()
         {
-            if (!string.IsNullOrWhiteSpace(productIdTextBox.Text) && !string.IsNullOrWhiteSpace(saleQtyTextBox.Text) && !string.IsNullOrWhiteSpace(priceTextBox.Text) && !string.IsNullOrWhiteSpace(productIdTextBox.Text) && !string.IsNullOrWhiteSpace(totalAmountTextBox.Text))
+            if (!string.IsNullOrWhiteSpace(productIdTextBox.Text) && !string.IsNullOrWhiteSpace(saleQtyTextBox.Text) && !string.IsNullOrWhiteSpace(priceTextBox.Text) && !string.IsNullOrWhiteSpace(productIdTextBox.Text) && !string.IsNullOrWhiteSpace(totalAmountTextBox.Text) && !string.IsNullOrEmpty(customerCodeTextBox.Text))
             {
                 addButton.Enabled = true;
             }
@@ -274,6 +274,54 @@ namespace IMS
         {
             FetchCustomers fetchCustomers = new FetchCustomers();
             fetchCustomers.ShowDialog();
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(saleNumberTextBox.Text))
+            {
+                MessageBox.Show("Sale Invoice Number must not be Empty","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                saleNumberTextBox.Focus();
+                return;
+            }
+            if (saleCategoryComboBox.SelectedIndex==-1)
+            {
+                MessageBox.Show("Sale Category must be selected", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                saleCategoryComboBox.Focus();
+                return;
+
+            }
+            if (string.IsNullOrEmpty(customerCodeTextBox.Text))
+            {
+                MessageBox.Show("Customer Code must be entered", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                customerCodeTextBox.Focus();
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(customerNameTextBox.Text))
+            {
+                MessageBox.Show("Please Enter Customer Name", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                customerNameTextBox.Focus();
+                return; 
+            }
+            if (string.IsNullOrWhiteSpace(mobileTextBox.Text))
+            {
+                MessageBox.Show("Please Enter Customer Mobile Number", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                mobileTextBox.Focus();
+                return;
+            }
+            if (productDataGridView.Rows.Count==0)
+            {
+                MessageBox.Show("Please enter any Product for further Processing", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                productIdTextBox.Focus();
+                return;
+            }
+
+
+        }
+
+        private void customerCodeTextBox_TextChanged(object sender, EventArgs e)
+        {
+            CheckTextBoxes();
         }
     }
 }

@@ -63,9 +63,9 @@ namespace IMS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _61_612748_home_appliances_background_home_appliances_images_png_transparent {
+        internal static System.Drawing.Bitmap Apliances {
             get {
-                object obj = ResourceManager.GetObject("61-612748_home-appliances-background-home-appliances-images-png-transparent", resourceCulture);
+                object obj = ResourceManager.GetObject("Apliances", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace IMS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Consumer_Goods_Photo_KGA_1 {
+        internal static System.Drawing.Bitmap ApliancesElectronics {
             get {
-                object obj = ResourceManager.GetObject("Consumer-Goods-Photo-KGA-1", resourceCulture);
+                object obj = ResourceManager.GetObject("ApliancesElectronics", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,29 @@ namespace IMS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap images {
+            get {
+                object obj = ResourceManager.GetObject("images", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap No_Image_Available {
             get {
                 object obj = ResourceManager.GetObject("No_Image_Available", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap save_button_png_no_background {
+            get {
+                object obj = ResourceManager.GetObject("save_button_png_no_background", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
