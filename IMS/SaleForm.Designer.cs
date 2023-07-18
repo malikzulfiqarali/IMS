@@ -113,37 +113,44 @@
             // 
             this.PID.HeaderText = "Product ID";
             this.PID.Name = "PID";
+            this.PID.ReadOnly = true;
             // 
             // Product
             // 
             this.Product.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Product.HeaderText = "Product";
             this.Product.Name = "Product";
+            this.Product.ReadOnly = true;
             // 
             // CurrentStock
             // 
             this.CurrentStock.HeaderText = "Current Stock";
             this.CurrentStock.Name = "CurrentStock";
+            this.CurrentStock.ReadOnly = true;
             // 
             // SaleQty
             // 
             this.SaleQty.HeaderText = "Sale Quantity";
             this.SaleQty.Name = "SaleQty";
+            this.SaleQty.ReadOnly = true;
             // 
             // Rate
             // 
             this.Rate.HeaderText = "Price";
             this.Rate.Name = "Rate";
+            this.Rate.ReadOnly = true;
             // 
             // Amount
             // 
             this.Amount.HeaderText = "Amount";
             this.Amount.Name = "Amount";
+            this.Amount.ReadOnly = true;
             // 
             // Remove
             // 
             this.Remove.HeaderText = "Remove";
             this.Remove.Name = "Remove";
+            this.Remove.ReadOnly = true;
             this.Remove.Text = "Remove";
             this.Remove.UseColumnTextForButtonValue = true;
             // 
@@ -493,6 +500,7 @@
             this.monthTextBox.Name = "monthTextBox";
             this.monthTextBox.Size = new System.Drawing.Size(117, 22);
             this.monthTextBox.TabIndex = 13;
+            this.monthTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.monthTextBox.Leave += new System.EventHandler(this.monthTextBox_Leave);
             // 
             // installmentTextBox
@@ -503,6 +511,7 @@
             this.installmentTextBox.ReadOnly = true;
             this.installmentTextBox.Size = new System.Drawing.Size(117, 22);
             this.installmentTextBox.TabIndex = 14;
+            this.installmentTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // totalTextBox
             // 
@@ -512,6 +521,7 @@
             this.totalTextBox.ReadOnly = true;
             this.totalTextBox.Size = new System.Drawing.Size(117, 22);
             this.totalTextBox.TabIndex = 10;
+            this.totalTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // advanceTextBox
             // 
@@ -520,6 +530,7 @@
             this.advanceTextBox.Name = "advanceTextBox";
             this.advanceTextBox.Size = new System.Drawing.Size(117, 22);
             this.advanceTextBox.TabIndex = 11;
+            this.advanceTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.advanceTextBox.Leave += new System.EventHandler(this.advanceTextBox_Leave);
             // 
             // balanceTextBox
@@ -530,6 +541,7 @@
             this.balanceTextBox.ReadOnly = true;
             this.balanceTextBox.Size = new System.Drawing.Size(117, 22);
             this.balanceTextBox.TabIndex = 12;
+            this.balanceTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label13
             // 

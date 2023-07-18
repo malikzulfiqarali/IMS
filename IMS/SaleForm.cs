@@ -135,16 +135,27 @@ namespace IMS
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            productDataGridView.Rows.Add(productIdTextBox.Text.Trim(),productTextBox.Text.Trim(),currentStockTextBox.Text.Trim(),saleQtyTextBox.Text.Trim(),priceTextBox.Text.Trim(),totalAmountTextBox.Text.Trim());
-            productIdTextBox.Text = string.Empty;
-            productTextBox.Text = string.Empty;
-            currentStockTextBox.Text = string.Empty;
-            saleQtyTextBox.Text = string.Empty;
-            priceTextBox.Text = string.Empty;
-            totalAmountTextBox.Text = string.Empty;
-            totalTextBox.Text = GetTotal().ToString();
-            AdvanceAmountAndBalaneAmountCalculation();
-            InstallmentCalculation();
+
+            if (Convert.ToInt32( currentStockTextBox.Text.Trim()) >=Convert.ToInt32( saleQtyTextBox.Text.Trim()))
+            {
+                productDataGridView.Rows.Add(productIdTextBox.Text.Trim(), productTextBox.Text.Trim(), currentStockTextBox.Text.Trim(), saleQtyTextBox.Text.Trim(), priceTextBox.Text.Trim(), totalAmountTextBox.Text.Trim());
+                productIdTextBox.Text = string.Empty;
+                productTextBox.Text = string.Empty;
+                currentStockTextBox.Text = string.Empty;
+                saleQtyTextBox.Text = string.Empty;
+                saleQtyTextBox.BackColor = Color.White;
+                priceTextBox.Text = string.Empty;
+                totalAmountTextBox.Text = string.Empty;
+                totalTextBox.Text = GetTotal().ToString();
+                AdvanceAmountAndBalaneAmountCalculation();
+                InstallmentCalculation(); 
+            }
+            else
+            {
+                MessageBox.Show("Sale Quantity cannot be greater than Current Stock","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                saleQtyTextBox.BackColor = Color.Aqua;
+                saleQtyTextBox.Focus();
+            }
            
             
             
