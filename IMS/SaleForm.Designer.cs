@@ -227,6 +227,7 @@
             this.customerNameTextBox.Name = "customerNameTextBox";
             this.customerNameTextBox.Size = new System.Drawing.Size(146, 22);
             this.customerNameTextBox.TabIndex = 3;
+            this.customerNameTextBox.TextChanged += new System.EventHandler(this.customerNameTextBox_TextChanged);
             // 
             // addressTextBox
             // 

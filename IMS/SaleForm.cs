@@ -250,7 +250,7 @@ namespace IMS
         }
         private void CheckTextBoxes()
         {
-            if (!string.IsNullOrWhiteSpace(productIdTextBox.Text) && !string.IsNullOrWhiteSpace(saleQtyTextBox.Text) && !string.IsNullOrWhiteSpace(priceTextBox.Text) && !string.IsNullOrWhiteSpace(productIdTextBox.Text) && !string.IsNullOrWhiteSpace(totalAmountTextBox.Text) && !string.IsNullOrEmpty(customerCodeTextBox.Text))
+            if (!string.IsNullOrWhiteSpace(productIdTextBox.Text) && !string.IsNullOrWhiteSpace(saleQtyTextBox.Text) && !string.IsNullOrWhiteSpace(priceTextBox.Text) && !string.IsNullOrWhiteSpace(productIdTextBox.Text) && !string.IsNullOrWhiteSpace(totalAmountTextBox.Text) && !string.IsNullOrEmpty(customerCodeTextBox.Text) && !string.IsNullOrWhiteSpace(customerNameTextBox.Text))
             {
                 addButton.Enabled = true;
             }
@@ -278,6 +278,7 @@ namespace IMS
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            SqlTransaction transaction = null;
             if (string.IsNullOrWhiteSpace(saleNumberTextBox.Text))
             {
                 MessageBox.Show("Sale Invoice Number must not be Empty","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
@@ -315,11 +316,54 @@ namespace IMS
                 productIdTextBox.Focus();
                 return;
             }
+            try
+            {
+                connection.Open();
+                transaction = connection.BeginTransaction();
+
+                foreach (DataGridViewRow row in productDataGridView.Rows)
+                {
+                    SqlCommand cmd = new SqlCommand("SP_INSERT_SALE", connection,transaction);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@SaleCode", saleNumberTextBox.Text.Trim());
+                    cmd.Parameters.AddWithValue("@Date", invoiceDateTimePicker.Value);
+                    cmd.Parameters.AddWithValue("@CustomerID", Convert.ToInt32( customerCodeTextBox.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@ProductID", Convert.ToInt32( row.Cells["PID"].Value)); 
+                    cmd.Parameters.AddWithValue("@SaleCategory", saleCategoryComboBox.SelectedItem); 
+                    cmd.Parameters.AddWithValue("@Qty", Convert.ToInt32( row.Cells["SaleQty"].Value)); 
+                    cmd.Parameters.AddWithValue("@Price", Convert.ToDecimal( row.Cells["Rate"].Value)); 
+                    cmd.Parameters.AddWithValue("@SaleAmount", Convert.ToDecimal( row.Cells["Amount"].Value)); 
+                    cmd.Parameters.AddWithValue("@TotalInvoiceAmount", Convert.ToDecimal( totalTextBox.Text.Trim())); 
+                    cmd.Parameters.AddWithValue("@Advance",  Convert.ToDecimal (advanceTextBox.Text.Trim())); 
+                    cmd.Parameters.AddWithValue("@BalanceAmount", Convert.ToDecimal( balanceTextBox.Text.Trim())); 
+                    cmd.Parameters.AddWithValue("@Months",  Convert.ToInt32( monthTextBox.Text.Trim())); 
+                    cmd.Parameters.AddWithValue("@InstallmentAmount", Convert.ToDecimal( installmentTextBox.Text.Trim()));
+                    cmd.ExecuteNonQuery();
+                }
+                transaction.Commit();
+                MessageBox.Show("The Transaction is successfull","Sucess",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                addButton.PerformClick();
+            }
+            catch (Exception ex)
+            {
+                
+                MessageBox.Show(ex.Message,"Failure",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                transaction.Rollback();
+            }
+            finally
+            {
+                connection.Close();
+            }
 
 
         }
 
         private void customerCodeTextBox_TextChanged(object sender, EventArgs e)
+        {
+            CheckTextBoxes();
+        }
+
+        private void customerNameTextBox_TextChanged(object sender, EventArgs e)
         {
             CheckTextBoxes();
         }
