@@ -368,5 +368,25 @@ namespace IMS
         {
             CheckTextBoxes();
         }
+
+        private void saleCategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (saleCategoryComboBox.SelectedIndex==0)
+            {
+                advanceTextBox.ReadOnly=true;
+                monthTextBox.ReadOnly=true;
+
+            }
+            if(saleCategoryComboBox.SelectedIndex==1)
+            {
+                advanceTextBox.ReadOnly = true;
+                monthTextBox.ReadOnly = true;
+            }
+            if (saleCategoryComboBox.SelectedIndex==2)
+            {
+                advanceTextBox.ReadOnly = false;
+                monthTextBox.ReadOnly = false;
+            }
+        }
     }
 }

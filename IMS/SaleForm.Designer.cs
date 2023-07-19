@@ -380,6 +380,7 @@
             this.saleCategoryComboBox.Name = "saleCategoryComboBox";
             this.saleCategoryComboBox.Size = new System.Drawing.Size(154, 24);
             this.saleCategoryComboBox.TabIndex = 1;
+            this.saleCategoryComboBox.SelectedIndexChanged += new System.EventHandler(this.saleCategoryComboBox_SelectedIndexChanged);
             // 
             // label7
             // 
