@@ -334,10 +334,10 @@ namespace IMS
                     cmd.Parameters.AddWithValue("@Price", Convert.ToDecimal( row.Cells["Rate"].Value)); 
                     cmd.Parameters.AddWithValue("@SaleAmount", Convert.ToDecimal( row.Cells["Amount"].Value)); 
                     cmd.Parameters.AddWithValue("@TotalInvoiceAmount", Convert.ToDecimal( totalTextBox.Text.Trim())); 
-                    cmd.Parameters.AddWithValue("@Advance",  Convert.ToDecimal (advanceTextBox.Text.Trim()??(object)DBNull.Value)); 
-                    cmd.Parameters.AddWithValue("@BalanceAmount", Convert.ToDecimal ( balanceTextBox.Text.Trim()??(object)DBNull.Value)); 
-                    cmd.Parameters.AddWithValue("@Months",  Convert.ToInt32( monthTextBox.Text.Trim()??(object)DBNull.Value)); 
-                    cmd.Parameters.AddWithValue("@InstallmentAmount", Convert.ToDecimal( installmentTextBox.Text.Trim()??(object)DBNull.Value));
+                    cmd.Parameters.AddWithValue("@Advance",   advanceTextBox.Text.Trim()==string.Empty?(object)DBNull.Value : Convert.ToDecimal (advanceTextBox.Text.Trim())); 
+                    cmd.Parameters.AddWithValue("@BalanceAmount",  balanceTextBox.Text.Trim()==string.Empty?(object)DBNull.Value: Convert.ToDecimal ( balanceTextBox.Text.Trim())); 
+                    cmd.Parameters.AddWithValue("@Months",    monthTextBox.Text.Trim()==string.Empty?(object)DBNull.Value: Convert.ToInt32( monthTextBox.Text.Trim())); 
+                    cmd.Parameters.AddWithValue("@InstallmentAmount", installmentTextBox.Text.Trim()==string.Empty?(object)DBNull.Value:Convert.ToDecimal( installmentTextBox.Text.Trim()));
                     cmd.ExecuteNonQuery();
                 }
                 transaction.Commit();
