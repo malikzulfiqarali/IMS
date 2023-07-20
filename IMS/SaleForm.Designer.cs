@@ -37,7 +37,7 @@
             this.Rate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Remove = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.salNumber = new System.Windows.Forms.Label();
+            this.saleNumber = new System.Windows.Forms.Label();
             this.customerName = new System.Windows.Forms.Label();
             this.cnicNumber = new System.Windows.Forms.Label();
             this.mobileNumber = new System.Windows.Forms.Label();
@@ -154,15 +154,15 @@
             this.Remove.Text = "Remove";
             this.Remove.UseColumnTextForButtonValue = true;
             // 
-            // salNumber
+            // saleNumber
             // 
-            this.salNumber.AutoSize = true;
-            this.salNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.salNumber.Location = new System.Drawing.Point(29, 26);
-            this.salNumber.Name = "salNumber";
-            this.salNumber.Size = new System.Drawing.Size(33, 16);
-            this.salNumber.TabIndex = 2;
-            this.salNumber.Text = "SAL";
+            this.saleNumber.AutoSize = true;
+            this.saleNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saleNumber.Location = new System.Drawing.Point(29, 26);
+            this.saleNumber.Name = "saleNumber";
+            this.saleNumber.Size = new System.Drawing.Size(33, 16);
+            this.saleNumber.TabIndex = 2;
+            this.saleNumber.Text = "SAL";
             // 
             // customerName
             // 
@@ -638,7 +638,7 @@
             this.Controls.Add(this.mobileNumber);
             this.Controls.Add(this.cnicNumber);
             this.Controls.Add(this.customerName);
-            this.Controls.Add(this.salNumber);
+            this.Controls.Add(this.saleNumber);
             this.Controls.Add(this.productDataGridView);
             this.Controls.Add(this.invoiceDateTimePicker);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -658,7 +658,7 @@
 
         private System.Windows.Forms.DateTimePicker invoiceDateTimePicker;
         private System.Windows.Forms.DataGridView productDataGridView;
-        private System.Windows.Forms.Label salNumber;
+        private System.Windows.Forms.Label saleNumber;
         private System.Windows.Forms.Label customerName;
         private System.Windows.Forms.Label cnicNumber;
         private System.Windows.Forms.Label mobileNumber;

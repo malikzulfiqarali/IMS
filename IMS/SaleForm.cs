@@ -320,7 +320,7 @@ namespace IMS
             {
                 connection.Open();
                 transaction = connection.BeginTransaction();
-
+                
                 foreach (DataGridViewRow row in productDataGridView.Rows)
                 {
                     SqlCommand cmd = new SqlCommand("SP_INSERT_SALE", connection,transaction);
@@ -340,6 +340,18 @@ namespace IMS
                     cmd.Parameters.AddWithValue("@InstallmentAmount", installmentTextBox.Text.Trim()==string.Empty?(object)DBNull.Value:Convert.ToDecimal( installmentTextBox.Text.Trim()));
                     cmd.ExecuteNonQuery();
                 }
+                string voucherCatCode = saleNumber.Text.Trim() + " " + saleNumberTextBox.Text.Trim();
+                SqlCommand cmd1 = new SqlCommand("[SP_INSERT_SALE_VOUCHER]", connection,transaction);
+                cmd1.CommandType = CommandType.StoredProcedure;
+                cmd1.Parameters.AddWithValue("@VoucherCode",Convert.ToInt32( saleNumberTextBox.Text.Trim()));
+                cmd1.Parameters.AddWithValue("@VoucherType", saleNumber.Text.Trim());
+                cmd1.Parameters.AddWithValue("@VoucherDate", invoiceDateTimePicker.Value);
+                cmd1.Parameters.AddWithValue("@VoucherCategoryID", Convert.ToInt32( customerCodeTextBox.Text.Trim()));
+                cmd1.Parameters.AddWithValue("@VoucherCategory", saleCategoryComboBox.SelectedItem);
+                cmd1.Parameters.AddWithValue("@VoucherCategoryCode",  voucherCatCode);
+                cmd1.Parameters.AddWithValue("@Description", customerNameTextBox.Text.Trim());
+                cmd1.Parameters.AddWithValue("@Debit", totalTextBox.Text.Trim()==string.Empty?(object)DBNull.Value: Convert.ToDecimal( totalTextBox.Text.Trim()));
+                cmd1.ExecuteNonQuery();
                 transaction.Commit();
                 MessageBox.Show("The Transaction is successfull","Sucess",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 connection.Close();
