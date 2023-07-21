@@ -88,7 +88,7 @@
             this.invoiceDateTimePicker.Location = new System.Drawing.Point(772, 12);
             this.invoiceDateTimePicker.Name = "invoiceDateTimePicker";
             this.invoiceDateTimePicker.Size = new System.Drawing.Size(200, 20);
-            this.invoiceDateTimePicker.TabIndex = 0;
+            this.invoiceDateTimePicker.TabIndex = 2;
             // 
             // productDataGridView
             // 
@@ -219,7 +219,7 @@
             this.cnicTextBox.Location = new System.Drawing.Point(117, 132);
             this.cnicTextBox.Name = "cnicTextBox";
             this.cnicTextBox.Size = new System.Drawing.Size(146, 22);
-            this.cnicTextBox.TabIndex = 3;
+            this.cnicTextBox.TabIndex = 6;
             // 
             // customerNameTextBox
             // 
@@ -237,7 +237,7 @@
             this.addressTextBox.Multiline = true;
             this.addressTextBox.Name = "addressTextBox";
             this.addressTextBox.Size = new System.Drawing.Size(285, 52);
-            this.addressTextBox.TabIndex = 3;
+            this.addressTextBox.TabIndex = 8;
             // 
             // mobileTextBox
             // 
@@ -245,7 +245,7 @@
             this.mobileTextBox.Location = new System.Drawing.Point(117, 170);
             this.mobileTextBox.Name = "mobileTextBox";
             this.mobileTextBox.Size = new System.Drawing.Size(146, 22);
-            this.mobileTextBox.TabIndex = 3;
+            this.mobileTextBox.TabIndex = 7;
             // 
             // label1
             // 
@@ -263,7 +263,7 @@
             this.productIdTextBox.Location = new System.Drawing.Point(32, 217);
             this.productIdTextBox.Name = "productIdTextBox";
             this.productIdTextBox.Size = new System.Drawing.Size(92, 22);
-            this.productIdTextBox.TabIndex = 3;
+            this.productIdTextBox.TabIndex = 9;
             this.productIdTextBox.TextChanged += new System.EventHandler(this.productIdTextBox_TextChanged);
             this.productIdTextBox.DoubleClick += new System.EventHandler(this.productIdTextBox_DoubleClick);
             this.productIdTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.productIdTextBox_KeyDown);
@@ -277,7 +277,7 @@
             this.productTextBox.Name = "productTextBox";
             this.productTextBox.ReadOnly = true;
             this.productTextBox.Size = new System.Drawing.Size(169, 22);
-            this.productTextBox.TabIndex = 4;
+            this.productTextBox.TabIndex = 10;
             // 
             // label2
             // 
@@ -296,7 +296,7 @@
             this.currentStockTextBox.Name = "currentStockTextBox";
             this.currentStockTextBox.ReadOnly = true;
             this.currentStockTextBox.Size = new System.Drawing.Size(87, 22);
-            this.currentStockTextBox.TabIndex = 5;
+            this.currentStockTextBox.TabIndex = 11;
             // 
             // label3
             // 
@@ -314,7 +314,7 @@
             this.saleQtyTextBox.Location = new System.Drawing.Point(432, 218);
             this.saleQtyTextBox.Name = "saleQtyTextBox";
             this.saleQtyTextBox.Size = new System.Drawing.Size(87, 22);
-            this.saleQtyTextBox.TabIndex = 6;
+            this.saleQtyTextBox.TabIndex = 12;
             this.saleQtyTextBox.TextChanged += new System.EventHandler(this.saleQtyTextBox_TextChanged);
             this.saleQtyTextBox.Enter += new System.EventHandler(this.saleQtyTextBox_Enter);
             this.saleQtyTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.saleQtyTextBox_KeyPress);
@@ -336,7 +336,7 @@
             this.priceTextBox.Location = new System.Drawing.Point(536, 218);
             this.priceTextBox.Name = "priceTextBox";
             this.priceTextBox.Size = new System.Drawing.Size(98, 22);
-            this.priceTextBox.TabIndex = 7;
+            this.priceTextBox.TabIndex = 13;
             this.priceTextBox.TextChanged += new System.EventHandler(this.priceTextBox_TextChanged);
             this.priceTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.priceTextBox_KeyPress);
             this.priceTextBox.Leave += new System.EventHandler(this.priceTextBox_Leave);
@@ -358,7 +358,7 @@
             this.totalAmountTextBox.Name = "totalAmountTextBox";
             this.totalAmountTextBox.ReadOnly = true;
             this.totalAmountTextBox.Size = new System.Drawing.Size(98, 22);
-            this.totalAmountTextBox.TabIndex = 8;
+            this.totalAmountTextBox.TabIndex = 14;
             this.totalAmountTextBox.TextChanged += new System.EventHandler(this.totalAmountTextBox_TextChanged);
             // 
             // label6
@@ -411,7 +411,7 @@
             this.customerCodeTextBox.Location = new System.Drawing.Point(513, 44);
             this.customerCodeTextBox.Name = "customerCodeTextBox";
             this.customerCodeTextBox.Size = new System.Drawing.Size(154, 22);
-            this.customerCodeTextBox.TabIndex = 2;
+            this.customerCodeTextBox.TabIndex = 4;
             this.customerCodeTextBox.TextChanged += new System.EventHandler(this.customerCodeTextBox_TextChanged);
             this.customerCodeTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.customerCodeTextBox_KeyDown);
             this.customerCodeTextBox.Leave += new System.EventHandler(this.customerCodeTextBox_Leave);
@@ -423,7 +423,7 @@
             this.updateButton.Location = new System.Drawing.Point(192, 607);
             this.updateButton.Name = "updateButton";
             this.updateButton.Size = new System.Drawing.Size(141, 50);
-            this.updateButton.TabIndex = 16;
+            this.updateButton.TabIndex = 20;
             this.updateButton.Text = "Update";
             this.updateButton.UseVisualStyleBackColor = true;
             // 
@@ -433,7 +433,7 @@
             this.addNewButton.Location = new System.Drawing.Point(355, 607);
             this.addNewButton.Name = "addNewButton";
             this.addNewButton.Size = new System.Drawing.Size(141, 50);
-            this.addNewButton.TabIndex = 17;
+            this.addNewButton.TabIndex = 19;
             this.addNewButton.Text = "Add New";
             this.addNewButton.UseVisualStyleBackColor = true;
             this.addNewButton.Click += new System.EventHandler(this.addNewButton_Click);
@@ -495,7 +495,7 @@
             this.monthTextBox.Location = new System.Drawing.Point(786, 640);
             this.monthTextBox.Name = "monthTextBox";
             this.monthTextBox.Size = new System.Drawing.Size(117, 22);
-            this.monthTextBox.TabIndex = 13;
+            this.monthTextBox.TabIndex = 17;
             this.monthTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.monthTextBox.TextChanged += new System.EventHandler(this.monthTextBox_TextChanged);
             this.monthTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.monthTextBox_KeyPress);
@@ -527,7 +527,7 @@
             this.advanceTextBox.Location = new System.Drawing.Point(786, 584);
             this.advanceTextBox.Name = "advanceTextBox";
             this.advanceTextBox.Size = new System.Drawing.Size(117, 22);
-            this.advanceTextBox.TabIndex = 11;
+            this.advanceTextBox.TabIndex = 16;
             this.advanceTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.advanceTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.advanceTextBox_KeyPress);
             this.advanceTextBox.Leave += new System.EventHandler(this.advanceTextBox_Leave);
@@ -558,7 +558,7 @@
             this.fatherTextBox.Location = new System.Drawing.Point(117, 94);
             this.fatherTextBox.Name = "fatherTextBox";
             this.fatherTextBox.Size = new System.Drawing.Size(146, 22);
-            this.fatherTextBox.TabIndex = 30;
+            this.fatherTextBox.TabIndex = 5;
             // 
             // label14
             // 
@@ -578,7 +578,7 @@
             this.saveButton.Location = new System.Drawing.Point(12, 556);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(153, 151);
-            this.saveButton.TabIndex = 15;
+            this.saveButton.TabIndex = 21;
             this.saveButton.Text = "Save";
             this.saveButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.saveButton.UseVisualStyleBackColor = true;
@@ -593,7 +593,7 @@
             this.addButton.Location = new System.Drawing.Point(876, 165);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(83, 76);
-            this.addButton.TabIndex = 9;
+            this.addButton.TabIndex = 15;
             this.addButton.UseVisualStyleBackColor = false;
             this.addButton.Click += new System.EventHandler(this.addButton_Click);
             // 
