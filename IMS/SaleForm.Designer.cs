@@ -497,6 +497,8 @@
             this.monthTextBox.Size = new System.Drawing.Size(117, 22);
             this.monthTextBox.TabIndex = 13;
             this.monthTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.monthTextBox.TextChanged += new System.EventHandler(this.monthTextBox_TextChanged);
+            this.monthTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.monthTextBox_KeyPress);
             this.monthTextBox.Leave += new System.EventHandler(this.monthTextBox_Leave);
             // 
             // installmentTextBox
@@ -527,6 +529,7 @@
             this.advanceTextBox.Size = new System.Drawing.Size(117, 22);
             this.advanceTextBox.TabIndex = 11;
             this.advanceTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.advanceTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.advanceTextBox_KeyPress);
             this.advanceTextBox.Leave += new System.EventHandler(this.advanceTextBox_Leave);
             // 
             // balanceTextBox

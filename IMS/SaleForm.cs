@@ -23,6 +23,10 @@ namespace IMS
 
         private void closeButton_Click(object sender, EventArgs e)
         {
+            if (productDataGridView.Rows.Count!=0)
+            {
+                UpdateBackQuantityInProductTable(); 
+            }
             this.Close();
         }
 
@@ -64,6 +68,11 @@ namespace IMS
 
         private void addNewButton_Click(object sender, EventArgs e)
         {
+
+            if (productDataGridView.Rows.Count!=0)
+            {
+                UpdateBackQuantityInProductTable(); 
+            }
             ClearAllData();
             GetMaxNumber();
             AddButtonEnabled();
@@ -556,6 +565,30 @@ namespace IMS
         }
 
         private void priceTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void advanceTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void monthTextBox_TextChanged(object sender, EventArgs e)
+        {
+            //if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            //{
+            //    e.Handled = true;
+            //}
+        }
+
+        private void monthTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
