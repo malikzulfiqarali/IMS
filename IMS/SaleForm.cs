@@ -130,6 +130,10 @@ namespace IMS
             {
                 totalAmountTextBox.Text = (Convert.ToDecimal(saleQtyTextBox.Text.Trim()) * Convert.ToDecimal(priceTextBox.Text.Trim())).ToString(); 
             }
+            if (Convert.ToInt32(currentStockTextBox.Text.Trim()) >= Convert.ToInt32(saleQtyTextBox.Text.Trim()))
+            {
+                saleQtyTextBox.BackColor = Color.White;
+            }
 
         }
 
@@ -158,7 +162,7 @@ namespace IMS
                 totalAmountTextBox.Text = string.Empty;
                 totalTextBox.Text = GetTotal().ToString();
                 AdvanceAmountAndBalaneAmountCalculation();
-                InstallmentCalculation(); 
+                InstallmentCalculation();
             }
             else
             {
