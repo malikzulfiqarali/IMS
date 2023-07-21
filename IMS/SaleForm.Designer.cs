@@ -602,6 +602,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 711);
+            this.ControlBox = false;
             this.Controls.Add(this.fatherTextBox);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.balanceTextBox);

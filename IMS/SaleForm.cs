@@ -16,6 +16,7 @@ namespace IMS
     public partial class SaleForm : Form
     {
         SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
+        SqlTransaction transaction2 = null;
         public SaleForm()
         {
             InitializeComponent();
@@ -192,7 +193,7 @@ namespace IMS
                     command.Parameters.AddWithValue("@ProductID", Convert.ToInt32(productIdTextBox.Text.Trim()));
                     command.ExecuteNonQuery();
                     transaction1.Commit();
-                    MessageBox.Show("Quantity sold is reduced in stock","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    //MessageBox.Show("Quantity sold is reduced in stock","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
@@ -225,13 +226,22 @@ namespace IMS
             {
                 if (productDataGridView.Columns[e.ColumnIndex].HeaderText == "Remove")
                 {
-                    UpdateBackQuantityInProductTable();
+                    UpdateBackQuantityInProductTableWithoutForLoop();
                     productDataGridView.Rows.RemoveAt(e.RowIndex);
+                    productIdTextBox.Text = string.Empty;
+                    productTextBox.Text = string.Empty;
+                    currentStockTextBox.Text = string.Empty;
+                    saleQtyTextBox.Text = string.Empty;
+                    priceTextBox.Text = string.Empty;
+                    totalAmountTextBox.Text = string.Empty;
+
+
                     if (e.RowIndex > 0)
                     {
                         totalTextBox.Text = GetTotal().ToString();
                         AdvanceAmountAndBalaneAmountCalculation();
                         InstallmentCalculation();
+                        
 
                     }
                     else
@@ -253,39 +263,86 @@ namespace IMS
            
         }
 
-        private void UpdateBackQuantityInProductTable()
+        private void UpdateBackQuantityInProductTableWithoutForLoop()
         {
-            SqlTransaction transaction2 = null;
+            connection.Open();
             try
             {
-                string query1 = "SELECT ProductID,Quantity FROM Product WHERE ProductID=@ProductID";
-                string query2 = "UPDATE Product SET Quantity=@Quantity WHERE ProductID=@ProductID";
-                connection.Open();
-                transaction2 = connection.BeginTransaction();
-                SqlCommand command = new SqlCommand(query1,connection,transaction2);
-                command.Parameters.AddWithValue("@ProductID", Convert.ToInt32(productDataGridView.CurrentRow.Cells["PID"].Value));
-                SqlDataAdapter da = new SqlDataAdapter(command);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                int id = Convert.ToInt32( dt.Rows[0][0]);
-                int qty = Convert.ToInt32(dt.Rows[0][1]);
-                int increasedQty = qty + Convert.ToInt32( productDataGridView.CurrentRow.Cells["SaleQty"].Value);
-                SqlCommand cmd = new SqlCommand(query2,connection,transaction2);
-                cmd.Parameters.AddWithValue("@Quantity", increasedQty);
-                cmd.Parameters.AddWithValue("@ProductID",id);
-                cmd.ExecuteNonQuery();
-                transaction2.Commit();
-
-                MessageBox.Show("Removed quantity is added back","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
+               
+                    string query1 = "SELECT ProductID,Quantity FROM Product WHERE ProductID=@ProductID";
+                    string query2 = "UPDATE Product SET Quantity=@Quantity WHERE ProductID=@ProductID";
 
 
+                    SqlCommand command = new SqlCommand(query1, connection);
+                    command.Parameters.AddWithValue("@ProductID", Convert.ToInt32(productDataGridView.CurrentRow.Cells["PID"].Value));
+                    SqlDataAdapter da = new SqlDataAdapter(command);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+
+                    int id = Convert.ToInt32(dt.Rows[0][0]);
+                    int qty = Convert.ToInt32(dt.Rows[0][1]);
+                    int increasedQty = qty + Convert.ToInt32(productDataGridView.CurrentRow.Cells["SaleQty"].Value);
+
+                    SqlCommand cmd = new SqlCommand(query2, connection);
+                    cmd.Parameters.AddWithValue("@Quantity", increasedQty);
+                    cmd.Parameters.AddWithValue("@ProductID", id);
+                    cmd.ExecuteNonQuery();
+
+                
+
+                //MessageBox.Show("Removed quantity is added back", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
             catch (Exception ex)
             {
 
                 MessageBox.Show(ex.Message);
-                transaction2.Rollback();
+                connection.Close();
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        private void UpdateBackQuantityInProductTable()
+        {
+            connection.Open();
+            try
+            {
+                for (int i = 0; i < productDataGridView.Rows.Count; i++)
+                {
+                    string query1 = "SELECT ProductID,Quantity FROM Product WHERE ProductID=@ProductID";
+                    string query2 = "UPDATE Product SET Quantity=@Quantity WHERE ProductID=@ProductID";
+                    
+                    
+                    SqlCommand command = new SqlCommand(query1, connection);
+                    command.Parameters.AddWithValue("@ProductID", Convert.ToInt32(productDataGridView.Rows[i].Cells["PID"].Value));
+                    SqlDataAdapter da = new SqlDataAdapter(command);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    
+
+                    int id = Convert.ToInt32(dt.Rows[0][0]);
+                    int qty = Convert.ToInt32(dt.Rows[0][1]);
+                    int increasedQty = qty + Convert.ToInt32(productDataGridView.Rows[i].Cells["SaleQty"].Value);
+                    
+                    SqlCommand cmd = new SqlCommand(query2, connection);
+                    cmd.Parameters.AddWithValue("@Quantity", increasedQty);
+                    cmd.Parameters.AddWithValue("@ProductID", id);
+                    cmd.ExecuteNonQuery();
+                    
+                }
+                
+               // MessageBox.Show("Removed quantity is added back","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
+
+            }
+            catch (Exception ex)
+            {
+                
+                MessageBox.Show(ex.Message);
+                connection.Close();
             }
             finally
             {
