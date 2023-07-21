@@ -139,6 +139,7 @@ namespace IMS
             if (Convert.ToInt32( currentStockTextBox.Text.Trim()) >=Convert.ToInt32( saleQtyTextBox.Text.Trim()))
             {
                 productDataGridView.Rows.Add(productIdTextBox.Text.Trim(), productTextBox.Text.Trim(), currentStockTextBox.Text.Trim(), saleQtyTextBox.Text.Trim(), priceTextBox.Text.Trim(), totalAmountTextBox.Text.Trim());
+                UpdateStockInProductTable();
                 productIdTextBox.Text = string.Empty;
                 productTextBox.Text = string.Empty;
                 currentStockTextBox.Text = string.Empty;
@@ -161,6 +162,40 @@ namespace IMS
             
 
         }
+
+        private void UpdateStockInProductTable()
+        {
+            if (!string.IsNullOrEmpty(productIdTextBox.Text.Trim()))
+            {
+                SqlTransaction transaction1 = null;
+                try
+                {
+                    int reducedQuantity = Convert.ToInt32(currentStockTextBox.Text.Trim()) - Convert.ToInt32(saleQtyTextBox.Text.Trim());
+                    connection.Open();
+                    transaction1 = connection.BeginTransaction();
+                    string query = "UPDATE Product SET Quantity=@Quantity WHERE ProductID=@ProductID";
+                    SqlCommand command = new SqlCommand(query, connection, transaction1);
+                    command.Parameters.AddWithValue("@Quantity", reducedQuantity);
+                    command.Parameters.AddWithValue("@ProductID", Convert.ToInt32(productIdTextBox.Text.Trim()));
+                    command.ExecuteNonQuery();
+                    transaction1.Commit();
+                    MessageBox.Show("Quantity sold is reduced in stock","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show(ex.Message);
+                    transaction1.Rollback();
+                    connection.Close();
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
+            }
+        }
+
         private decimal GetTotal()
         {
             decimal Total = 0;
@@ -180,6 +215,7 @@ namespace IMS
                     productDataGridView.Rows.RemoveAt(e.RowIndex);
                     if (e.RowIndex > 0)
                     {
+                        UpdateBackQuantityInProductTable();
                         totalTextBox.Text = GetTotal().ToString();
                         AdvanceAmountAndBalaneAmountCalculation();
                         InstallmentCalculation();
@@ -202,6 +238,11 @@ namespace IMS
                 MessageBox.Show("Please remove this field from remove button" + ex.Message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
            
+        }
+
+        private void UpdateBackQuantityInProductTable()
+        {
+            throw new NotImplementedException();
         }
 
         private void advanceTextBox_Leave(object sender, EventArgs e)
@@ -422,7 +463,6 @@ namespace IMS
                     cmd6.Parameters.AddWithValue("@Credit", totalTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(totalTextBox.Text.Trim()));
                     cmd6.ExecuteNonQuery();
                 }
-                
                 transaction.Commit();
                 MessageBox.Show("The Transaction is successfull","Sucess",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 connection.Close();
