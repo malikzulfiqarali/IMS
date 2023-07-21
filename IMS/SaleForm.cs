@@ -212,10 +212,10 @@ namespace IMS
             {
                 if (productDataGridView.Columns[e.ColumnIndex].HeaderText == "Remove")
                 {
+                    UpdateBackQuantityInProductTable();
                     productDataGridView.Rows.RemoveAt(e.RowIndex);
                     if (e.RowIndex > 0)
                     {
-                        UpdateBackQuantityInProductTable();
                         totalTextBox.Text = GetTotal().ToString();
                         AdvanceAmountAndBalaneAmountCalculation();
                         InstallmentCalculation();
@@ -242,7 +242,42 @@ namespace IMS
 
         private void UpdateBackQuantityInProductTable()
         {
-            throw new NotImplementedException();
+            SqlTransaction transaction2 = null;
+            try
+            {
+                string query1 = "SELECT ProductID,Quantity FROM Product WHERE ProductID=@ProductID";
+                string query2 = "UPDATE Product SET Quantity=@Quantity WHERE ProductID=@ProductID";
+                connection.Open();
+                transaction2 = connection.BeginTransaction();
+                SqlCommand command = new SqlCommand(query1,connection,transaction2);
+                command.Parameters.AddWithValue("@ProductID", Convert.ToInt32(productDataGridView.CurrentRow.Cells["PID"].Value));
+                SqlDataAdapter da = new SqlDataAdapter(command);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                int id = Convert.ToInt32( dt.Rows[0][0]);
+                int qty = Convert.ToInt32(dt.Rows[0][1]);
+                int increasedQty = qty + Convert.ToInt32( productDataGridView.CurrentRow.Cells["SaleQty"].Value);
+                SqlCommand cmd = new SqlCommand(query2,connection,transaction2);
+                cmd.Parameters.AddWithValue("@Quantity", increasedQty);
+                cmd.Parameters.AddWithValue("@ProductID",id);
+                cmd.ExecuteNonQuery();
+                transaction2.Commit();
+
+                MessageBox.Show("Removed quantity is added back","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+                transaction2.Rollback();
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
 
         private void advanceTextBox_Leave(object sender, EventArgs e)
@@ -509,6 +544,22 @@ namespace IMS
             {
                 advanceTextBox.ReadOnly = false;
                 monthTextBox.ReadOnly = false;
+            }
+        }
+
+        private void saleQtyTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void priceTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
             }
         }
     }

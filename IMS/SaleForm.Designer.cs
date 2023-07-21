@@ -209,6 +209,7 @@
             this.saleNumberTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.saleNumberTextBox.Location = new System.Drawing.Point(117, 18);
             this.saleNumberTextBox.Name = "saleNumberTextBox";
+            this.saleNumberTextBox.ReadOnly = true;
             this.saleNumberTextBox.Size = new System.Drawing.Size(90, 22);
             this.saleNumberTextBox.TabIndex = 0;
             // 
@@ -316,6 +317,7 @@
             this.saleQtyTextBox.TabIndex = 6;
             this.saleQtyTextBox.TextChanged += new System.EventHandler(this.saleQtyTextBox_TextChanged);
             this.saleQtyTextBox.Enter += new System.EventHandler(this.saleQtyTextBox_Enter);
+            this.saleQtyTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.saleQtyTextBox_KeyPress);
             this.saleQtyTextBox.Leave += new System.EventHandler(this.saleQtyTextBox_Leave);
             // 
             // label4
@@ -336,6 +338,7 @@
             this.priceTextBox.Size = new System.Drawing.Size(98, 22);
             this.priceTextBox.TabIndex = 7;
             this.priceTextBox.TextChanged += new System.EventHandler(this.priceTextBox_TextChanged);
+            this.priceTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.priceTextBox_KeyPress);
             this.priceTextBox.Leave += new System.EventHandler(this.priceTextBox_Leave);
             // 
             // label5
