@@ -209,9 +209,9 @@
             this.saleNumberTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.saleNumberTextBox.Location = new System.Drawing.Point(117, 18);
             this.saleNumberTextBox.Name = "saleNumberTextBox";
-            this.saleNumberTextBox.ReadOnly = true;
             this.saleNumberTextBox.Size = new System.Drawing.Size(90, 22);
             this.saleNumberTextBox.TabIndex = 0;
+            this.saleNumberTextBox.Leave += new System.EventHandler(this.saleNumberTextBox_Leave);
             // 
             // cnicTextBox
             // 

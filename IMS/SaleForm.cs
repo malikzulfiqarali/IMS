@@ -656,5 +656,70 @@ namespace IMS
                 e.Handled = true;
             }
         }
+
+        private void saleNumberTextBox_Leave(object sender, EventArgs e)
+        {
+            connection.Open();
+            SqlTransaction transaction = null;
+            int ID=0;
+            try
+            {
+                
+                if (!string.IsNullOrEmpty(saleNumberTextBox.Text.Trim()))
+                {
+                    
+                    transaction = connection.BeginTransaction();
+                    string query = "select distinct (SaleCode),Date,CustomerID,SaleCategory from Sale where SaleCode=@SaleCode";
+                    SqlCommand cmd = new SqlCommand(query,connection,transaction);
+                    cmd.Parameters.AddWithValue("@SaleCode",  saleNumberTextBox.Text.Trim());
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Rows.Count>0)
+                    {
+                        invoiceDateTimePicker.Value = (DateTime)dt.Rows[0][1];
+                        ID = Convert.ToInt32( dt.Rows[0][2]);
+                        saleCategoryComboBox.SelectedItem = dt.Rows[0][3];
+
+                    }
+                    else
+                    {
+                        connection.Close();
+                        addNewButton.PerformClick();
+                        return;
+                        
+                    }
+                    
+                    SqlCommand cmd1 = new SqlCommand("[dbo].[SP_SEARCH_DATA_BASED_ON_ID]", connection,transaction);
+                    cmd1.CommandType = CommandType.StoredProcedure;
+                    cmd1.Parameters.AddWithValue("@CustomerID",ID);
+                    cmd1.Parameters.AddWithValue("@VID",ID);
+                    cmd1.Parameters.AddWithValue("@EID",ID);
+                    SqlDataAdapter da1 = new SqlDataAdapter(cmd1);
+                    DataTable dt1 = new DataTable();
+                    da1.Fill(dt1);
+                    if (dt1.Rows.Count>0)
+                    {
+                        customerCodeTextBox.Text= dt1.Rows[0][0].ToString();
+                        customerNameTextBox.Text = dt1.Rows[0][1].ToString();
+                        fatherTextBox.Text = dt1.Rows[0][2].ToString();
+                        cnicTextBox.Text = dt1.Rows[0][3].ToString();
+                        mobileTextBox.Text = dt1.Rows[0][4].ToString();
+                        addressTextBox.Text = dt1.Rows[0][5].ToString();
+                    }
+                    
+
+                }
+                transaction.Commit();
+                connection.Close();
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+                transaction.Rollback();
+            }
+        }
     }
 }
