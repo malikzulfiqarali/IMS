@@ -64,6 +64,7 @@ namespace IMS
             {
                 comboBox.SelectedIndex = -1;
             }
+            productDataGridView.DataSource = null;
             productDataGridView.Rows.Clear();
         }
 
@@ -659,6 +660,8 @@ namespace IMS
 
         private void saleNumberTextBox_Leave(object sender, EventArgs e)
         {
+            productDataGridView.DataSource = null;
+            productDataGridView.Rows.Clear();
             connection.Open();
             SqlTransaction transaction = null;
             int ID=0;
@@ -707,7 +710,41 @@ namespace IMS
                         mobileTextBox.Text = dt1.Rows[0][4].ToString();
                         addressTextBox.Text = dt1.Rows[0][5].ToString();
                     }
-                    
+                    SqlCommand cmd2 = new SqlCommand("select s.ProductID as PID,p.ProductDescription as Product,p.Quantity as CurrentStock,s.Qty as SoldStock,s.Price as Rate,SaleAmount as Amount from Sale s join Product p on s.ProductID=p.ProductID where SaleCode=@SaleCode", connection,transaction);
+                    cmd2.Parameters.AddWithValue("@SaleCode", saleNumberTextBox.Text.Trim());
+                    SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+                    DataTable dt2 = new DataTable();
+                    da2.Fill(dt2);
+                    productDataGridView.Rows.Clear();
+                    productDataGridView.AutoGenerateColumns = false;
+                    productDataGridView.DataSource = null;
+                    productDataGridView.DataSource = dt2;
+                    SqlCommand cmd3 = new SqlCommand("SELECT DISTINCT TotalInvoiceAmount,Advance,BalanceAmount,Months,InstallmentAmount FROM Sale where SaleCode=@SaleCode", connection,transaction);
+                    cmd3.Parameters.AddWithValue("@SaleCode", saleNumberTextBox.Text.Trim());
+                    SqlDataAdapter da3 = new SqlDataAdapter(cmd3);
+                    DataTable dt3 = new DataTable();
+                    da3.Fill(dt3);
+                    if (dt3.Rows.Count>0)
+                    {
+                        foreach (DataRow row in dt3.Rows)
+                        {
+                            decimal? TotalInvoiceValue = row.Field<decimal?>("TotalInvoiceAmount");
+                            totalTextBox.Text = TotalInvoiceValue.HasValue ? TotalInvoiceValue.Value.ToString() :"";
+                            decimal? Advance = row.Field<decimal?>("Advance");
+                            advanceTextBox.Text = Advance.HasValue ? Advance.Value.ToString() : "";
+                            decimal? Balance = row.Field<decimal?>("BalanceAmount");
+                            balanceTextBox.Text = Balance.HasValue ? Balance.Value.ToString() : "";
+                            int? Month = row.Field<int?>("Months");
+                            monthTextBox.Text = Month.HasValue ? Month.Value.ToString() : "";
+                            decimal? Installment = row.Field<decimal?>("InstallmentAmount");
+                            installmentTextBox.Text = Installment.HasValue ? Installment.Value.ToString() : "";
+                        }
+                        //totalTextBox.Text = Convert.ToDecimal(dt3.Rows[0][0]).ToString();
+                        //advanceTextBox.Text = Convert.ToDecimal( dt3.Rows[0][1]).ToString();
+                        //balanceTextBox.Text = Convert.ToDecimal( dt3.Rows[0][2]).ToString();
+                        //installmentTextBox.Text = Convert.ToDecimal( dt3.Rows[0][3]).ToString();
+                    }
+
 
                 }
                 transaction.Commit();
@@ -719,6 +756,10 @@ namespace IMS
 
                 MessageBox.Show(ex.Message);
                 transaction.Rollback();
+            }
+            finally
+            {
+                connection.Close();
             }
         }
     }
