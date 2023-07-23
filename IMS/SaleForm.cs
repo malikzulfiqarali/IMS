@@ -16,7 +16,7 @@ namespace IMS
     public partial class SaleForm : Form
     {
         SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
-        SqlTransaction transaction2 = null;
+        
         public SaleForm()
         {
             InitializeComponent();
