@@ -75,6 +75,7 @@ namespace IMS
             {
                 UpdateBackQuantityInProductTable(); 
             }
+            saveButton.Enabled = true;
             ClearAllData();
             GetMaxNumber();
             AddButtonEnabled();
@@ -668,6 +669,16 @@ namespace IMS
             try
             {
                 
+                SqlDataAdapter da4 = new SqlDataAdapter("select distinct max(SaleCode) from Sale", connection);
+                DataTable dt4 = new DataTable();
+                da4.Fill(dt4);
+                int maxNumber = Convert.ToInt32(dt4.Rows[0][0]);
+                int invoiceNumber = Convert.ToInt32( saleNumberTextBox.Text.Trim());
+                if (maxNumber>=invoiceNumber)
+                {
+                    saveButton.Enabled = false;
+                }
+
                 if (!string.IsNullOrEmpty(saleNumberTextBox.Text.Trim()))
                 {
                     
