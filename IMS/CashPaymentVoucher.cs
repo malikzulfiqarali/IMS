@@ -380,7 +380,7 @@ namespace IMS
             try
             {
                 transaction = connection.BeginTransaction();
-                string query = "UPDATE TransactionTable SET Narration=@Narration,VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,VoucherCategoryCode=@VoucherCategoryCode,Description=@Description,Debit=@Debit,Remarks=@Remarks where VoucherType=@VoucherType and VoucherCode=@VoucherCode";
+                string query = "UPDATE TransactionTable SET Narration=@Narration,VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,VoucherCategoryCode=@VoucherCategoryCode,Description=@Description,Debit=@Debit,Remarks=@Remarks where VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID!='"+cashCode+"'";
                 foreach (DataGridViewRow row in cpvDataGridView.Rows)
                 {
                     if (row.IsNewRow)
