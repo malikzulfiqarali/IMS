@@ -380,13 +380,13 @@ namespace IMS
             try
             {
                 transaction = connection.BeginTransaction();
-                string query = "UPDATE TransactionTable SET Narration=@Narration,VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,VoucherCategoryCode=@VoucherCategoryCode,Description=@Description,Debit=@Debit,Remarks=@Remarks where VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID!='"+cashCode+"'";
+                string query = "UPDATE TransactionTable SET    Narration=@Narration,VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,VoucherCategoryCode=@VoucherCategoryCode,Description=@Description,Debit=@Debit,Remarks=@Remarks where VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID!='" + cashCode+"'";
                 foreach (DataGridViewRow row in cpvDataGridView.Rows)
                 {
                     if (row.IsNewRow)
                         continue;
                     SqlCommand cmd = new SqlCommand(query,connection,transaction);
-                    cmd.Parameters.AddWithValue("@Narration",narrationTextBox.Text.Trim());
+                    cmd.Parameters.AddWithValue("@Narration", narrationTextBox.Text.Trim());
                     cmd.Parameters.AddWithValue("@VoucherCategoryID", row.Cells["Code"].Value);
                     cmd.Parameters.AddWithValue("@VoucherCategory", categoryComboBox.SelectedItem);
                     cmd.Parameters.AddWithValue("@VoucherCategoryCode", row.Cells["PartyCode"].Value);
