@@ -380,19 +380,37 @@ namespace IMS
             try
             {
                 transaction = connection.BeginTransaction();
-                string query = "UPDATE TransactionTable SET    Narration=@Narration,VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,VoucherCategoryCode=@VoucherCategoryCode,Description=@Description,Debit=@Debit,Remarks=@Remarks where VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID!='" + cashCode+"'";
+                string query2 = "SELECT Narration,VoucherCategoryID,VoucherCategory,VoucherCategoryCode,Description,Debit,Remarks FROM TransactionTable where VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID!='" + cashCode + "'";
+                string query = "UPDATE TransactionTable SET  Narration=@Narration,VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,VoucherCategoryCode=@VoucherCategoryCode,Description=@Description,Debit=@Debit,Remarks=@Remarks where VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID!='" + cashCode+"'";
                 foreach (DataGridViewRow row in cpvDataGridView.Rows)
                 {
                     if (row.IsNewRow)
                         continue;
+                    SqlCommand command = new SqlCommand(query2, connection,transaction);
+                    command.Parameters.AddWithValue("@VoucherType", cpvLabel.Text.Trim());
+                    command.Parameters.AddWithValue("@VoucherCode", cpvTextBox.Text.Trim());
+                    SqlDataAdapter da = new SqlDataAdapter(command);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    string narration = dt.Rows[0][0].ToString();
+                    int VID = Convert.ToInt32(dt.Rows[0][1]);
+                    string VCat = dt.Rows[0][2].ToString();
+                    string VCatCode = dt.Rows[0][3].ToString();
+                    string Description = dt.Rows[0][4].ToString();
+                    string amount = Convert.ToDecimal( dt.Rows[0][5]).ToString();
+                    string Remarks = dt.Rows[0][6].ToString();
+                    
+
+
                     SqlCommand cmd = new SqlCommand(query,connection,transaction);
-                    cmd.Parameters.AddWithValue("@Narration", narrationTextBox.Text.Trim());
-                    cmd.Parameters.AddWithValue("@VoucherCategoryID", row.Cells["Code"].Value);
-                    cmd.Parameters.AddWithValue("@VoucherCategory", categoryComboBox.SelectedItem);
-                    cmd.Parameters.AddWithValue("@VoucherCategoryCode", row.Cells["PartyCode"].Value);
-                    cmd.Parameters.AddWithValue("@Description", row.Cells["Description"].Value);
-                    cmd.Parameters.AddWithValue("@Debit", row.Cells["Amount"].Value);
-                    cmd.Parameters.AddWithValue("@Remarks", row.Cells["Remarks"].Value);
+                    cmd.Parameters.AddWithValue("@Narration", narration);
+                    cmd.Parameters.AddWithValue("@VoucherCategoryID", VID);
+                    cmd.Parameters.AddWithValue("@VoucherCategory", VCat);
+                    cmd.Parameters.AddWithValue("@VoucherCategoryCode", VCatCode);
+                    cmd.Parameters.AddWithValue("@Description", Description);
+                    cmd.Parameters.AddWithValue("@Debit", amount);
+                    cmd.Parameters.AddWithValue("@Remarks", Remarks);
                     cmd.Parameters.AddWithValue("@VoucherType", cpvLabel.Text.Trim());
                     cmd.Parameters.AddWithValue("@VoucherCode", cpvTextBox.Text.Trim());
                     cmd.ExecuteNonQuery();
