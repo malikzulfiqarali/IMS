@@ -62,6 +62,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.crvLabel = new System.Windows.Forms.Label();
             this.crvTextBox = new System.Windows.Forms.TextBox();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.cpvDataGridView)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -268,9 +269,10 @@
             this.PartyCode,
             this.Amount,
             this.Remarks,
-            this.RemoveColumnButton});
+            this.RemoveColumnButton,
+            this.ID});
             this.cpvDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
-            this.cpvDataGridView.Location = new System.Drawing.Point(42, 291);
+            this.cpvDataGridView.Location = new System.Drawing.Point(31, 288);
             this.cpvDataGridView.MultiSelect = false;
             this.cpvDataGridView.Name = "cpvDataGridView";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -390,6 +392,11 @@
             this.crvTextBox.Size = new System.Drawing.Size(100, 29);
             this.crvTextBox.TabIndex = 1;
             // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            // 
             // CashPaymentVoucher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -467,5 +474,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label crvLabel;
         private System.Windows.Forms.TextBox crvTextBox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
     }
 }
