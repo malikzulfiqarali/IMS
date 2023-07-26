@@ -405,7 +405,7 @@ namespace IMS
                     string Description = row.Cells["Description"].Value.ToString();
                     decimal amount =Convert.ToDecimal( row.Cells["Amount"].Value);
                     string Remarks = row.Cells["Remarks"].Value.ToString();
-                    int  ID = row.Cells["ID"].Value.ToString()==string.Empty? Convert.ToInt32(Id): Convert.ToInt32(row.Cells["ID"].Value);
+                    int ? ID = row.Cells["ID"].Value!=null? (int?)Convert.ToInt32(row.Cells["ID"].Value):(int?) Convert.ToInt32(Id) ;
 
                     if (ID==0)
                     {
