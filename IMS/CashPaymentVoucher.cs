@@ -379,7 +379,7 @@ namespace IMS
             int cashCode =Convert.ToInt32( cashCodeTextBox.Text.Trim());
             connection.Open();
             SqlTransaction transaction = null;
-            int Id = 0;
+            //int Id = 0;
             try
             {
                 transaction = connection.BeginTransaction();
@@ -405,9 +405,9 @@ namespace IMS
                     string Description = row.Cells["Description"].Value.ToString();
                     decimal amount =Convert.ToDecimal( row.Cells["Amount"].Value);
                     string Remarks = row.Cells["Remarks"].Value.ToString();
-                    int ? ID = row.Cells["ID"].Value!=null? (int?)Convert.ToInt32(row.Cells["ID"].Value):(int?) Convert.ToInt32(Id) ;
+                    int ? ID = row.Cells["ID"].Value!=null? (int?)Convert.ToInt32(row.Cells["ID"].Value):null ;
 
-                    if (ID==0)
+                    if ((int?) ID==null)
                     {
                         string query2 = "insert into TransactionTable (Narration,VoucherDate,VoucherCategoryID,VoucherCategory,VoucherCategoryCode,Description,Debit,Remarks,VoucherType,VoucherCode)values(@Narration,@VoucherDate,@VoucherCategoryID,@VoucherCategory,@VoucherCategoryCode,@Description,@Debit,@Remarks,@VoucherType,@VoucherCode)";
                         SqlCommand cmd2 = new SqlCommand(query2, connection, transaction);
