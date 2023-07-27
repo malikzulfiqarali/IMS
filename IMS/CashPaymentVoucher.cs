@@ -376,15 +376,16 @@ namespace IMS
 
         private void updateButton_Click(object sender, EventArgs e)
         {
-            int cashCode =Convert.ToInt32( cashCodeTextBox.Text.Trim());
+            int cashCode = Convert.ToInt32(cashCodeTextBox.Text.Trim());
             connection.Open();
+
             SqlTransaction transaction = null;
             //int Id = 0;
             try
             {
                 transaction = connection.BeginTransaction();
                 //string query2 = "SELECT Narration,VoucherCategoryID,VoucherCategory,VoucherCategoryCode,Description,Debit,Remarks FROM TransactionTable where VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID!='" + cashCode + "'";
-                string query = "UPDATE TransactionTable SET  Narration=@Narration,VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,VoucherCategoryCode=@VoucherCategoryCode,Description=@Description,Debit=@Debit,Remarks=@Remarks where VoucherID=@VoucherID and VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID!='" + cashCode+"'";
+                string query = "UPDATE TransactionTable SET  Narration=@Narration,VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,VoucherCategoryCode=@VoucherCategoryCode,Description=@Description,Debit=@Debit,Remarks=@Remarks where VoucherID=@VoucherID and VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID!='" + cashCode + "'";
                 foreach (DataGridViewRow row in cpvDataGridView.Rows)
                 {
                     if (row.IsNewRow)
@@ -397,17 +398,20 @@ namespace IMS
                     //da.Fill(dt);
 
 
-
+                    
                     string narration = narrationTextBox.Text.Trim();
-                    int VCode =Convert.ToInt32( row.Cells["Code"].Value);
+                    int VCode = Convert.ToInt32(row.Cells["Code"].Value);
                     string VCat = categoryComboBox.SelectedItem.ToString();
                     string VCatCode = row.Cells["PartyCode"].Value.ToString();
                     string Description = row.Cells["Description"].Value.ToString();
-                    decimal amount =Convert.ToDecimal( row.Cells["Amount"].Value);
+                    decimal amount = Convert.ToDecimal(row.Cells["Amount"].Value);
                     string Remarks = row.Cells["Remarks"].Value.ToString();
-                    int ? ID = row.Cells["ID"].Value!=null? (int?)Convert.ToInt32(row.Cells["ID"].Value):null ;
+                    int? ID = row.Cells["ID"].Value != null ? (int?)Convert.ToInt32(row.Cells["ID"].Value) : null;
+                    int id = ID ?? 0;
 
-                    if ((int?) ID==null)
+
+
+                    if (id == 0)
                     {
                         string query2 = "insert into TransactionTable (Narration,VoucherDate,VoucherCategoryID,VoucherCategory,VoucherCategoryCode,Description,Debit,Remarks,VoucherType,VoucherCode)values(@Narration,@VoucherDate,@VoucherCategoryID,@VoucherCategory,@VoucherCategoryCode,@Description,@Debit,@Remarks,@VoucherType,@VoucherCode)";
                         SqlCommand cmd2 = new SqlCommand(query2, connection, transaction);
@@ -438,12 +442,10 @@ namespace IMS
                         cmd.Parameters.AddWithValue("@VoucherCode", cpvTextBox.Text.Trim());
                         cmd.ExecuteNonQuery();
                     }
-
-                    
                 }
                 string query1 = "UPDATE TransactionTable SET Narration=@Narration,VoucherCategory=@VoucherCategory,Description=@Description,Credit=@Credit where VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID=@VoucherCategoryID";
-                SqlCommand cmd1= new SqlCommand(query1,connection,transaction);
-                cmd1.Parameters.AddWithValue("@Narration",narrationTextBox.Text.Trim());
+                SqlCommand cmd1 = new SqlCommand(query1, connection, transaction);
+                cmd1.Parameters.AddWithValue("@Narration", narrationTextBox.Text.Trim());
                 cmd1.Parameters.AddWithValue("@VoucherCategory", categoryComboBox.SelectedItem);
                 cmd1.Parameters.AddWithValue("@Description", cashLabel.Text.Trim());
                 cmd1.Parameters.AddWithValue("@Credit", creditTotalTextBox.Text.Trim());
@@ -453,16 +455,18 @@ namespace IMS
 
                 cmd1.ExecuteNonQuery();
                 transaction.Commit();
-                MessageBox.Show("Records are updated successfully","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Records are updated successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 connection.Close();
                 clearButton.PerformClick();
-                
 
-            }
+
             
+            
+            }
+
             catch (Exception ex)
             {
-                
+
                 MessageBox.Show(ex.Message);
                 transaction.Rollback();
             }
