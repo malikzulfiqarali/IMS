@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.nextButton = new System.Windows.Forms.Button();
             this.previousButton = new System.Windows.Forms.Button();
             this.lastButton = new System.Windows.Forms.Button();
@@ -43,15 +43,8 @@
             this.cashCodeTextBox = new System.Windows.Forms.TextBox();
             this.cpvTextBox = new System.Windows.Forms.TextBox();
             this.cashLabel = new System.Windows.Forms.Label();
-            this.RemoveColumnButton = new System.Windows.Forms.DataGridViewButtonColumn();
             this.firstButton = new System.Windows.Forms.Button();
-            this.Remarks = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PartyCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.VoucherID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cpvDataGridView = new System.Windows.Forms.DataGridView();
-            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dateDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.narrationTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -62,6 +55,12 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.crvLabel = new System.Windows.Forms.Label();
             this.crvTextBox = new System.Windows.Forms.TextBox();
+            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PartyCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Remarks = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RemoveColumnButton = new System.Windows.Forms.DataGridViewButtonColumn();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.cpvDataGridView)).BeginInit();
             this.panel1.SuspendLayout();
@@ -195,15 +194,6 @@
             this.cashLabel.TabIndex = 14;
             this.cashLabel.Text = "Cash";
             // 
-            // RemoveColumnButton
-            // 
-            this.RemoveColumnButton.HeaderText = "Romove";
-            this.RemoveColumnButton.Name = "RemoveColumnButton";
-            this.RemoveColumnButton.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.RemoveColumnButton.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.RemoveColumnButton.Text = "Remove";
-            this.RemoveColumnButton.UseColumnTextForButtonValue = true;
-            // 
             // firstButton
             // 
             this.firstButton.Location = new System.Drawing.Point(496, 127);
@@ -213,57 +203,18 @@
             this.firstButton.Text = ">>";
             this.firstButton.UseVisualStyleBackColor = true;
             // 
-            // Remarks
-            // 
-            this.Remarks.DataPropertyName = "Remarks";
-            this.Remarks.HeaderText = "Remarks";
-            this.Remarks.Name = "Remarks";
-            this.Remarks.Width = 350;
-            // 
-            // PartyCode
-            // 
-            this.PartyCode.DataPropertyName = "VoucherCategoryCode";
-            this.PartyCode.HeaderText = "Party Code";
-            this.PartyCode.Name = "PartyCode";
-            // 
-            // Description
-            // 
-            this.Description.DataPropertyName = "Description";
-            this.Description.HeaderText = "Description";
-            this.Description.Name = "Description";
-            this.Description.Width = 345;
-            // 
-            // Code
-            // 
-            this.Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Code.DataPropertyName = "VoucherCategoryID";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Code.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Code.HeaderText = "Code";
-            this.Code.Name = "Code";
-            this.Code.Width = 76;
-            // 
-            // VoucherID
-            // 
-            this.VoucherID.DataPropertyName = "VoucherID";
-            this.VoucherID.HeaderText = "ID";
-            this.VoucherID.Name = "VoucherID";
-            this.VoucherID.Visible = false;
-            // 
             // cpvDataGridView
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.cpvDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cpvDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.cpvDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.cpvDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.VoucherID,
             this.Code,
             this.Description,
             this.PartyCode,
@@ -288,12 +239,6 @@
             this.cpvDataGridView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.cpvDataGridView_EditingControlShowing);
             this.cpvDataGridView.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.cpvDataGridView_RowLeave);
             this.cpvDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cpvDataGridView_KeyDown);
-            // 
-            // Amount
-            // 
-            this.Amount.DataPropertyName = "Credit";
-            this.Amount.HeaderText = "Amount";
-            this.Amount.Name = "Amount";
             // 
             // dateDateTimePicker
             // 
@@ -392,8 +337,55 @@
             this.crvTextBox.Size = new System.Drawing.Size(100, 29);
             this.crvTextBox.TabIndex = 1;
             // 
+            // Code
+            // 
+            this.Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Code.DataPropertyName = "VoucherCategoryID";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Code.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Code.HeaderText = "Code";
+            this.Code.Name = "Code";
+            this.Code.Width = 76;
+            // 
+            // Description
+            // 
+            this.Description.DataPropertyName = "Description";
+            this.Description.HeaderText = "Description";
+            this.Description.Name = "Description";
+            this.Description.Width = 345;
+            // 
+            // PartyCode
+            // 
+            this.PartyCode.DataPropertyName = "VoucherCategoryCode";
+            this.PartyCode.HeaderText = "Party Code";
+            this.PartyCode.Name = "PartyCode";
+            // 
+            // Amount
+            // 
+            this.Amount.DataPropertyName = "Credit";
+            this.Amount.HeaderText = "Amount";
+            this.Amount.Name = "Amount";
+            // 
+            // Remarks
+            // 
+            this.Remarks.DataPropertyName = "Remarks";
+            this.Remarks.HeaderText = "Remarks";
+            this.Remarks.Name = "Remarks";
+            this.Remarks.Width = 350;
+            // 
+            // RemoveColumnButton
+            // 
+            this.RemoveColumnButton.HeaderText = "Romove";
+            this.RemoveColumnButton.Name = "RemoveColumnButton";
+            this.RemoveColumnButton.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.RemoveColumnButton.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.RemoveColumnButton.Text = "Remove";
+            this.RemoveColumnButton.UseColumnTextForButtonValue = true;
+            // 
             // ID
             // 
+            this.ID.DataPropertyName = "VoucherID";
             this.ID.HeaderText = "ID";
             this.ID.Name = "ID";
             // 
@@ -455,15 +447,8 @@
         private System.Windows.Forms.TextBox cashCodeTextBox;
         private System.Windows.Forms.TextBox cpvTextBox;
         private System.Windows.Forms.Label cashLabel;
-        private System.Windows.Forms.DataGridViewButtonColumn RemoveColumnButton;
         private System.Windows.Forms.Button firstButton;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Remarks;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PartyCode;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Description;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Code;
-        private System.Windows.Forms.DataGridViewTextBoxColumn VoucherID;
         public System.Windows.Forms.DataGridView cpvDataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
         private System.Windows.Forms.DateTimePicker dateDateTimePicker;
         private System.Windows.Forms.TextBox narrationTextBox;
         private System.Windows.Forms.Label label5;
@@ -474,6 +459,12 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label crvLabel;
         private System.Windows.Forms.TextBox crvTextBox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Code;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Description;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PartyCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Remarks;
+        private System.Windows.Forms.DataGridViewButtonColumn RemoveColumnButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
     }
 }

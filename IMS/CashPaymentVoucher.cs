@@ -398,16 +398,18 @@ namespace IMS
                     if (!row.IsNewRow)
                     {
                         int ID = Convert.ToInt32(row.Cells["ID"].Value);
-                        string narration = narrationTextBox.Text.Trim();
-                        int VCode = Convert.ToInt32(row.Cells["Code"].Value);
-                        string VCat = categoryComboBox.SelectedItem.ToString();
-                        string VCatCode = row.Cells["PartyCode"].Value.ToString()??string.Empty;
-                        string Description = row.Cells["Description"].Value.ToString()??string.Empty;
-                        decimal amount = Convert.ToDecimal(row.Cells["Amount"].Value);
-                        string Remarks = row.Cells["Remarks"].Value.ToString();
+                        
 
                         if (ID!=0)
                         {
+                            string narration = narrationTextBox.Text.Trim();
+                            int VCode = Convert.ToInt32(row.Cells["Code"].Value);
+                            string VCat = categoryComboBox.SelectedItem.ToString();
+                            string VCatCode =row.Cells["PartyCode"].Value.ToString();
+                            string Description = row.Cells["Description"].Value.ToString();
+                            decimal amount = Convert.ToDecimal(row.Cells["Amount"].Value);
+                            string Remarks = row.Cells["Remarks"].Value.ToString();
+
                             string query = "UPDATE TransactionTable SET  Narration=@Narration,VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,VoucherCategoryCode=@VoucherCategoryCode,Description=@Description,Debit=@Debit,Remarks=@Remarks where VoucherID=@VoucherID and VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID!='" + cashCode + "'";
                             SqlCommand cmd = new SqlCommand(query, connection, transaction);
                             cmd.Parameters.AddWithValue("@VoucherID", ID);
@@ -427,17 +429,18 @@ namespace IMS
 
                         if (ID == 0)
                         {
+                            
 
                             string query2 = "insert into TransactionTable (Narration,VoucherDate,VoucherCategoryID,VoucherCategory,VoucherCategoryCode,Description,Debit,Remarks,VoucherType,VoucherCode)values(@Narration,@VoucherDate,@VoucherCategoryID,@VoucherCategory,@VoucherCategoryCode,@Description,@Debit,@Remarks,@VoucherType,@VoucherCode)";
                             SqlCommand cmd2 = new SqlCommand(query2, connection, transaction);
-                            cmd2.Parameters.AddWithValue("@Narration", narration);
+                            cmd2.Parameters.AddWithValue("@Narration", narrationTextBox.Text.Trim());
                             cmd2.Parameters.AddWithValue("@VoucherDate", dateDateTimePicker.Value);
-                            cmd2.Parameters.AddWithValue("@VoucherCategoryID", VCode);
-                            cmd2.Parameters.AddWithValue("@VoucherCategory", VCat);
-                            cmd2.Parameters.AddWithValue("@VoucherCategoryCode", VCatCode);
-                            cmd2.Parameters.AddWithValue("@Description", Description);
-                            cmd2.Parameters.AddWithValue("@Debit", amount);
-                            cmd2.Parameters.AddWithValue("@Remarks", Remarks);
+                            cmd2.Parameters.AddWithValue("@VoucherCategoryID", Convert.ToInt32(row.Cells["Code"].Value));
+                            cmd2.Parameters.AddWithValue("@VoucherCategory", categoryComboBox.SelectedItem.ToString());
+                            cmd2.Parameters.AddWithValue("@VoucherCategoryCode", row.Cells["PartyCode"].Value??DBNull.Value);
+                            cmd2.Parameters.AddWithValue("@Description", row.Cells["Description"].Value ?? DBNull.Value);
+                            cmd2.Parameters.AddWithValue("@Debit", Convert.ToDecimal(row.Cells["Amount"].Value));
+                            cmd2.Parameters.AddWithValue("@Remarks", row.Cells["Remarks"].Value ?? DBNull.Value);
                             cmd2.Parameters.AddWithValue("@VoucherType", cpvLabel.Text.Trim());
                             cmd2.Parameters.AddWithValue("@VoucherCode", cpvTextBox.Text.Trim());
                             cmd2.ExecuteNonQuery();
