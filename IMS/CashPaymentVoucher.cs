@@ -19,6 +19,7 @@ namespace IMS
         public CashPaymentVoucher()
         {
             InitializeComponent();
+            cpvDataGridView.AllowUserToAddRows = true;
         }
 
         private void closeButton_Click(object sender, EventArgs e)
@@ -385,64 +386,21 @@ namespace IMS
             {
                 transaction = connection.BeginTransaction();
                 //string query2 = "SELECT Narration,VoucherCategoryID,VoucherCategory,VoucherCategoryCode,Description,Debit,Remarks FROM TransactionTable where VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID!='" + cashCode + "'";
-                string query = "UPDATE TransactionTable SET  Narration=@Narration,VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,VoucherCategoryCode=@VoucherCategoryCode,Description=@Description,Debit=@Debit,Remarks=@Remarks where VoucherID=@VoucherID and VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID!='" + cashCode + "'";
                 foreach (DataGridViewRow row in cpvDataGridView.Rows)
                 {
-                    if (row.IsNewRow)
-                        continue;
-                    //SqlCommand command = new SqlCommand(query2, connection,transaction);
-                    //command.Parameters.AddWithValue("@VoucherType", cpvLabel.Text.Trim());
-                    //command.Parameters.AddWithValue("@VoucherCode", cpvTextBox.Text.Trim());
-                    //SqlDataAdapter da = new SqlDataAdapter(command);
-                    //DataTable dt = new DataTable();
-                    //da.Fill(dt);
 
-
-                    
-                    string narration = narrationTextBox.Text.Trim();
-                    int VCode = Convert.ToInt32(row.Cells["Code"].Value);
-                    string VCat = categoryComboBox.SelectedItem.ToString();
-                    string VCatCode = row.Cells["PartyCode"].Value.ToString();
-                    string Description = row.Cells["Description"].Value.ToString();
-                    decimal amount = Convert.ToDecimal(row.Cells["Amount"].Value);
-                    string Remarks = row.Cells["Remarks"].Value.ToString();
-                    int? ID = row.Cells["ID"].Value != null ? (int?)Convert.ToInt32(row.Cells["ID"].Value) : null;
-                    int id = ID ?? 0;
-
-
-
-                    if (id == 0)
+                    if (!row.IsNewRow)
                     {
+                        int ID = Convert.ToInt32(row.Cells["ID"].Value);
+                        string narration = narrationTextBox.Text.Trim();
+                        int VCode = Convert.ToInt32(row.Cells["Code"].Value);
+                        string VCat = categoryComboBox.SelectedItem.ToString();
+                        string VCatCode = row.Cells["PartyCode"].Value.ToString();
+                        string Description = row.Cells["Description"].Value.ToString();
+                        decimal amount = Convert.ToDecimal(row.Cells["Amount"].Value);
+                        string Remarks = row.Cells["Remarks"].Value.ToString();
 
-                        foreach (DataGridViewRow drow in cpvDataGridView.Rows)
-                        {
-                            if (!drow.IsNewRow)
-                            {
-                                string narrationNew = narrationTextBox.Text.Trim();
-                                int VCodeNew = Convert.ToInt32(drow.Cells["Code"].Value);
-                                string VCatNew = categoryComboBox.SelectedItem.ToString();
-                                string VCatCodeNew = drow.Cells["PartyCode"].Value.ToString();
-                                string DescriptionNew = drow.Cells["Description"].Value.ToString();
-                                decimal amountNew = Convert.ToDecimal(drow.Cells["Amount"].Value);
-                                string RemarksNew = drow.Cells["Remarks"].Value.ToString();
-
-                                string query2 = "insert into TransactionTable (Narration,VoucherDate,VoucherCategoryID,VoucherCategory,VoucherCategoryCode,Description,Debit,Remarks,VoucherType,VoucherCode)values(@Narration,@VoucherDate,@VoucherCategoryID,@VoucherCategory,@VoucherCategoryCode,@Description,@Debit,@Remarks,@VoucherType,@VoucherCode)";
-                                SqlCommand cmd2 = new SqlCommand(query2, connection, transaction);
-                                cmd2.Parameters.AddWithValue("@Narration", narrationNew);
-                                cmd2.Parameters.AddWithValue("@VoucherDate", dateDateTimePicker.Value);
-                                cmd2.Parameters.AddWithValue("@VoucherCategoryID", VCodeNew);
-                                cmd2.Parameters.AddWithValue("@VoucherCategory", VCatNew);
-                                cmd2.Parameters.AddWithValue("@VoucherCategoryCode", VCatCodeNew);
-                                cmd2.Parameters.AddWithValue("@Description", DescriptionNew);
-                                cmd2.Parameters.AddWithValue("@Debit", amountNew);
-                                cmd2.Parameters.AddWithValue("@Remarks", RemarksNew);
-                                cmd2.Parameters.AddWithValue("@VoucherType", cpvLabel.Text.Trim());
-                                cmd2.Parameters.AddWithValue("@VoucherCode", cpvTextBox.Text.Trim());  
-                            }  
-                        }
-                    }
-                    else
-                    {
+                        string query = "UPDATE TransactionTable SET  Narration=@Narration,VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,VoucherCategoryCode=@VoucherCategoryCode,Description=@Description,Debit=@Debit,Remarks=@Remarks where VoucherID=@VoucherID and VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID!='" + cashCode + "'";
                         SqlCommand cmd = new SqlCommand(query, connection, transaction);
                         cmd.Parameters.AddWithValue("@VoucherID", ID);
                         cmd.Parameters.AddWithValue("@Narration", narration);
@@ -456,6 +414,28 @@ namespace IMS
                         cmd.Parameters.AddWithValue("@VoucherType", cpvLabel.Text.Trim());
                         cmd.Parameters.AddWithValue("@VoucherCode", cpvTextBox.Text.Trim());
                         cmd.ExecuteNonQuery();
+
+
+                        if (ID == 0)
+                        {
+
+                            string query2 = "insert into TransactionTable (Narration,VoucherDate,VoucherCategoryID,VoucherCategory,VoucherCategoryCode,Description,Debit,Remarks,VoucherType,VoucherCode)values(@Narration,@VoucherDate,@VoucherCategoryID,@VoucherCategory,@VoucherCategoryCode,@Description,@Debit,@Remarks,@VoucherType,@VoucherCode)";
+                            SqlCommand cmd2 = new SqlCommand(query2, connection, transaction);
+                            cmd2.Parameters.AddWithValue("@Narration", narration);
+                            cmd2.Parameters.AddWithValue("@VoucherDate", dateDateTimePicker.Value);
+                            cmd2.Parameters.AddWithValue("@VoucherCategoryID", VCode);
+                            cmd2.Parameters.AddWithValue("@VoucherCategory", VCat);
+                            cmd2.Parameters.AddWithValue("@VoucherCategoryCode", VCatCode);
+                            cmd2.Parameters.AddWithValue("@Description", Description);
+                            cmd2.Parameters.AddWithValue("@Debit", amount);
+                            cmd2.Parameters.AddWithValue("@Remarks", Remarks);
+                            cmd2.Parameters.AddWithValue("@VoucherType", cpvLabel.Text.Trim());
+                            cmd2.Parameters.AddWithValue("@VoucherCode", cpvTextBox.Text.Trim());
+                            cmd2.ExecuteNonQuery();
+
+
+                        }
+
                     }
                 }
                 string query1 = "UPDATE TransactionTable SET Narration=@Narration,VoucherCategory=@VoucherCategory,Description=@Description,Credit=@Credit where VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID=@VoucherCategoryID";
