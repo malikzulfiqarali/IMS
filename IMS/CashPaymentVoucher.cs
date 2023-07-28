@@ -261,6 +261,14 @@ namespace IMS
             {
                 if (cpvDataGridView.Columns[e.ColumnIndex].Name == "RemoveColumnButton")
                 {
+                   
+                    int id = Convert.ToInt32( cpvDataGridView.Rows[e.RowIndex].Cells["ID"].Value);
+                    connection.Open();
+                    string query = "DELETE from TransactionTable WHERE VoucherID=@VoucherID ";
+                    SqlCommand cmd = new SqlCommand(query,connection);
+                    cmd.Parameters.AddWithValue("@VoucherID", id);
+                    cmd.ExecuteNonQuery();
+                    connection.Close();
                     cpvDataGridView.Rows.RemoveAt(e.RowIndex);
                 }
             }
