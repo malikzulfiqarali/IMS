@@ -180,13 +180,14 @@ namespace IMS
         private void cpvDataGridView_CellLeave(object sender, DataGridViewCellEventArgs e)
         {
 
-            if (cpvDataGridView.CurrentCell.Value==DBNull.Value)
+            if (cpvDataGridView.CurrentRow.Cells["Code"].Value==null || Convert.ToInt32( cpvDataGridView.CurrentRow.Cells["Code"].Value.ToString().Trim())==0)
             {
                 cpvDataGridView.CurrentRow.Cells["Code"].Value = FetchDataForm.SetCode;
                 cpvDataGridView.CurrentRow.Cells["Description"].Value = FetchDataForm.SetName;
                 creditTotalTextBox.Text = getCreditTotal().ToString(); 
             }
             
+
         }
 
         private void cpvDataGridView_RowLeave(object sender, DataGridViewCellEventArgs e)
