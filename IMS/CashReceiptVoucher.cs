@@ -376,10 +376,13 @@ namespace IMS
 
         private void crvDataGridView_CellLeave(object sender, DataGridViewCellEventArgs e)
         {
-            crvDataGridView.CurrentRow.Cells["Code"].Value = FetchDataForm.SetCode;
-            crvDataGridView.CurrentRow.Cells["Description"].Value = FetchDataForm.SetName;
-            creditTotalTextBox.Text = getCreditTotal().ToString();
+            if (crvDataGridView.CurrentRow.Cells["Code"].Value==null || Convert.ToInt32(crvDataGridView.CurrentRow.Cells["Code"].Value.ToString().Trim())==0)
+            {
+                crvDataGridView.CurrentRow.Cells["Code"].Value = FetchDataForm.SetCode;
+                crvDataGridView.CurrentRow.Cells["Description"].Value = FetchDataForm.SetName;
+                creditTotalTextBox.Text = getCreditTotal().ToString();
 
+            }
         }
         private void updateButton_Click(object sender, EventArgs e)
         {
