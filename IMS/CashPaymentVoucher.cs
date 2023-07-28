@@ -401,8 +401,8 @@ namespace IMS
                         string narration = narrationTextBox.Text.Trim();
                         int VCode = Convert.ToInt32(row.Cells["Code"].Value);
                         string VCat = categoryComboBox.SelectedItem.ToString();
-                        string VCatCode = row.Cells["PartyCode"].Value.ToString();
-                        string Description = row.Cells["Description"].Value.ToString();
+                        string VCatCode = row.Cells["PartyCode"].Value.ToString()??string.Empty;
+                        string Description = row.Cells["Description"].Value.ToString()??string.Empty;
                         decimal amount = Convert.ToDecimal(row.Cells["Amount"].Value);
                         string Remarks = row.Cells["Remarks"].Value.ToString();
 
