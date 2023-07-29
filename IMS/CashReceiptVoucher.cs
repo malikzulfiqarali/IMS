@@ -58,6 +58,7 @@ namespace IMS
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            SqlTransaction sqlTransaction = null;
             if (crvTextBox.Text.Trim() == string.Empty)
             {
                 MessageBox.Show("Cash Receipt Voucher Field is require", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -104,7 +105,7 @@ namespace IMS
 
                         if (row.IsNewRow)
                             continue;
-                        SqlCommand cmd = new SqlCommand("SP_INSERT_VOUCHER", connection);
+                        SqlCommand cmd = new SqlCommand("SP_INSERT_VOUCHER", connection,sqlTransaction);
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@VoucherCode", crvTextBox.Text);
                         cmd.Parameters.AddWithValue("@VoucherType", crvLabel.Text.Trim());
@@ -121,20 +122,17 @@ namespace IMS
                     }
 
 
-                    string creditTotalValue = creditTotalTextBox.Text ?? null;
-                    string column1 = crvDataGridView.Rows[0].Cells["Code"].Value.ToString() ?? null;
-                    string column2 = crvDataGridView.Rows[0].Cells["Description"].Value.ToString() ?? null;
-                    string column3 = crvDataGridView.Rows[0].Cells["Amount"].Value.ToString() ?? null;
+                   
 
-
-                    if (string.IsNullOrEmpty(creditTotalValue) && string.IsNullOrEmpty(column1) && string.IsNullOrEmpty(column2) && string.IsNullOrEmpty(column3))
-                    //if(crvDataGridView==null)
+                    if (crvDataGridView.Rows.Count==0)
+                    
                     {
                         MessageBox.Show("Please enter records in DataGridView", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
-                        SqlCommand command = new SqlCommand("[SP_INSERT_VOUCHER_DEBIT]", connection);
+                        decimal Total = getCreditTotal();
+                        SqlCommand command = new SqlCommand("[SP_INSERT_VOUCHER_DEBIT]", connection,sqlTransaction);
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@VoucherCode", crvTextBox.Text);
                         command.Parameters.AddWithValue("@VoucherType", crvLabel.Text.Trim());
@@ -143,10 +141,11 @@ namespace IMS
                         command.Parameters.AddWithValue("@VoucherCategoryID", cashCodeTextBox.Text.Trim());
                         command.Parameters.AddWithValue("@VoucherCategory", categoryComboBox.SelectedItem.ToString().Trim());
                         command.Parameters.AddWithValue("@Description", cashLabel.Text.Trim());
-                        command.Parameters.AddWithValue("@Debit", Convert.ToDecimal(creditTotalTextBox.Text));
+                        command.Parameters.AddWithValue("@Debit", Total);
                         int success = command.ExecuteNonQuery();
 
 
+                        sqlTransaction.Commit();
 
                         if (success > 0)
                         {
@@ -170,6 +169,7 @@ namespace IMS
             {
 
                 MessageBox.Show(ex.Message);
+                sqlTransaction.Rollback();
             }
             finally
             {
@@ -195,9 +195,9 @@ namespace IMS
 
 
         }
-        private int getDebitTotal()
+        private decimal getDebitTotal()
         {
-            int Total = 0;
+            decimal Total = 0;
             foreach (DataGridViewRow row in crvDataGridView.Rows)
             {
                 Total += Convert.ToInt32(row.Cells["Debit"].Value);
@@ -482,39 +482,6 @@ namespace IMS
             finally
             {
                 connection.Close();
-            }
-        }
-        //private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
-        //    {
-        //        DataGridViewRow row = crvDataGridView.Rows[e.RowIndex];
-        //        DataGridViewCell cell = crvDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
-        //        row.Cells[e.ColumnIndex].Selected = true;
-        //        row.Selected = true;
-        //    }
-        //}
-        private object previousValue;
-
-        private void dataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex > -1)
-            {
-                DataGridViewCell currentCell = crvDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
-
-                // Store the value of the current cell
-                previousValue = currentCell.Value;
-            }
-        }
-
-        private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex > -1)
-            {
-                DataGridViewCell currentCell = crvDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
-
-                // Restore the value of the previous cell
-                currentCell.Value = previousValue;
             }
         }
 
