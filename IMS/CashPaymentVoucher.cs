@@ -257,25 +257,51 @@ namespace IMS
 
         private void cpvDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            SqlTransaction sqlTransaction = null;
+            
+            connection.Open();
             try
             {
+                
                 if (cpvDataGridView.Columns[e.ColumnIndex].Name == "RemoveColumnButton")
                 {
-                   
+                    sqlTransaction = connection.BeginTransaction();
                     int id = Convert.ToInt32( cpvDataGridView.Rows[e.RowIndex].Cells["ID"].Value);
-                    connection.Open();
                     string query = "DELETE from TransactionTable WHERE VoucherID=@VoucherID ";
-                    SqlCommand cmd = new SqlCommand(query,connection);
+                    SqlCommand cmd = new SqlCommand(query,connection, sqlTransaction);
                     cmd.Parameters.AddWithValue("@VoucherID", id);
                     cmd.ExecuteNonQuery();
-                    connection.Close();
+
                     cpvDataGridView.Rows.RemoveAt(e.RowIndex);
+
+                    decimal Total = getCreditTotal();
+                    string query1 = "UPDATE TransactionTable SET Narration=@Narration,VoucherCategory=@VoucherCategory,Description=@Description,Credit=@Credit where VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID=@VoucherCategoryID";
+                    SqlCommand cmd1 = new SqlCommand(query1, connection, sqlTransaction);
+                    cmd1.Parameters.AddWithValue("@Narration", narrationTextBox.Text.Trim());
+                    cmd1.Parameters.AddWithValue("@VoucherCategory", categoryComboBox.SelectedItem);
+                    cmd1.Parameters.AddWithValue("@Description", cashLabel.Text.Trim());
+                    cmd1.Parameters.AddWithValue("@Credit", Total);
+                    cmd1.Parameters.AddWithValue("@VoucherType", cpvLabel.Text.Trim());
+                    cmd1.Parameters.AddWithValue("@VoucherCode", cpvTextBox.Text.Trim());
+                    cmd1.Parameters.AddWithValue("@VoucherCategoryID", cashCodeTextBox.Text.Trim());
+                    cmd1.ExecuteNonQuery();
+                    sqlTransaction.Commit();
+                    
+
+                    
                 }
             }
             catch (Exception ex)
             {
 
                 MessageBox.Show("Please remove this field from remove button" + ex.Message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                sqlTransaction.Rollback();
+                connection.Close();
+                
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
@@ -395,7 +421,7 @@ namespace IMS
             connection.Open();
 
             SqlTransaction transaction = null;
-            //int Id = 0;
+            decimal Total = getCreditTotal();
             try
             {
                 transaction = connection.BeginTransaction();
@@ -463,7 +489,7 @@ namespace IMS
                 cmd1.Parameters.AddWithValue("@Narration", narrationTextBox.Text.Trim());
                 cmd1.Parameters.AddWithValue("@VoucherCategory", categoryComboBox.SelectedItem);
                 cmd1.Parameters.AddWithValue("@Description", cashLabel.Text.Trim());
-                cmd1.Parameters.AddWithValue("@Credit", creditTotalTextBox.Text.Trim());
+                cmd1.Parameters.AddWithValue("@Credit", Total);
                 cmd1.Parameters.AddWithValue("@VoucherType", cpvLabel.Text.Trim());
                 cmd1.Parameters.AddWithValue("@VoucherCode", cpvTextBox.Text.Trim());
                 cmd1.Parameters.AddWithValue("@VoucherCategoryID", cashCodeTextBox.Text.Trim());

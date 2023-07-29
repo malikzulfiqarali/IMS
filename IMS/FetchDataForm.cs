@@ -50,6 +50,7 @@ namespace IMS
                 (infoDataGridView.DataSource as DataTable).DefaultView.RowFilter = string.Empty;
 
             }
+            
         }
 
         private void infoDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
