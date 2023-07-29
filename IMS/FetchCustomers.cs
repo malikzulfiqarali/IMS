@@ -91,5 +91,13 @@ namespace IMS
                 this.Hide();
             }
         }
+
+        private void CustomerSearchTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetterOrDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

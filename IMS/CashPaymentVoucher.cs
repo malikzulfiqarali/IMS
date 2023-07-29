@@ -109,6 +109,7 @@ namespace IMS
                     {
                         using (SqlCommand cmd=new SqlCommand("SP_INSERT_CASH_PAYMENT_VOUCHER_CREDIT",connection))
                         {
+                            decimal Total = getCreditTotal();
                             cmd.CommandType = CommandType.StoredProcedure;
                             cmd.Parameters.AddWithValue("@VoucherCode",cpvTextBox.Text.Trim());
                             cmd.Parameters.AddWithValue("@VoucherType", cpvLabel.Text.Trim());
@@ -117,7 +118,7 @@ namespace IMS
                             cmd.Parameters.AddWithValue("@VoucherCategoryID", cashCodeTextBox.Text.Trim());
                             cmd.Parameters.AddWithValue("@VoucherCategory", categoryComboBox.SelectedItem);
                             cmd.Parameters.AddWithValue("@Description",cashLabel.Text.Trim());
-                            cmd.Parameters.AddWithValue("@Credit", creditTotalTextBox.Text.Trim());
+                            cmd.Parameters.AddWithValue("@Credit", Total);
                             connection.Open();
                             int result = cmd.ExecuteNonQuery();
                             if (result > 0)

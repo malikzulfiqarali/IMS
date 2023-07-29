@@ -43,6 +43,7 @@
             this.CustomerSearchTextBox.TabIndex = 2;
             this.CustomerSearchTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.CustomerSearchTextBox.TextChanged += new System.EventHandler(this.CustomerSearchTextBox_TextChanged);
+            this.CustomerSearchTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CustomerSearchTextBox_KeyPress);
             // 
             // label1
             // 

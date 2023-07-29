@@ -66,6 +66,7 @@
             this.searchTextBox.TabIndex = 0;
             this.searchTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.searchTextBox.TextChanged += new System.EventHandler(this.searchTextBox_TextChanged);
+            this.searchTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.searchTextBox_KeyPress);
             // 
             // FetchDataForm
             // 
