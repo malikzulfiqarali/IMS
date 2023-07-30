@@ -25,7 +25,8 @@ namespace IMS
         {
             ClearAllStuff();
             MaxNumberVoucherCode();
-            
+            saveButton.Enabled = true;
+            updateButton.Enabled = false;
         }
 
         private void closeButton_Click(object sender, EventArgs e)
@@ -139,10 +140,13 @@ namespace IMS
 
         private void jrvDataGridView_CellLeave(object sender, DataGridViewCellEventArgs e)
         {
-            jrvDataGridView.CurrentRow.Cells["Code"].Value = FetchDataForm.SetCode;
-            jrvDataGridView.CurrentRow.Cells["Description"].Value = FetchDataForm.SetName;
-            debitTextBox.Text = getDebitTotal().ToString();
-            creditTextBox.Text = getCreditTotal().ToString();
+            if (jrvDataGridView.CurrentRow.Cells["Code"].Value == null || Convert.ToInt32(jrvDataGridView.CurrentRow.Cells["Code"].Value.ToString().Trim()) == 0)
+            {
+                jrvDataGridView.CurrentRow.Cells["Code"].Value = FetchDataForm.SetCode;
+                jrvDataGridView.CurrentRow.Cells["Description"].Value = FetchDataForm.SetName;
+                debitTextBox.Text = getDebitTotal().ToString();
+                creditTextBox.Text = getCreditTotal().ToString(); 
+            }
         }
 
         private void jrvDataGridView_RowLeave(object sender, DataGridViewCellEventArgs e)
@@ -178,6 +182,8 @@ namespace IMS
         {
             ClearAllStuff();
             MaxNumberVoucherCode();
+            saveButton.Enabled = true;
+            updateButton.Enabled = false;
         }
         private void ClearAllStuff()
         {
@@ -305,10 +311,12 @@ namespace IMS
             if (dateDateTimePicker.Value.Date == System.DateTime.Today.Date)
             {
                 updateButton.Enabled = true;
+                saveButton.Enabled = false;
             }
             else
             {
                 updateButton.Enabled = false;
+                saveButton.Enabled = true;
 
             }
         }
@@ -323,10 +331,12 @@ namespace IMS
             if (dateDateTimePicker.Value.Date == System.DateTime.Today.Date)
             {
                 updateButton.Enabled = true;
+                saveButton.Enabled = false;
             }
             else
             {
                 updateButton.Enabled = false;
+                saveButton.Enabled = true;
 
             }
         }
