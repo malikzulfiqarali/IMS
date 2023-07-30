@@ -159,6 +159,8 @@ namespace IMS
         {
             MaxNumberVoucherCode();
             creditTotalTextBox.Text = getCreditTotal().ToString();
+            updateButton.Enabled = false;
+            saveButton.Enabled = true;
         }
 
         private void cpvDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -266,30 +268,34 @@ namespace IMS
                 
                 if (cpvDataGridView.Columns[e.ColumnIndex].Name == "RemoveColumnButton")
                 {
-                    sqlTransaction = connection.BeginTransaction();
-                    int id = Convert.ToInt32( cpvDataGridView.Rows[e.RowIndex].Cells["ID"].Value);
-                    string query = "DELETE from TransactionTable WHERE VoucherID=@VoucherID ";
-                    SqlCommand cmd = new SqlCommand(query,connection, sqlTransaction);
-                    cmd.Parameters.AddWithValue("@VoucherID", id);
-                    cmd.ExecuteNonQuery();
+                    if (dateDateTimePicker.Value.Date==DateTime.Now.Date)
+                    {
+                        sqlTransaction = connection.BeginTransaction();
+                        int id = Convert.ToInt32(cpvDataGridView.Rows[e.RowIndex].Cells["ID"].Value);
+                        string query = "DELETE from TransactionTable WHERE VoucherID=@VoucherID ";
+                        SqlCommand cmd = new SqlCommand(query, connection, sqlTransaction);
+                        cmd.Parameters.AddWithValue("@VoucherID", id);
+                        cmd.ExecuteNonQuery();
 
-                    cpvDataGridView.Rows.RemoveAt(e.RowIndex);
+                        cpvDataGridView.Rows.RemoveAt(e.RowIndex);
 
-                    decimal Total = getCreditTotal();
-                    string query1 = "UPDATE TransactionTable SET Narration=@Narration,VoucherCategory=@VoucherCategory,Description=@Description,Credit=@Credit where VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID=@VoucherCategoryID";
-                    SqlCommand cmd1 = new SqlCommand(query1, connection, sqlTransaction);
-                    cmd1.Parameters.AddWithValue("@Narration", narrationTextBox.Text.Trim());
-                    cmd1.Parameters.AddWithValue("@VoucherCategory", categoryComboBox.SelectedItem);
-                    cmd1.Parameters.AddWithValue("@Description", cashLabel.Text.Trim());
-                    cmd1.Parameters.AddWithValue("@Credit", Total);
-                    cmd1.Parameters.AddWithValue("@VoucherType", cpvLabel.Text.Trim());
-                    cmd1.Parameters.AddWithValue("@VoucherCode", cpvTextBox.Text.Trim());
-                    cmd1.Parameters.AddWithValue("@VoucherCategoryID", cashCodeTextBox.Text.Trim());
-                    cmd1.ExecuteNonQuery();
-                    sqlTransaction.Commit();
-                    
-
-                    
+                        decimal Total = getCreditTotal();
+                        string query1 = "UPDATE TransactionTable SET Narration=@Narration,VoucherCategory=@VoucherCategory,Description=@Description,Credit=@Credit where VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID=@VoucherCategoryID";
+                        SqlCommand cmd1 = new SqlCommand(query1, connection, sqlTransaction);
+                        cmd1.Parameters.AddWithValue("@Narration", narrationTextBox.Text.Trim());
+                        cmd1.Parameters.AddWithValue("@VoucherCategory", categoryComboBox.SelectedItem);
+                        cmd1.Parameters.AddWithValue("@Description", cashLabel.Text.Trim());
+                        cmd1.Parameters.AddWithValue("@Credit", Total);
+                        cmd1.Parameters.AddWithValue("@VoucherType", cpvLabel.Text.Trim());
+                        cmd1.Parameters.AddWithValue("@VoucherCode", cpvTextBox.Text.Trim());
+                        cmd1.Parameters.AddWithValue("@VoucherCategoryID", cashCodeTextBox.Text.Trim());
+                        cmd1.ExecuteNonQuery();
+                        sqlTransaction.Commit(); 
+                    }
+                    else
+                    {
+                        MessageBox.Show("You cannot remove previous date data", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
             }
             catch (Exception ex)

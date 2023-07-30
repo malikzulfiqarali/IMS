@@ -54,6 +54,7 @@ namespace IMS
             saveButton.Enabled = true;
             updateButton.Enabled = true;
             creditTotalTextBox.Text = string.Empty;
+            updateButton.Enabled = false;
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -124,7 +125,7 @@ namespace IMS
                     
                         decimal Total = getCreditTotal();
 
-                if (Total!=0)
+                if (Total!=0 && crvDataGridView.Rows.Count!=0)
                 {
                     SqlCommand command = new SqlCommand("[SP_INSERT_VOUCHER_DEBIT]", connection, sqlTransaction);
                     command.CommandType = CommandType.StoredProcedure;
@@ -232,6 +233,8 @@ namespace IMS
         private void CashReceiptVoucher_Load(object sender, EventArgs e)
         {
             MaxNumberVoucherCode();
+            updateButton.Enabled = false;
+            saveButton.Enabled = true;
         }
 
         private void crvDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -291,6 +294,7 @@ namespace IMS
                         crvDataGridView.Rows[i].Cells["PartyCode"].Value = dt.Rows[i]["VoucherCategoryCode"];
                         crvDataGridView.Rows[i].Cells["Amount"].Value = dt.Rows[i]["Credit"];
                         crvDataGridView.Rows[i].Cells["Remarks"].Value = dt.Rows[i]["Remarks"];
+                        crvDataGridView.Rows[i].Cells["ID"].Value = dt.Rows[i]["VoucherID"];
 
                     }
 
