@@ -278,6 +278,7 @@ namespace IMS
                         jrvDataGridView.Rows[i].Cells["Debit"].Value = dt.Rows[i]["Debit"]==DBNull.Value? "0": dt.Rows[i]["Debit"];
                         jrvDataGridView.Rows[i].Cells["Credit"].Value = dt.Rows[i]["Credit"]==DBNull.Value? "0": dt.Rows[i]["Credit"];
                         jrvDataGridView.Rows[i].Cells["Remarks"].Value = dt.Rows[i]["Remarks"];
+                        jrvDataGridView.Rows[i].Cells["ID"].Value = dt.Rows[i]["VoucherID"];
 
                     }
 
