@@ -94,11 +94,10 @@ namespace IMS
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString))
-                {
                     connection.Open();
 
-
+                sqlTransaction = connection.BeginTransaction();
+                
 
                     foreach (DataGridViewRow row in crvDataGridView.Rows)
                     {
@@ -117,53 +116,42 @@ namespace IMS
                         cmd.Parameters.AddWithValue("@Description", row.Cells["Description"].Value ?? DBNull.Value);
                         cmd.Parameters.AddWithValue("@Credit", Convert.ToDecimal(row.Cells["Amount"].Value));
                         cmd.Parameters.AddWithValue("@Remarks", row.Cells["Remarks"].Value ?? DBNull.Value);
-                        int result = cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
 
                     }
-
-
                    
 
-                    if (crvDataGridView.Rows.Count==0)
                     
-                    {
-                        MessageBox.Show("Please enter records in DataGridView", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
                         decimal Total = getCreditTotal();
-                        SqlCommand command = new SqlCommand("[SP_INSERT_VOUCHER_DEBIT]", connection,sqlTransaction);
-                        command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@VoucherCode", crvTextBox.Text);
-                        command.Parameters.AddWithValue("@VoucherType", crvLabel.Text.Trim());
-                        command.Parameters.AddWithValue("@VoucherDate", dateDateTimePicker.Value);
-                        command.Parameters.AddWithValue("@Narration", narrationTextBox.Text.Trim());
-                        command.Parameters.AddWithValue("@VoucherCategoryID", cashCodeTextBox.Text.Trim());
-                        command.Parameters.AddWithValue("@VoucherCategory", categoryComboBox.SelectedItem.ToString().Trim());
-                        command.Parameters.AddWithValue("@Description", cashLabel.Text.Trim());
-                        command.Parameters.AddWithValue("@Debit", Total);
-                        int success = command.ExecuteNonQuery();
 
+                if (Total!=0)
+                {
+                    SqlCommand command = new SqlCommand("[SP_INSERT_VOUCHER_DEBIT]", connection, sqlTransaction);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@VoucherCode", crvTextBox.Text);
+                    command.Parameters.AddWithValue("@VoucherType", crvLabel.Text.Trim());
+                    command.Parameters.AddWithValue("@VoucherDate", dateDateTimePicker.Value);
+                    command.Parameters.AddWithValue("@Narration", narrationTextBox.Text.Trim());
+                    command.Parameters.AddWithValue("@VoucherCategoryID", cashCodeTextBox.Text.Trim());
+                    command.Parameters.AddWithValue("@VoucherCategory", categoryComboBox.SelectedItem.ToString().Trim());
+                    command.Parameters.AddWithValue("@Description", cashLabel.Text.Trim());
+                    command.Parameters.AddWithValue("@Debit", Total);
+                    command.ExecuteNonQuery();
 
-                        sqlTransaction.Commit();
-
-                        if (success > 0)
-                        {
-                            MessageBox.Show("Rocord saved to database successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            clearButton.PerformClick();
-                            MaxNumberVoucherCode();
-                            connection.Close();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Rocord is not saved to database successfully", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            connection.Close();
-
-                        }
-
-                    }
-
+                    sqlTransaction.Commit();
+                    MessageBox.Show("Rocord saved to database successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    clearButton.PerformClick();
+                    MaxNumberVoucherCode();
+                    connection.Close();
                 }
+                else
+                {
+                    MessageBox.Show("Empty voucher cannot be saved","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    clearButton.PerformClick();
+                    connection.Close();
+                    
+                }
+                
             }
             catch (Exception ex)
             {
