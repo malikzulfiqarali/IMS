@@ -37,25 +37,25 @@ namespace IMS
         private void saveButton_Click(object sender, EventArgs e)
         {
             bool success = false;
-            if (jrvTextBox.Text.Trim()==string.Empty)
+            if (jrvTextBox.Text.Trim() == string.Empty)
             {
-                MessageBox.Show("This field is required","failure",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("This field is required", "failure", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 jrvTextBox.Focus();
                 return;
             }
-            if (categoryComboBox.SelectedIndex==-1)
+            if (categoryComboBox.SelectedIndex == -1)
             {
                 MessageBox.Show("Please select an item from category combobox", "failure", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 categoryComboBox.Focus();
                 return;
             }
-            if (narrationTextBox.Text.Trim()==string.Empty)
+            if (narrationTextBox.Text.Trim() == string.Empty)
             {
                 MessageBox.Show("Narration field is required", "failure", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 narrationTextBox.Focus();
                 return;
             }
-            if (jrvDataGridView.Rows.Count==-1)
+            if (jrvDataGridView.Rows.Count == -1)
             {
                 MessageBox.Show("Please enters correct particulars in voucher detail", "failure", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 jrvDataGridView.Focus();
@@ -73,14 +73,14 @@ namespace IMS
                     cmd.Parameters.AddWithValue("@VoucherType", jrvLabel.Text.Trim());
                     cmd.Parameters.AddWithValue("@VoucherDate", dateDateTimePicker.Value);
                     cmd.Parameters.AddWithValue("@Narration", narrationTextBox.Text.Trim());
-                    cmd.Parameters.AddWithValue("@VoucherCategoryID",row.Cells["Code"].Value??DBNull.Value);
-                    cmd.Parameters.AddWithValue("@VoucherCategory",categoryComboBox.SelectedItem);
-                    cmd.Parameters.AddWithValue("@VoucherCategoryCode",row.Cells["PartyCode"].Value??DBNull.Value);
-                    cmd.Parameters.AddWithValue("@Description",row.Cells["Description"].Value??DBNull.Value);
-                    cmd.Parameters.AddWithValue("@Debit",row.Cells["Debit"].Value??DBNull.Value);
-                    cmd.Parameters.AddWithValue("@Credit",row.Cells["Credit"].Value??DBNull.Value);
-                    cmd.Parameters.AddWithValue("@Remarks", row.Cells["Remarks"].Value??DBNull.Value);
-                    if (debitTextBox.Text.Trim()==creditTextBox.Text.Trim())
+                    cmd.Parameters.AddWithValue("@VoucherCategoryID", row.Cells["Code"].Value ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@VoucherCategory", categoryComboBox.SelectedItem);
+                    cmd.Parameters.AddWithValue("@VoucherCategoryCode", row.Cells["PartyCode"].Value ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Description", row.Cells["Description"].Value ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Debit", row.Cells["Debit"].Value ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Credit", row.Cells["Credit"].Value ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Remarks", row.Cells["Remarks"].Value ?? DBNull.Value);
+                    if (debitTextBox.Text.Trim() == creditTextBox.Text.Trim())
                     {
                         connection.Open();
                         int result = cmd.ExecuteNonQuery();
@@ -97,21 +97,21 @@ namespace IMS
                     }
                     else
                     {
-                        MessageBox.Show("Debit Total must be equal to Credit Total","Failure",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                        MessageBox.Show("Debit Total must be equal to Credit Total", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
-                   
+
                 }
-                if (success==true)
+                if (success == true)
                 {
-                    MessageBox.Show("Records are inserted successfully","Success",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    MessageBox.Show("Records are inserted successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clearButton.PerformClick();
-                    
+
                 }
                 else
                 {
                     MessageBox.Show("Records are not inserted something happen wrong", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
+
                 }
             }
             catch (Exception ex)
@@ -145,7 +145,7 @@ namespace IMS
                 jrvDataGridView.CurrentRow.Cells["Code"].Value = FetchDataForm.SetCode;
                 jrvDataGridView.CurrentRow.Cells["Description"].Value = FetchDataForm.SetName;
                 debitTextBox.Text = getDebitTotal().ToString();
-                creditTextBox.Text = getCreditTotal().ToString(); 
+                creditTextBox.Text = getCreditTotal().ToString();
             }
         }
 
@@ -216,7 +216,7 @@ namespace IMS
 
         private void jrvDataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            if (jrvDataGridView.CurrentCell.ColumnIndex == jrvDataGridView.Columns["Debit"].Index || jrvDataGridView.CurrentCell.ColumnIndex==jrvDataGridView.Columns["Credit"].Index)
+            if (jrvDataGridView.CurrentCell.ColumnIndex == jrvDataGridView.Columns["Debit"].Index || jrvDataGridView.CurrentCell.ColumnIndex == jrvDataGridView.Columns["Credit"].Index)
             {
                 TextBox textBox = e.Control as TextBox;
 
@@ -259,7 +259,7 @@ namespace IMS
             try
             {
                 connection.Open();
-                SqlDataAdapter da = new SqlDataAdapter("Select * from TransactionTable where VoucherCode='" + jrvTextBox.Text.Trim() + "' and VoucherType='"+jrvLabel.Text.Trim()+"'", connection);
+                SqlDataAdapter da = new SqlDataAdapter("Select * from TransactionTable where VoucherCode='" + jrvTextBox.Text.Trim() + "' and VoucherType='" + jrvLabel.Text.Trim() + "'", connection);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 if (dt.Rows.Count > 0)
@@ -270,19 +270,19 @@ namespace IMS
                     jrvDataGridView.Rows.Clear();
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        
+
                         jrvDataGridView.Rows.Add();
                         jrvDataGridView.Rows[i].Cells["Code"].Value = dt.Rows[i]["VoucherCategoryID"];
                         jrvDataGridView.Rows[i].Cells["Description"].Value = dt.Rows[i]["Description"];
                         jrvDataGridView.Rows[i].Cells["PartyCode"].Value = dt.Rows[i]["VoucherCategoryCode"];
-                        jrvDataGridView.Rows[i].Cells["Debit"].Value = dt.Rows[i]["Debit"]==DBNull.Value? "0": dt.Rows[i]["Debit"];
-                        jrvDataGridView.Rows[i].Cells["Credit"].Value = dt.Rows[i]["Credit"]==DBNull.Value? "0": dt.Rows[i]["Credit"];
+                        jrvDataGridView.Rows[i].Cells["Debit"].Value = dt.Rows[i]["Debit"] == DBNull.Value ? "0" : dt.Rows[i]["Debit"];
+                        jrvDataGridView.Rows[i].Cells["Credit"].Value = dt.Rows[i]["Credit"] == DBNull.Value ? "0" : dt.Rows[i]["Credit"];
                         jrvDataGridView.Rows[i].Cells["Remarks"].Value = dt.Rows[i]["Remarks"];
                         jrvDataGridView.Rows[i].Cells["ID"].Value = dt.Rows[i]["VoucherID"];
 
                     }
 
-                    creditTextBox.Text= getCreditTotal().ToString();
+                    creditTextBox.Text = getCreditTotal().ToString();
                     debitTextBox.Text = getDebitTotal().ToString();
                 }
                 //else
@@ -339,6 +339,120 @@ namespace IMS
                 updateButton.Enabled = false;
                 saveButton.Enabled = true;
 
+            }
+        }
+
+        private void updateButton_Click(object sender, EventArgs e)
+        {
+            SqlTransaction sqlTransaction = null;
+            if (categoryComboBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please category from category combobox", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                categoryComboBox.Focus();
+                return;
+            }
+            if (narrationTextBox.Text.Trim() == string.Empty)
+            {
+                MessageBox.Show("Please Enter narration for the Voucher", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                narrationTextBox.Focus();
+                return;
+            }
+            if (jrvDataGridView.Rows.Count == 0)
+            {
+                MessageBox.Show("Cannot update empty voucher Please enter some data", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                narrationTextBox.Focus();
+                return;
+            }
+            try
+            {
+                connection.Open();
+                sqlTransaction = connection.BeginTransaction();
+                decimal debitTotal = getDebitTotal();
+                decimal creditTotal = getCreditTotal();
+                foreach (DataGridViewRow row in jrvDataGridView.Rows)
+                {
+                    if (!row.IsNewRow)
+                    {
+                        int ID = Convert.ToInt32(row.Cells["ID"].Value);
+                        if (ID != 0)
+                        {
+                            string narration = narrationTextBox.Text.Trim();
+                            int VCode = Convert.ToInt32(row.Cells["Code"].Value);
+                            string VCat = categoryComboBox.SelectedItem.ToString();
+                            string VCatCode = row.Cells["PartyCode"].Value.ToString();
+                            string Description = row.Cells["Description"].Value.ToString();
+                            decimal debit = Convert.ToDecimal(row.Cells["Debit"].Value);
+                            decimal credit = Convert.ToDecimal(row.Cells["Credit"].Value);
+                            string Remarks = row.Cells["Remarks"].Value.ToString();
+
+                            string query1 = "UPDATE TransactionTable SET  Narration=@Narration,VoucherDate=@VoucherDate,VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,VoucherCategoryCode=@VoucherCategoryCode,Description=@Description,Debit=@Debit,Credit=@Credit,Remarks=@Remarks where VoucherID=@VoucherID and VoucherType=@VoucherType and VoucherCode=@VoucherCode";
+                            SqlCommand cmd = new SqlCommand(query1, connection, sqlTransaction);
+                            cmd.Parameters.AddWithValue("@Narration", narration);
+                            cmd.Parameters.AddWithValue("@VoucherDate", dateDateTimePicker.Value);
+                            cmd.Parameters.AddWithValue("@VoucherCategoryID", VCode);
+                            cmd.Parameters.AddWithValue("@VoucherCategory", VCat);
+                            cmd.Parameters.AddWithValue("@VoucherCategoryCode", VCatCode);
+                            cmd.Parameters.AddWithValue("@Description", Description);
+                            cmd.Parameters.AddWithValue("@Debit", debit);
+                            cmd.Parameters.AddWithValue("@Credit", credit);
+                            cmd.Parameters.AddWithValue("@Remarks", Remarks);
+                            cmd.Parameters.AddWithValue("@VoucherID", ID);
+                            cmd.Parameters.AddWithValue("@VoucherType", jrvLabel.Text.Trim());
+                            cmd.Parameters.AddWithValue("@VoucherCode", jrvTextBox.Text.Trim());
+                            cmd.ExecuteNonQuery();
+                        }
+                        
+
+                        if (ID == 0)
+                        {
+                            
+                            string query2 = "INSERT INTO TransactionTable (VoucherCode,VoucherType,VoucherDate,Narration,VoucherCategoryID,VoucherCategory,VoucherCategoryCode,Description,Debit,Credit,Remarks)VALUES(@VoucherCode,@VoucherType,@VoucherDate,@Narration,@VoucherCategoryID,@VoucherCategory,@VoucherCategoryCode,@Description,@Debit,@Credit,@Remarks)";
+                            SqlCommand command = new SqlCommand(query2, connection, sqlTransaction);
+                            command.Parameters.AddWithValue("@VoucherCode", jrvTextBox.Text.Trim());
+                            command.Parameters.AddWithValue("@VoucherType", jrvLabel.Text.Trim());
+                            command.Parameters.AddWithValue("@VoucherDate", dateDateTimePicker.Value);
+                            command.Parameters.AddWithValue("@Narration", narrationTextBox.Text.Trim());
+                            command.Parameters.AddWithValue("@VoucherCategoryID", Convert.ToInt32(row.Cells["Code"].Value));
+                            command.Parameters.AddWithValue("@VoucherCategory", categoryComboBox.SelectedItem);
+                            command.Parameters.AddWithValue("@VoucherCategoryCode", row.Cells["PartyCode"].Value ?? DBNull.Value);
+                            command.Parameters.AddWithValue("@Description", row.Cells["Description"].Value ?? DBNull.Value);
+                            command.Parameters.AddWithValue("@Debit", Convert.ToDecimal( row.Cells["Debit"].Value));
+                            command.Parameters.AddWithValue("@Credit",Convert.ToDecimal( row.Cells["Credit"].Value));
+                            command.Parameters.AddWithValue("@Remarks", row.Cells["Remarks"].Value ?? DBNull.Value);
+                            command.ExecuteNonQuery();
+                        }
+                        
+
+                    }
+
+            
+            
+                }
+                if (debitTotal==creditTotal)
+                {
+                    sqlTransaction.Commit();
+                    MessageBox.Show("Data is updated successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    clearButton.PerformClick();
+                    connection.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Debit Total and credit Total must be equal","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    sqlTransaction.Rollback();
+                    clearButton.PerformClick();
+                    connection.Close();
+                }
+                
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+                sqlTransaction.Rollback();
+            }
+            finally
+            {
+                connection.Close();
             }
         }
     }

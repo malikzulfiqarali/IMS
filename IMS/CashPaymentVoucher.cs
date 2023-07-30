@@ -450,7 +450,7 @@ namespace IMS
                             decimal amount = Convert.ToDecimal(row.Cells["Amount"].Value);
                             string Remarks = row.Cells["Remarks"].Value.ToString();
 
-                            string query = "UPDATE TransactionTable SET  Narration=@Narration,VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,VoucherCategoryCode=@VoucherCategoryCode,Description=@Description,Debit=@Debit,Remarks=@Remarks where VoucherID=@VoucherID and VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID!='" + cashCode + "'";
+                            string query = "UPDATE TransactionTable SET  Narration=@Narration,VoucherDate=@VoucherDate,VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,VoucherCategoryCode=@VoucherCategoryCode,Description=@Description,Debit=@Debit,Remarks=@Remarks where VoucherID=@VoucherID and VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID!='" + cashCode + "'";
                             SqlCommand cmd = new SqlCommand(query, connection, transaction);
                             cmd.Parameters.AddWithValue("@VoucherID", ID);
                             cmd.Parameters.AddWithValue("@Narration", narration);
