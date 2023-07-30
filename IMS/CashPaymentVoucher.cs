@@ -432,7 +432,6 @@ namespace IMS
             try
             {
                 transaction = connection.BeginTransaction();
-                //string query2 = "SELECT Narration,VoucherCategoryID,VoucherCategory,VoucherCategoryCode,Description,Debit,Remarks FROM TransactionTable where VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID!='" + cashCode + "'";
                 foreach (DataGridViewRow row in cpvDataGridView.Rows)
                 {
 
