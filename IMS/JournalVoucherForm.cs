@@ -225,6 +225,10 @@ namespace IMS
                         jrvDataGridView.Rows.RemoveAt(e.RowIndex);
                         clearButton.Enabled = false;
                         closeButton.Enabled = false;
+                        this.ControlBox = false;
+                        
+                        
+                        
                         
                     }
                     else
@@ -467,6 +471,7 @@ namespace IMS
                     sqlTransaction.Commit();
                     clearButton.Enabled = true;
                     closeButton.Enabled = true;
+                    this.ControlBox = true;
                     MessageBox.Show("Data is updated successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clearButton.PerformClick();
                     connection.Close();
