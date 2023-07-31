@@ -31,7 +31,9 @@ namespace IMS
 
         private void closeButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            
+                this.Close(); 
+            
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -180,10 +182,12 @@ namespace IMS
 
         private void clearButton_Click(object sender, EventArgs e)
         {
-            ClearAllStuff();
-            MaxNumberVoucherCode();
-            saveButton.Enabled = true;
-            updateButton.Enabled = false;
+           
+                ClearAllStuff();
+                MaxNumberVoucherCode();
+                saveButton.Enabled = true;
+                updateButton.Enabled = false; 
+            
         }
         private void ClearAllStuff()
         {
@@ -219,6 +223,9 @@ namespace IMS
                         cmd.ExecuteNonQuery();
                         transaction.Commit();
                         jrvDataGridView.Rows.RemoveAt(e.RowIndex);
+                        clearButton.Enabled = false;
+                        closeButton.Enabled = false;
+                        
                     }
                     else
                     {
@@ -458,6 +465,8 @@ namespace IMS
                 if (debitTotal==creditTotal)
                 {
                     sqlTransaction.Commit();
+                    clearButton.Enabled = true;
+                    closeButton.Enabled = true;
                     MessageBox.Show("Data is updated successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     clearButton.PerformClick();
                     connection.Close();
