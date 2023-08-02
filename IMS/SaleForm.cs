@@ -154,8 +154,37 @@ namespace IMS
 
         private void addButton_Click(object sender, EventArgs e)
         {
+            int currentNumber =Convert.ToInt32( saleNumberTextBox.Text);
+            int saleNumber = 0;
+            connection.Open();
+            SqlDataAdapter da = new SqlDataAdapter("Select distinct MAX(SaleCode) from Sale",connection);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count > 0)
+            {
+                saleNumber =Convert.ToInt32( dt.Rows[0][0]);
+            }
+            connection.Close();
+            if (saleNumber >= currentNumber && Convert.ToInt32(currentStockTextBox.Text.Trim()) >= Convert.ToInt32(saleQtyTextBox.Text.Trim()))
+            {
+                // Assuming your DataGridView is bound to a DataTable (for example)
+                DataTable dataTable = (DataTable)productDataGridView.DataSource;
+                DataRow newRow = dataTable.NewRow();
+                newRow["PID"] = productIdTextBox.Text.Trim();
+                newRow["Product"] = productTextBox.Text.Trim();
+                newRow["CurrentStock"] = currentStockTextBox.Text.Trim();
+                newRow["SoldStock"] = saleQtyTextBox.Text.Trim();
+                newRow["Rate"] = priceTextBox.Text.Trim();
+                newRow["Amount"] = totalAmountTextBox.Text.Trim();
 
-            if (Convert.ToInt32( currentStockTextBox.Text.Trim()) >=Convert.ToInt32( saleQtyTextBox.Text.Trim()))
+                // Set values for the new row, e.g., newRow["Column1"] = value1; newRow["Column2"] = value2;
+                dataTable.Rows.Add(newRow);
+                productDataGridView.Refresh();
+                UpdateStockInProductTable();
+                return;
+            }
+
+            if (currentNumber > saleNumber && Convert.ToInt32( currentStockTextBox.Text.Trim()) >=Convert.ToInt32( saleQtyTextBox.Text.Trim()))
             {
                 productDataGridView.Rows.Add(productIdTextBox.Text.Trim(), productTextBox.Text.Trim(), currentStockTextBox.Text.Trim(), saleQtyTextBox.Text.Trim(), priceTextBox.Text.Trim(), totalAmountTextBox.Text.Trim());
                 UpdateStockInProductTable();
