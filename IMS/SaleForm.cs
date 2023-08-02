@@ -17,6 +17,8 @@ namespace IMS
     {
         SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
         
+
+
         public SaleForm()
         {
             InitializeComponent();
@@ -70,8 +72,9 @@ namespace IMS
 
         private void addNewButton_Click(object sender, EventArgs e)
         {
+            
 
-            if (productDataGridView.Rows.Count!=0)
+            if (productDataGridView.Rows.Count != 0 )
             {
                 UpdateBackQuantityInProductTable(); 
             }
@@ -777,6 +780,32 @@ namespace IMS
         private void updateButton_Click(object sender, EventArgs e)
         {
 
+        }
+        private int LastIncrementedNumber()
+        {
+            connection.Open();
+            SqlDataAdapter da = new SqlDataAdapter("select distinct max(SaleCode) from Sale", connection);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            int maxNumber = Convert.ToInt32(dt.Rows[0][0]);
+            int newNumber = maxNumber + 1;
+            return newNumber;
+        }
+
+        private void previousButton_Click(object sender, EventArgs e)
+        {
+            int voucherNumber = Convert.ToInt32(saleNumberTextBox.Text.Trim());
+            int newNumber = voucherNumber - 1;
+            saleNumberTextBox.Text = newNumber.ToString();
+            saleNumberTextBox_Leave(sender, e);
+        }
+
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            int voucherNumber = Convert.ToInt32(saleNumberTextBox.Text.Trim());
+            int newNumber = voucherNumber + 1;
+            saleNumberTextBox.Text = newNumber.ToString();
+            saleNumberTextBox_Leave(sender, e);
         }
     }
 }

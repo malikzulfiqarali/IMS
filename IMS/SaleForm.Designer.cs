@@ -80,6 +80,8 @@
             this.label14 = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
             this.addButton = new System.Windows.Forms.Button();
+            this.nextButton = new System.Windows.Forms.Button();
+            this.previousButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.productDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -596,11 +598,33 @@
             this.addButton.UseVisualStyleBackColor = false;
             this.addButton.Click += new System.EventHandler(this.addButton_Click);
             // 
+            // nextButton
+            // 
+            this.nextButton.Location = new System.Drawing.Point(275, 16);
+            this.nextButton.Name = "nextButton";
+            this.nextButton.Size = new System.Drawing.Size(54, 26);
+            this.nextButton.TabIndex = 33;
+            this.nextButton.Text = ">";
+            this.nextButton.UseVisualStyleBackColor = true;
+            this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
+            // 
+            // previousButton
+            // 
+            this.previousButton.Location = new System.Drawing.Point(224, 16);
+            this.previousButton.Name = "previousButton";
+            this.previousButton.Size = new System.Drawing.Size(54, 26);
+            this.previousButton.TabIndex = 32;
+            this.previousButton.Text = "<";
+            this.previousButton.UseVisualStyleBackColor = true;
+            this.previousButton.Click += new System.EventHandler(this.previousButton_Click);
+            // 
             // SaleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 711);
+            this.Controls.Add(this.nextButton);
+            this.Controls.Add(this.previousButton);
             this.Controls.Add(this.fatherTextBox);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.balanceTextBox);
@@ -713,5 +737,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Rate;
         private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
         private System.Windows.Forms.DataGridViewButtonColumn Remove;
+        private System.Windows.Forms.Button nextButton;
+        private System.Windows.Forms.Button previousButton;
     }
 }
