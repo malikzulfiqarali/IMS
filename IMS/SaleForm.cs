@@ -181,6 +181,9 @@ namespace IMS
                 dataTable.Rows.Add(newRow);
                 productDataGridView.Refresh();
                 UpdateStockInProductTable();
+                totalTextBox.Text = GetTotal().ToString();
+                AdvanceAmountAndBalaneAmountCalculation();
+                InstallmentCalculation();
                 return;
             }
 
