@@ -55,6 +55,7 @@ namespace IMS
             updateButton.Enabled = true;
             creditTotalTextBox.Text = string.Empty;
             updateButton.Enabled = false;
+            dateDateTimePicker.Value = DateTime.Now;
         }
 
         private void saveButton_Click(object sender, EventArgs e)

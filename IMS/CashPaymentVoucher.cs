@@ -205,6 +205,7 @@ namespace IMS
             MaxNumberVoucherCode();
             cashCodeTextBox.Text = "10002";
             saveButton.Enabled = true;
+            dateDateTimePicker.Value = DateTime.Now;
         }
         private void MaxNumberVoucherCode()
         {

@@ -186,7 +186,8 @@ namespace IMS
                 ClearAllStuff();
                 MaxNumberVoucherCode();
                 saveButton.Enabled = true;
-                updateButton.Enabled = false; 
+                updateButton.Enabled = false;
+            dateDateTimePicker.Value = DateTime.Now;
             
         }
         private void ClearAllStuff()

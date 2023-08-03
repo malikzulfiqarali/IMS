@@ -161,7 +161,7 @@
             this.Remarks,
             this.RemoveColumnButton,
             this.ID});
-            this.jrvDataGridView.Location = new System.Drawing.Point(42, 291);
+            this.jrvDataGridView.Location = new System.Drawing.Point(29, 288);
             this.jrvDataGridView.MultiSelect = false;
             this.jrvDataGridView.Name = "jrvDataGridView";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;

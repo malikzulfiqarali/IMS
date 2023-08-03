@@ -82,6 +82,7 @@ namespace IMS
             ClearAllData();
             GetMaxNumber();
             AddButtonEnabled();
+            invoiceDateTimePicker.Value = DateTime.Now;
         }
         private void GetMaxNumber()
         {
