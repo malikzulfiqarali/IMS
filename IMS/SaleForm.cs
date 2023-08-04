@@ -757,7 +757,7 @@ namespace IMS
                         mobileTextBox.Text = dt1.Rows[0][4].ToString();
                         addressTextBox.Text = dt1.Rows[0][5].ToString();
                     }
-                    SqlCommand cmd2 = new SqlCommand("select s.ProductID as PID,p.ProductDescription as Product,p.Quantity as CurrentStock,s.Qty as SoldStock,s.Price as Rate,SaleAmount as Amount from Sale s join Product p on s.ProductID=p.ProductID where SaleCode=@SaleCode", connection,transaction);
+                    SqlCommand cmd2 = new SqlCommand("select s.SaleID,s.ProductID as PID,p.ProductDescription as Product,p.Quantity as CurrentStock,s.Qty as SoldStock,s.Price as Rate,SaleAmount as Amount from Sale s join Product p on s.ProductID=p.ProductID where SaleCode=@SaleCode", connection,transaction);
                     cmd2.Parameters.AddWithValue("@SaleCode", saleNumberTextBox.Text.Trim());
                     SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
                     DataTable dt2 = new DataTable();
@@ -812,8 +812,190 @@ namespace IMS
 
         private void updateButton_Click(object sender, EventArgs e)
         {
+            SqlTransaction transaction = null;
+            if (string.IsNullOrWhiteSpace(saleNumberTextBox.Text))
+            {
+                MessageBox.Show("Sale Invoice Number must not be Empty", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                saleNumberTextBox.Focus();
+                return;
+            }
+            if (saleCategoryComboBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Sale Category must be selected", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                saleCategoryComboBox.Focus();
+                return;
 
-        }
+            }
+            if (string.IsNullOrEmpty(customerCodeTextBox.Text))
+            {
+                MessageBox.Show("Customer Code must be entered", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                customerCodeTextBox.Focus();
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(customerNameTextBox.Text))
+            {
+                MessageBox.Show("Please Enter Customer Name", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                customerNameTextBox.Focus();
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(mobileTextBox.Text))
+            {
+                MessageBox.Show("Please Enter Customer Mobile Number", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                mobileTextBox.Focus();
+                return;
+            }
+            if (productDataGridView.Rows.Count == 0)
+            {
+                MessageBox.Show("Please enter any Product for further Processing", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                productIdTextBox.Focus();
+                return;
+            }
+            try
+            {
+                //connection.Open();
+                //transaction = connection.BeginTransaction();
+                //string voucherCatCode = saleNumber.Text.Trim() + " " + saleNumberTextBox.Text.Trim();
+                //int VCodeCash = 10002;
+                //string Description = "Cash";
+                //int installmentSaleCode = 10017;
+                //string installmentSaleDescription = "Installment Sales Revenue";
+                //int salesRevenue = 10004;
+                //string salesRevenueDescription = "Sales Revenue";
+
+
+                //foreach (DataGridViewRow row in productDataGridView.Rows)
+                //{
+                //    string mergeQuery = $@"
+                //    MERGE Sale AS T
+                //    USING (VALUES (@SaleID, @SaleCode, @Date,@CustomerID,@ProductID,@SaleCategory,@Qty,@Price,@SaleAmount,@TotalInvoiceAmount,@Advance,@BalanceAmount,@Months,@InstallmentAmount))
+                //    AS S (SaleID, SaleCode, Date,CustomerID,ProductID,SaleCategory,Qty,Price,SaleAmount,TotalInvoiceAmount,Advance,BalanceAmount,Months,InstallmentAmount)
+                //    ON T.SaleID = S.SaleID
+                //    WHEN MATCHED THEN
+                //        UPDATE SET T.SaleCode = S.SaleCode,T.Date=S.Date,
+                //                   T.CustomerID=S.CustomerID,T.ProductID=S.ProductID,
+                //                   T.SaleCategory=S.SaleCategory,T.Qty=S.Qty,
+                //                   T.Price=S.Price,T.SaleAmount=S.SaleAmount,
+                //                   T.TotalInvoiceAmount=S.TotalInvoiceAmount,
+                //                   T.Advance=S.Advance,T.BalanceAmount=S.BalanceAmount,
+                //                   T.Months=S.Months,T.InstallmentAmount=S.InstallmentAmount
+                                   
+                                
+                //    WHEN NOT MATCHED THEN
+                //        INSERT (SaleCode,Date,CustomerID,ProductID,SaleCategory,Qty,Price,SaleAmount,TotalInvoiceAmount,Advance,BalanceAmount,Months,InstallmentAmount) VALUES
+                //               (S.SaleCode,S.Date,S.CustomerID,S.ProductID,S.SaleCategory,S.Qty,S.Price,S.SaleAmount,S.TotalInvoiceAmount,S.Advance,S.BalanceAmount,S.Months,S.InstallmentAmount)
+                //    WHEN NOT MATCHED BY SOURCE THEN
+                //        DELETE;
+                //    ";
+                //    SqlCommand cmd = new SqlCommand(mergeQuery, connection, transaction);
+                //    cmd.Parameters.AddWithValue("@SaleID",Convert.ToInt32(row.Cells["SaleID"].Value).ToString().Trim()??(object)DBNull.Value);
+                //    cmd.Parameters.AddWithValue("@SaleCode", saleNumberTextBox.Text.Trim());
+                //    cmd.Parameters.AddWithValue("@Date", invoiceDateTimePicker.Value);
+                //    cmd.Parameters.AddWithValue("@CustomerID", Convert.ToInt32(customerCodeTextBox.Text.Trim()));
+                //    cmd.Parameters.AddWithValue("@ProductID", Convert.ToInt32(row.Cells["PID"].Value));
+                //    cmd.Parameters.AddWithValue("@SaleCategory", saleCategoryComboBox.SelectedItem);
+                //    cmd.Parameters.AddWithValue("@Qty", Convert.ToInt32(row.Cells["SaleQty"].Value));
+                //    cmd.Parameters.AddWithValue("@Price", Convert.ToDecimal(row.Cells["Rate"].Value));
+                //    cmd.Parameters.AddWithValue("@SaleAmount", Convert.ToDecimal(row.Cells["Amount"].Value));
+                //    cmd.Parameters.AddWithValue("@TotalInvoiceAmount", Convert.ToDecimal(totalTextBox.Text.Trim()));
+                //    cmd.Parameters.AddWithValue("@Advance", advanceTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(advanceTextBox.Text.Trim()));
+                //    cmd.Parameters.AddWithValue("@BalanceAmount", balanceTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(balanceTextBox.Text.Trim()));
+                //    cmd.Parameters.AddWithValue("@Months", monthTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToInt32(monthTextBox.Text.Trim()));
+                //    cmd.Parameters.AddWithValue("@InstallmentAmount", installmentTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(installmentTextBox.Text.Trim()));
+                //    cmd.ExecuteNonQuery();
+                //}
+                
+                //foreach (DataGridViewRow row in productDataGridView.Rows)
+                //{
+                //    SqlCommand cmd2 = new SqlCommand("INSERT INTO [dbo].[Stock] (Date,SaleID,ProductID,CustomerID,SoldQuantity)VALUES(@Date,@SaleID,@ProductID,@CustomerID,@SoldQuantity)", connection, transaction);
+                //    cmd2.Parameters.AddWithValue("@Date", invoiceDateTimePicker.Value);
+                //    cmd2.Parameters.AddWithValue("@SaleID", Convert.ToInt32(saleNumberTextBox.Text.Trim()));
+                //    cmd2.Parameters.AddWithValue("@ProductID", row.Cells["PID"].Value);
+                //    cmd2.Parameters.AddWithValue("@CustomerID", Convert.ToInt32(customerCodeTextBox.Text.Trim()));
+                //    cmd2.Parameters.AddWithValue("@SoldQuantity", row.Cells["SaleQty"].Value);
+                //    cmd2.ExecuteNonQuery();
+                //}
+
+                //if (!string.IsNullOrWhiteSpace(advanceTextBox.Text.Trim()))
+                //{
+
+                //    SqlCommand cmd3 = new SqlCommand("INSERT INTO [dbo].[TransactionTable] (VoucherCode,VoucherType,VoucherDate,Description,VoucherCategoryID,VoucherCategory,VoucherCategoryCode,Debit)VALUES(@VoucherCode,@VoucherType,@VoucherDate,@Description,@VoucherCategoryID,@VoucherCategory,@VoucherCategoryCode,@Debit)", connection, transaction);
+                //    cmd3.Parameters.AddWithValue("@VoucherCode", Convert.ToInt32(saleNumberTextBox.Text.Trim()));
+                //    cmd3.Parameters.AddWithValue("@VoucherType", saleNumber.Text.Trim());
+                //    cmd3.Parameters.AddWithValue("@VoucherDate", invoiceDateTimePicker.Value);
+                //    cmd3.Parameters.AddWithValue("@Description", Description);
+                //    cmd3.Parameters.AddWithValue("@VoucherCategoryID", VCodeCash);
+                //    cmd3.Parameters.AddWithValue("@VoucherCategory", saleCategoryComboBox.SelectedItem);
+                //    cmd3.Parameters.AddWithValue("@VoucherCategoryCode", voucherCatCode);
+                //    cmd3.Parameters.AddWithValue("@Debit", advanceTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(advanceTextBox.Text.Trim()));
+                //    cmd3.ExecuteNonQuery();
+                //    SqlCommand cmd4 = new SqlCommand("INSERT INTO [dbo].[TransactionTable] (VoucherCode,VoucherType,VoucherDate,Description,VoucherCategoryID,VoucherCategory,VoucherCategoryCode,Debit)VALUES(@VoucherCode,@VoucherType,@VoucherDate,@Description,@VoucherCategoryID,@VoucherCategory,@VoucherCategoryCode,@Debit)", connection, transaction);
+                //    cmd4.Parameters.AddWithValue("@VoucherCode", Convert.ToInt32(saleNumberTextBox.Text.Trim()));
+                //    cmd4.Parameters.AddWithValue("@VoucherType", saleNumber.Text.Trim());
+                //    cmd4.Parameters.AddWithValue("@VoucherDate", invoiceDateTimePicker.Value);
+                //    cmd4.Parameters.AddWithValue("@VoucherCategoryID", Convert.ToInt32(customerCodeTextBox.Text.Trim()));
+                //    cmd4.Parameters.AddWithValue("@VoucherCategory", saleCategoryComboBox.SelectedItem);
+                //    cmd4.Parameters.AddWithValue("@VoucherCategoryCode", voucherCatCode);
+                //    cmd4.Parameters.AddWithValue("@Description", customerNameTextBox.Text.Trim());
+                //    cmd4.Parameters.AddWithValue("@Debit", balanceTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(balanceTextBox.Text.Trim()));
+                //    cmd4.ExecuteNonQuery();
+
+                //    SqlCommand cmd5 = new SqlCommand("INSERT INTO [dbo].[TransactionTable] (VoucherCode,VoucherType,VoucherDate,Description,VoucherCategoryID,VoucherCategory,VoucherCategoryCode,Credit)VALUES(@VoucherCode,@VoucherType,@VoucherDate,@Description,@VoucherCategoryID,@VoucherCategory,@VoucherCategoryCode,@Credit)", connection, transaction);
+                //    cmd5.Parameters.AddWithValue("@VoucherCode", Convert.ToInt32(saleNumberTextBox.Text.Trim()));
+                //    cmd5.Parameters.AddWithValue("@VoucherType", saleNumber.Text.Trim());
+                //    cmd5.Parameters.AddWithValue("@VoucherDate", invoiceDateTimePicker.Value);
+                //    cmd5.Parameters.AddWithValue("@VoucherCategoryID", installmentSaleCode);
+                //    cmd5.Parameters.AddWithValue("@VoucherCategory", saleCategoryComboBox.SelectedItem);
+                //    cmd5.Parameters.AddWithValue("@VoucherCategoryCode", voucherCatCode);
+                //    cmd5.Parameters.AddWithValue("@Description", installmentSaleDescription);
+                //    cmd5.Parameters.AddWithValue("@Credit", totalTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(totalTextBox.Text.Trim()));
+                //    cmd5.ExecuteNonQuery();
+
+
+                //}
+                //else
+                //{
+                //    SqlCommand cmd1 = new SqlCommand("[SP_INSERT_SALE_VOUCHER]", connection, transaction);
+                //    cmd1.CommandType = CommandType.StoredProcedure;
+                //    cmd1.Parameters.AddWithValue("@VoucherCode", Convert.ToInt32(saleNumberTextBox.Text.Trim()));
+                //    cmd1.Parameters.AddWithValue("@VoucherType", saleNumber.Text.Trim());
+                //    cmd1.Parameters.AddWithValue("@VoucherDate", invoiceDateTimePicker.Value);
+                //    cmd1.Parameters.AddWithValue("@VoucherCategoryID", VCodeCash);
+                //    cmd1.Parameters.AddWithValue("@VoucherCategory", saleCategoryComboBox.SelectedItem);
+                //    cmd1.Parameters.AddWithValue("@VoucherCategoryCode", voucherCatCode);
+                //    cmd1.Parameters.AddWithValue("@Description", Description);
+                //    cmd1.Parameters.AddWithValue("@Debit", totalTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(totalTextBox.Text.Trim()));
+                //    cmd1.ExecuteNonQuery();
+
+                //    SqlCommand cmd6 = new SqlCommand("INSERT INTO [dbo].[TransactionTable] (VoucherCode,VoucherType,VoucherDate,VoucherCategoryID,VoucherCategory,VoucherCategoryCode,Description,Credit)VALUES(@VoucherCode,@VoucherType,@VoucherDate,@VoucherCategoryID,@VoucherCategory,@VoucherCategoryCode,@Description,@Credit)", connection, transaction);
+                //    cmd6.Parameters.AddWithValue("@VoucherCode", Convert.ToInt32(saleNumberTextBox.Text.Trim()));
+                //    cmd6.Parameters.AddWithValue("@VoucherType", saleNumber.Text.Trim());
+                //    cmd6.Parameters.AddWithValue("@VoucherDate", invoiceDateTimePicker.Value);
+                //    cmd6.Parameters.AddWithValue("@VoucherCategoryID", salesRevenue);
+                //    cmd6.Parameters.AddWithValue("@VoucherCategory", saleCategoryComboBox.SelectedItem);
+                //    cmd6.Parameters.AddWithValue("@VoucherCategoryCode", voucherCatCode);
+                //    cmd6.Parameters.AddWithValue("@Description", salesRevenueDescription);
+                //    cmd6.Parameters.AddWithValue("@Credit", totalTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(totalTextBox.Text.Trim()));
+                //    cmd6.ExecuteNonQuery();
+                //}
+                transaction.Commit();
+                MessageBox.Show("The Transaction is successfull", "Sucess", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                connection.Close();
+                addNewButton.PerformClick();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, "Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                transaction.Rollback();
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+
+        
+    }
         private int LastIncrementedNumber()
         {
             connection.Open();
