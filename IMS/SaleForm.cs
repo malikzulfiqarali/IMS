@@ -888,8 +888,6 @@ namespace IMS
 
                     object SaleID = row.Cells["SaleID"].Value==null || row.Cells["SaleID"].Value==DBNull.Value|| string.IsNullOrEmpty( row.Cells["SaleID"].Value.ToString()) ?Convert.ToInt32(0) : Convert.ToInt32(row.Cells["SaleID"].Value) ;
                     int ID = Convert.ToInt32(SaleID);
-
-
                     if (ID!=0)
                     {
                         string query1 = $@" UPDATE Sale SET 
@@ -901,22 +899,22 @@ namespace IMS
                                    Advance = @Advance,BalanceAmount = @BalanceAmount,
                                    Months = @Months,InstallmentAmount = @InstallmentAmount where SaleID=@SaleID";
                                    
-                        SqlCommand cmd = new SqlCommand(query1, connection, transaction);
-                        cmd.Parameters.AddWithValue("@SaleID",ID);
-                        cmd.Parameters.AddWithValue("@SaleCode", saleNumberTextBox.Text.Trim());
-                        cmd.Parameters.AddWithValue("@Date", invoiceDateTimePicker.Value);
-                        cmd.Parameters.AddWithValue("@CustomerID", Convert.ToInt32(customerCodeTextBox.Text.Trim()));
-                        cmd.Parameters.AddWithValue("@ProductID", Convert.ToInt32(row.Cells["PID"].Value));
-                        cmd.Parameters.AddWithValue("@SaleCategory", saleCategoryComboBox.SelectedItem);
-                        cmd.Parameters.AddWithValue("@Qty", Convert.ToInt32(row.Cells["SaleQty"].Value));
-                        cmd.Parameters.AddWithValue("@Price", Convert.ToDecimal(row.Cells["Rate"].Value));
-                        cmd.Parameters.AddWithValue("@SaleAmount", Convert.ToDecimal(row.Cells["Amount"].Value));
-                        cmd.Parameters.AddWithValue("@TotalInvoiceAmount", Convert.ToDecimal(totalTextBox.Text.Trim()));
-                        cmd.Parameters.AddWithValue("@Advance", advanceTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(advanceTextBox.Text.Trim()));
-                        cmd.Parameters.AddWithValue("@BalanceAmount", balanceTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(balanceTextBox.Text.Trim()));
-                        cmd.Parameters.AddWithValue("@Months", monthTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToInt32(monthTextBox.Text.Trim()));
-                        cmd.Parameters.AddWithValue("@InstallmentAmount", installmentTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(installmentTextBox.Text.Trim()));
-                        cmd.ExecuteNonQuery(); 
+                        SqlCommand cmd1 = new SqlCommand(query1, connection, transaction);
+                        cmd1.Parameters.AddWithValue("@SaleID",ID);
+                        cmd1.Parameters.AddWithValue("@SaleCode", saleNumberTextBox.Text.Trim());
+                        cmd1.Parameters.AddWithValue("@Date", invoiceDateTimePicker.Value);
+                        cmd1.Parameters.AddWithValue("@CustomerID", Convert.ToInt32(customerCodeTextBox.Text.Trim()));
+                        cmd1.Parameters.AddWithValue("@ProductID", Convert.ToInt32(row.Cells["PID"].Value));
+                        cmd1.Parameters.AddWithValue("@SaleCategory", saleCategoryComboBox.SelectedItem);
+                        cmd1.Parameters.AddWithValue("@Qty", Convert.ToInt32(row.Cells["SaleQty"].Value));
+                        cmd1.Parameters.AddWithValue("@Price", Convert.ToDecimal(row.Cells["Rate"].Value));
+                        cmd1.Parameters.AddWithValue("@SaleAmount", Convert.ToDecimal(row.Cells["Amount"].Value));
+                        cmd1.Parameters.AddWithValue("@TotalInvoiceAmount", Convert.ToDecimal(totalTextBox.Text.Trim()));
+                        cmd1.Parameters.AddWithValue("@Advance", advanceTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(advanceTextBox.Text.Trim()));
+                        cmd1.Parameters.AddWithValue("@BalanceAmount", balanceTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(balanceTextBox.Text.Trim()));
+                        cmd1.Parameters.AddWithValue("@Months", monthTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToInt32(monthTextBox.Text.Trim()));
+                        cmd1.Parameters.AddWithValue("@InstallmentAmount", installmentTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(installmentTextBox.Text.Trim()));
+                        cmd1.ExecuteNonQuery(); 
                     }
                     if (ID==0)
                     {
@@ -940,16 +938,36 @@ namespace IMS
                     }
                 }
 
-                //foreach (DataGridViewRow row in productDataGridView.Rows)
-                //{
-                //    SqlCommand cmd2 = new SqlCommand("INSERT INTO [dbo].[Stock] (Date,SaleID,ProductID,CustomerID,SoldQuantity)VALUES(@Date,@SaleID,@ProductID,@CustomerID,@SoldQuantity)", connection, transaction);
-                //    cmd2.Parameters.AddWithValue("@Date", invoiceDateTimePicker.Value);
-                //    cmd2.Parameters.AddWithValue("@SaleID", Convert.ToInt32(saleNumberTextBox.Text.Trim()));
-                //    cmd2.Parameters.AddWithValue("@ProductID", row.Cells["PID"].Value);
-                //    cmd2.Parameters.AddWithValue("@CustomerID", Convert.ToInt32(customerCodeTextBox.Text.Trim()));
-                //    cmd2.Parameters.AddWithValue("@SoldQuantity", row.Cells["SaleQty"].Value);
-                //    cmd2.ExecuteNonQuery();
-                //}
+                foreach (DataGridViewRow row in productDataGridView.Rows)
+                {
+                    object SaleID = row.Cells["SaleID"].Value == null || row.Cells["SaleID"].Value == DBNull.Value || string.IsNullOrEmpty(row.Cells["SaleID"].Value.ToString()) ? Convert.ToInt32(0) : Convert.ToInt32(row.Cells["SaleID"].Value);
+                    int ID = Convert.ToInt32(SaleID);
+
+                    if (ID==0)
+                    {
+                        string query3 = $@"INSERT INTO [dbo].[Stock] (Date,SaleID,ProductID,CustomerID,SoldQuantity)VALUES
+                                                                     (@Date,@SaleID,@ProductID,@CustomerID,@SoldQuantity)";
+                        SqlCommand cmd3 = new SqlCommand(query3, connection, transaction);
+                        cmd3.Parameters.AddWithValue("@Date", invoiceDateTimePicker.Value);
+                        cmd3.Parameters.AddWithValue("@SaleID", Convert.ToInt32(saleNumberTextBox.Text.Trim()));
+                        cmd3.Parameters.AddWithValue("@ProductID", row.Cells["PID"].Value);
+                        cmd3.Parameters.AddWithValue("@CustomerID", Convert.ToInt32(customerCodeTextBox.Text.Trim()));
+                        cmd3.Parameters.AddWithValue("@SoldQuantity", row.Cells["SaleQty"].Value);
+                        cmd3.ExecuteNonQuery(); 
+                    }
+                    if (ID!=0)
+                    {
+                        string query4 = $@"UPDATE Stock SET Date=@Date,SaleID=@SaleID,ProductID=@ProductID,
+                                                            CustomerID=@CustomerID,SoldQuantity=@SoldQuantity WHERE SaleID=@SaleID and ProductID=@ProductID";
+                        SqlCommand cmd4 = new SqlCommand(query4, connection, transaction);
+                        cmd4.Parameters.AddWithValue("@Date", invoiceDateTimePicker.Value);
+                        cmd4.Parameters.AddWithValue("@SaleID", Convert.ToInt32(saleNumberTextBox.Text.Trim()));
+                        cmd4.Parameters.AddWithValue("@ProductID", row.Cells["PID"].Value);
+                        cmd4.Parameters.AddWithValue("@CustomerID", Convert.ToInt32(customerCodeTextBox.Text.Trim()));
+                        cmd4.Parameters.AddWithValue("@SoldQuantity", row.Cells["SaleQty"].Value);
+                        cmd4.ExecuteNonQuery();
+                    }
+                }
 
                 //if (!string.IsNullOrWhiteSpace(advanceTextBox.Text.Trim()))
                 //{
