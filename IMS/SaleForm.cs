@@ -16,8 +16,7 @@ namespace IMS
     public partial class SaleForm : Form
     {
         SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
-        
-
+        private object sqlDbType;
 
         public SaleForm()
         {
@@ -83,6 +82,8 @@ namespace IMS
             GetMaxNumber();
             AddButtonEnabled();
             invoiceDateTimePicker.Value = DateTime.Now;
+            saveButton.Enabled = true;
+            updateButton.Enabled = false;
         }
         private void GetMaxNumber()
         {
@@ -101,6 +102,8 @@ namespace IMS
             addButton.Enabled = false; 
             ClearAllData();
             GetMaxNumber();
+            saveButton.Enabled = true;
+            updateButton.Enabled = false;
         }
 
         private void productIdTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -166,7 +169,7 @@ namespace IMS
                 saleNumber =Convert.ToInt32( dt.Rows[0][0]);
             }
             connection.Close();
-            if (saleNumber >= currentNumber && Convert.ToInt32(currentStockTextBox.Text.Trim()) >= Convert.ToInt32(saleQtyTextBox.Text.Trim()))
+            if (saleNumber >= currentNumber && Convert.ToInt32(currentStockTextBox.Text.Trim()) >= Convert.ToInt32(saleQtyTextBox.Text.Trim())  )
             {
                 // Assuming your DataGridView is bound to a DataTable (for example)
                 DataTable dataTable = (DataTable)productDataGridView.DataSource;
@@ -190,7 +193,7 @@ namespace IMS
 
             if (currentNumber > saleNumber && Convert.ToInt32( currentStockTextBox.Text.Trim()) >=Convert.ToInt32( saleQtyTextBox.Text.Trim()))
             {
-                productDataGridView.Rows.Add(productIdTextBox.Text.Trim(), productTextBox.Text.Trim(), currentStockTextBox.Text.Trim(), saleQtyTextBox.Text.Trim(), priceTextBox.Text.Trim(), totalAmountTextBox.Text.Trim());
+                productDataGridView.Rows.Add(productIdTextBox.Text.Trim(), productTextBox.Text.Trim(), currentStockTextBox.Text.Trim(), saleQtyTextBox.Text.Trim(), priceTextBox.Text.Trim(), totalAmountTextBox.Text.Trim() );
                 UpdateStockInProductTable();
                 productIdTextBox.Text = string.Empty;
                 productTextBox.Text = string.Empty;
@@ -264,7 +267,15 @@ namespace IMS
             {
                 if (productDataGridView.Columns[e.ColumnIndex].HeaderText == "Remove")
                 {
+                    
                     UpdateBackQuantityInProductTableWithoutForLoop();
+                    connection.Open();
+                    int id = Convert.ToInt32(productDataGridView.Rows[e.RowIndex].Cells["SaleID"].Value);
+                    string query = $@"DELETE FROM Sale WHERE SaleID=@SaleID";
+                    SqlCommand cmd1 = new SqlCommand(query,connection);
+                    cmd1.Parameters.AddWithValue("@SaleID",id);
+                    cmd1.ExecuteNonQuery();
+                    connection.Close();
                     productDataGridView.Rows.RemoveAt(e.RowIndex);
                     productIdTextBox.Text = string.Empty;
                     productTextBox.Text = string.Empty;
@@ -272,6 +283,10 @@ namespace IMS
                     saleQtyTextBox.Text = string.Empty;
                     priceTextBox.Text = string.Empty;
                     totalAmountTextBox.Text = string.Empty;
+                    this.ControlBox = false;
+                    closeButton.Enabled = false;
+                    addNewButton.Enabled = false;
+                    updateButton.Enabled = true;
 
 
                     if (e.RowIndex > 0)
@@ -846,15 +861,19 @@ namespace IMS
             }
             if (productDataGridView.Rows.Count == 0)
             {
-                MessageBox.Show("Please enter any Product for further Processing", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+               DialogResult result= MessageBox.Show("Please enter any Product for further Processing", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (result==DialogResult.OK)
+                {
+                    productDataGridView.DataSource = null;
+                }
                 productIdTextBox.Focus();
                 return;
             }
             try
             {
-                //connection.Open();
-                //transaction = connection.BeginTransaction();
-                //string voucherCatCode = saleNumber.Text.Trim() + " " + saleNumberTextBox.Text.Trim();
+                connection.Open();
+                transaction = connection.BeginTransaction();
+                string voucherCatCode = saleNumber.Text.Trim() + " " + saleNumberTextBox.Text.Trim();
                 //int VCodeCash = 10002;
                 //string Description = "Cash";
                 //int installmentSaleCode = 10017;
@@ -863,47 +882,64 @@ namespace IMS
                 //string salesRevenueDescription = "Sales Revenue";
 
 
-                //foreach (DataGridViewRow row in productDataGridView.Rows)
-                //{
-                //    string mergeQuery = $@"
-                //    MERGE Sale AS T
-                //    USING (VALUES (@SaleID, @SaleCode, @Date,@CustomerID,@ProductID,@SaleCategory,@Qty,@Price,@SaleAmount,@TotalInvoiceAmount,@Advance,@BalanceAmount,@Months,@InstallmentAmount))
-                //    AS S (SaleID, SaleCode, Date,CustomerID,ProductID,SaleCategory,Qty,Price,SaleAmount,TotalInvoiceAmount,Advance,BalanceAmount,Months,InstallmentAmount)
-                //    ON T.SaleID = S.SaleID
-                //    WHEN MATCHED THEN
-                //        UPDATE SET T.SaleCode = S.SaleCode,T.Date=S.Date,
-                //                   T.CustomerID=S.CustomerID,T.ProductID=S.ProductID,
-                //                   T.SaleCategory=S.SaleCategory,T.Qty=S.Qty,
-                //                   T.Price=S.Price,T.SaleAmount=S.SaleAmount,
-                //                   T.TotalInvoiceAmount=S.TotalInvoiceAmount,
-                //                   T.Advance=S.Advance,T.BalanceAmount=S.BalanceAmount,
-                //                   T.Months=S.Months,T.InstallmentAmount=S.InstallmentAmount
+                foreach (DataGridViewRow row in productDataGridView.Rows)
+                {
+                    
+
+                    object SaleID = row.Cells["SaleID"].Value==null || row.Cells["SaleID"].Value==DBNull.Value|| string.IsNullOrEmpty( row.Cells["SaleID"].Value.ToString()) ?Convert.ToInt32(0) : Convert.ToInt32(row.Cells["SaleID"].Value) ;
+                    int ID = Convert.ToInt32(SaleID);
+
+
+                    if (ID!=0)
+                    {
+                        string query1 = $@" UPDATE Sale SET 
+                                   SaleCode = @SaleCode,Date = @Date,
+                                   CustomerID = @CustomerID,ProductID = @ProductID,
+                                   SaleCategory = @SaleCategory,Qty = @Qty,
+                                   Price =@Price,SaleAmount = @SaleAmount,
+                                   TotalInvoiceAmount = @TotalInvoiceAmount,
+                                   Advance = @Advance,BalanceAmount = @BalanceAmount,
+                                   Months = @Months,InstallmentAmount = @InstallmentAmount where SaleID=@SaleID";
                                    
-                                
-                //    WHEN NOT MATCHED THEN
-                //        INSERT (SaleCode,Date,CustomerID,ProductID,SaleCategory,Qty,Price,SaleAmount,TotalInvoiceAmount,Advance,BalanceAmount,Months,InstallmentAmount) VALUES
-                //               (S.SaleCode,S.Date,S.CustomerID,S.ProductID,S.SaleCategory,S.Qty,S.Price,S.SaleAmount,S.TotalInvoiceAmount,S.Advance,S.BalanceAmount,S.Months,S.InstallmentAmount)
-                //    WHEN NOT MATCHED BY SOURCE THEN
-                //        DELETE;
-                //    ";
-                //    SqlCommand cmd = new SqlCommand(mergeQuery, connection, transaction);
-                //    cmd.Parameters.AddWithValue("@SaleID",Convert.ToInt32(row.Cells["SaleID"].Value).ToString().Trim()??(object)DBNull.Value);
-                //    cmd.Parameters.AddWithValue("@SaleCode", saleNumberTextBox.Text.Trim());
-                //    cmd.Parameters.AddWithValue("@Date", invoiceDateTimePicker.Value);
-                //    cmd.Parameters.AddWithValue("@CustomerID", Convert.ToInt32(customerCodeTextBox.Text.Trim()));
-                //    cmd.Parameters.AddWithValue("@ProductID", Convert.ToInt32(row.Cells["PID"].Value));
-                //    cmd.Parameters.AddWithValue("@SaleCategory", saleCategoryComboBox.SelectedItem);
-                //    cmd.Parameters.AddWithValue("@Qty", Convert.ToInt32(row.Cells["SaleQty"].Value));
-                //    cmd.Parameters.AddWithValue("@Price", Convert.ToDecimal(row.Cells["Rate"].Value));
-                //    cmd.Parameters.AddWithValue("@SaleAmount", Convert.ToDecimal(row.Cells["Amount"].Value));
-                //    cmd.Parameters.AddWithValue("@TotalInvoiceAmount", Convert.ToDecimal(totalTextBox.Text.Trim()));
-                //    cmd.Parameters.AddWithValue("@Advance", advanceTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(advanceTextBox.Text.Trim()));
-                //    cmd.Parameters.AddWithValue("@BalanceAmount", balanceTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(balanceTextBox.Text.Trim()));
-                //    cmd.Parameters.AddWithValue("@Months", monthTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToInt32(monthTextBox.Text.Trim()));
-                //    cmd.Parameters.AddWithValue("@InstallmentAmount", installmentTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(installmentTextBox.Text.Trim()));
-                //    cmd.ExecuteNonQuery();
-                //}
-                
+                        SqlCommand cmd = new SqlCommand(query1, connection, transaction);
+                        cmd.Parameters.AddWithValue("@SaleID",ID);
+                        cmd.Parameters.AddWithValue("@SaleCode", saleNumberTextBox.Text.Trim());
+                        cmd.Parameters.AddWithValue("@Date", invoiceDateTimePicker.Value);
+                        cmd.Parameters.AddWithValue("@CustomerID", Convert.ToInt32(customerCodeTextBox.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@ProductID", Convert.ToInt32(row.Cells["PID"].Value));
+                        cmd.Parameters.AddWithValue("@SaleCategory", saleCategoryComboBox.SelectedItem);
+                        cmd.Parameters.AddWithValue("@Qty", Convert.ToInt32(row.Cells["SaleQty"].Value));
+                        cmd.Parameters.AddWithValue("@Price", Convert.ToDecimal(row.Cells["Rate"].Value));
+                        cmd.Parameters.AddWithValue("@SaleAmount", Convert.ToDecimal(row.Cells["Amount"].Value));
+                        cmd.Parameters.AddWithValue("@TotalInvoiceAmount", Convert.ToDecimal(totalTextBox.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@Advance", advanceTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(advanceTextBox.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@BalanceAmount", balanceTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(balanceTextBox.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@Months", monthTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToInt32(monthTextBox.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@InstallmentAmount", installmentTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(installmentTextBox.Text.Trim()));
+                        cmd.ExecuteNonQuery(); 
+                    }
+                    if (ID==0)
+                    {
+                        string query2 = $@"INSERT INTO Sale (SaleCode,Date,CustomerID,ProductID,SaleCategory,Qty,Price,SaleAmount,TotalInvoiceAmount,Advance,BalanceAmount,Months,InstallmentAmount) VALUES
+                                                            (@SaleCode,@Date,@CustomerID,@ProductID,@SaleCategory,@Qty,@Price,@SaleAmount,@TotalInvoiceAmount,@Advance,@BalanceAmount,@Months,@InstallmentAmount)";
+                        SqlCommand cmd2 = new SqlCommand(query2,connection,transaction);
+                        cmd2.Parameters.AddWithValue("@SaleCode", saleNumberTextBox.Text.Trim());
+                        cmd2.Parameters.AddWithValue("@Date", invoiceDateTimePicker.Value);
+                        cmd2.Parameters.AddWithValue("@CustomerID", Convert.ToInt32(customerCodeTextBox.Text.Trim()));
+                        cmd2.Parameters.AddWithValue("@ProductID", Convert.ToInt32(row.Cells["PID"].Value));
+                        cmd2.Parameters.AddWithValue("@SaleCategory", saleCategoryComboBox.SelectedItem);
+                        cmd2.Parameters.AddWithValue("@Qty", Convert.ToInt32(row.Cells["SaleQty"].Value));
+                        cmd2.Parameters.AddWithValue("@Price", Convert.ToDecimal(row.Cells["Rate"].Value));
+                        cmd2.Parameters.AddWithValue("@SaleAmount", Convert.ToDecimal(row.Cells["Amount"].Value));
+                        cmd2.Parameters.AddWithValue("@TotalInvoiceAmount", Convert.ToDecimal(totalTextBox.Text.Trim()));
+                        cmd2.Parameters.AddWithValue("@Advance", advanceTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(advanceTextBox.Text.Trim()));
+                        cmd2.Parameters.AddWithValue("@BalanceAmount", balanceTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(balanceTextBox.Text.Trim()));
+                        cmd2.Parameters.AddWithValue("@Months", monthTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToInt32(monthTextBox.Text.Trim()));
+                        cmd2.Parameters.AddWithValue("@InstallmentAmount", installmentTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(installmentTextBox.Text.Trim()));
+                        cmd2.ExecuteNonQuery();
+                    }
+                }
+
                 //foreach (DataGridViewRow row in productDataGridView.Rows)
                 //{
                 //    SqlCommand cmd2 = new SqlCommand("INSERT INTO [dbo].[Stock] (Date,SaleID,ProductID,CustomerID,SoldQuantity)VALUES(@Date,@SaleID,@ProductID,@CustomerID,@SoldQuantity)", connection, transaction);
@@ -980,7 +1016,14 @@ namespace IMS
                 transaction.Commit();
                 MessageBox.Show("The Transaction is successfull", "Sucess", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 connection.Close();
+                
+                this.ControlBox = true;
+                saveButton.Enabled = true;
+                addNewButton.Enabled = true;
+                closeButton.Enabled = true;
+                updateButton.Enabled = false;
                 addNewButton.PerformClick();
+
             }
             catch (Exception ex)
             {
@@ -1013,6 +1056,8 @@ namespace IMS
             int newNumber = voucherNumber - 1;
             saleNumberTextBox.Text = newNumber.ToString();
             saleNumberTextBox_Leave(sender, e);
+            saveButton.Enabled = false;
+            updateButton.Enabled = true;
         }
 
         private void nextButton_Click(object sender, EventArgs e)
@@ -1021,6 +1066,8 @@ namespace IMS
             int newNumber = voucherNumber + 1;
             saleNumberTextBox.Text = newNumber.ToString();
             saleNumberTextBox_Leave(sender, e);
+            saveButton.Enabled = false;
+            updateButton.Enabled = true;
         }
     }
 }
