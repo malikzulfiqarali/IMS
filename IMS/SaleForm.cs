@@ -175,6 +175,7 @@ namespace IMS
             }
             int currentNumber =Convert.ToInt32( saleNumberTextBox.Text);
             int saleNumber = 0;
+
             connection.Open();
             SqlDataAdapter da = new SqlDataAdapter("Select distinct MAX(SaleCode) from Sale",connection);
             DataTable dt = new DataTable();
@@ -184,6 +185,7 @@ namespace IMS
                 saleNumber =Convert.ToInt32( dt.Rows[0][0]);
             }
             connection.Close();
+
             if (saleNumber >= currentNumber && Convert.ToInt32(currentStockTextBox.Text.Trim()) >= Convert.ToInt32(saleQtyTextBox.Text.Trim())  )
             {
                 // Assuming your DataGridView is bound to a DataTable (for example)
@@ -215,6 +217,7 @@ namespace IMS
 
             if (currentNumber > saleNumber && Convert.ToInt32( currentStockTextBox.Text.Trim()) >=Convert.ToInt32( saleQtyTextBox.Text.Trim()))
             {
+                productDataGridView.DataSource = null;
                 productDataGridView.Rows.Add(productIdTextBox.Text.Trim(), productTextBox.Text.Trim(), currentStockTextBox.Text.Trim(), saleQtyTextBox.Text.Trim(), priceTextBox.Text.Trim(), totalAmountTextBox.Text.Trim() );
                 UpdateStockInProductTable();
                 productIdTextBox.Text = string.Empty;
@@ -507,9 +510,17 @@ namespace IMS
 
         private void InstallmentCalculation()
         {
-            if (balanceTextBox.Text != string.Empty)
+            try
             {
-                installmentTextBox.Text = (Math.Round((Convert.ToDecimal(balanceTextBox.Text.Trim())) / Convert.ToDecimal(monthTextBox.Text.Trim()),0)).ToString();
+                if (balanceTextBox.Text != string.Empty)
+                {
+                    installmentTextBox.Text = (Math.Round((Convert.ToDecimal(balanceTextBox.Text.Trim())) / Convert.ToDecimal(monthTextBox.Text.Trim()), 0)).ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Month could not be empty and "+ex.Message+"","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
 
@@ -599,12 +610,23 @@ namespace IMS
                 productIdTextBox.Focus();
                 return;
             }
-            if (invoiceDateTimePicker.Value.Date==DateTime.Now.Date)
+            if (invoiceDateTimePicker.Value.Date!=DateTime.Now.Date)
             {
                 MessageBox.Show("You cannot Insert Previous Date Record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 customerCodeTextBox.Focus();
                 return;
             }
+            if (saleCategoryComboBox.SelectedIndex==2)
+            {
+                if (advanceTextBox.Text==string.Empty)
+                {
+                    MessageBox.Show("Please enter advance amount and number of months","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    advanceTextBox.Focus();
+                    return;
+                }
+            }
+            
+
             try
             {
                 connection.Open();
