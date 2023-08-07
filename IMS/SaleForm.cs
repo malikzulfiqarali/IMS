@@ -166,6 +166,13 @@ namespace IMS
 
         private void addButton_Click(object sender, EventArgs e)
         {
+            if (invoiceDateTimePicker.Value.Date!=DateTime.Now.Date)
+            {
+                MessageBox.Show("You cannot Add Records to the Previous date","Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                addNewButton.PerformClick();
+                customerCodeTextBox.Focus();
+                return;
+            }
             int currentNumber =Convert.ToInt32( saleNumberTextBox.Text);
             int saleNumber = 0;
             connection.Open();
@@ -191,11 +198,18 @@ namespace IMS
 
                 // Set values for the new row, e.g., newRow["Column1"] = value1; newRow["Column2"] = value2;
                 dataTable.Rows.Add(newRow);
-                productDataGridView.Refresh();
                 UpdateStockInProductTable();
+                productIdTextBox.Text = string.Empty;
+                productTextBox.Text = string.Empty;
+                currentStockTextBox.Text = string.Empty;
+                saleQtyTextBox.Text = string.Empty;
+                saleQtyTextBox.BackColor = Color.White;
+                priceTextBox.Text = string.Empty;
+                totalAmountTextBox.Text = string.Empty;
                 totalTextBox.Text = GetTotal().ToString();
                 AdvanceAmountAndBalaneAmountCalculation();
                 InstallmentCalculation();
+                productDataGridView.Refresh();
                 return;
             }
 
@@ -273,66 +287,115 @@ namespace IMS
         {
             try
             {
-                if (productDataGridView.Columns[e.ColumnIndex].HeaderText == "Remove")
-                {
-                    
-                    UpdateBackQuantityInProductTableWithoutForLoop();
-                    connection.Open();
-                    int id1 = Convert.ToInt32(productDataGridView.Rows[e.RowIndex].Cells["SaleID"].Value);
-                    string query1 = $@"DELETE FROM Sale WHERE SaleID=@SaleID";
-                    SqlCommand cmd1 = new SqlCommand(query1,connection);
-                    cmd1.Parameters.AddWithValue("@SaleID",id1);
-                    cmd1.ExecuteNonQuery();
-                    connection.Close();
+
+                if (invoiceDateTimePicker.Value.Date!=DateTime.Now.Date)
+            {
+                MessageBox.Show("You cannot Remove records from previous date", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                addNewButton.PerformClick();
+                customerCodeTextBox.Focus();
+                return;
+            }
+
+                object SaleID = productDataGridView.Rows[e.RowIndex].Cells["SaleID"].Value == null || productDataGridView.Rows[e.RowIndex].Cells["SaleID"].Value == DBNull.Value || string.IsNullOrEmpty(productDataGridView.Rows[e.RowIndex].Cells["SaleID"].Value.ToString()) ? Convert.ToInt32(0) : Convert.ToInt32(productDataGridView.Rows[e.RowIndex].Cells["SaleID"].Value);
+                int ID = Convert.ToInt32(SaleID);
+               
+                    if (productDataGridView.Columns[e.ColumnIndex].HeaderText == "Remove")
+                    {
+                    if (ID == 0)
+                    {
+                        
+                            UpdateBackQuantityInProductTableWithoutForLoop();
+                            productDataGridView.Rows.RemoveAt(e.RowIndex);
+                            productIdTextBox.Text = string.Empty;
+                            productTextBox.Text = string.Empty;
+                            currentStockTextBox.Text = string.Empty;
+                            saleQtyTextBox.Text = string.Empty;
+                            priceTextBox.Text = string.Empty;
+                            totalAmountTextBox.Text = string.Empty;
+                            this.ControlBox = false;
+                            closeButton.Enabled = false;
+                            addNewButton.Enabled = false;
+                            updateButton.Enabled = true;
+                            totalTextBox.Text = GetTotal().ToString();
+                            AdvanceAmountAndBalaneAmountCalculation();
+                            InstallmentCalculation();
+
+                    } 
+                    }
+                    if (ID!=0)
+                    {
+                        
+
+                            UpdateBackQuantityInProductTableWithoutForLoop();
+                            connection.Open();
+                            int id1 = Convert.ToInt32(productDataGridView.Rows[e.RowIndex].Cells["SaleID"].Value);
+                            string query1 = $@"DELETE FROM Sale WHERE SaleID=@SaleID";
+                            SqlCommand cmd1 = new SqlCommand(query1, connection);
+                            cmd1.Parameters.AddWithValue("@SaleID", id1);
+                            cmd1.ExecuteNonQuery();
+                            connection.Close();
 
 
-                    connection.Open();
-                    int id2 = Convert.ToInt32(productDataGridView.Rows[e.RowIndex].Cells["PID"].Value);
-                    string PID = saleNumberTextBox.Text.ToString().Trim();
-                    string query2 = $@"DELETE FROM Stock WHERE ProductID=@ProductId and SaleID=@SaleID ";
-                    SqlCommand cmd2 = new SqlCommand(query2,connection);
-                    cmd2.Parameters.AddWithValue("@ProductID",id2);
-                    cmd2.Parameters.AddWithValue("@SaleID", PID);
-                    cmd2.ExecuteNonQuery();
-                    connection.Close();
+                            connection.Open();
+                            int id2 = Convert.ToInt32(productDataGridView.Rows[e.RowIndex].Cells["PID"].Value);
+                            string PID = saleNumberTextBox.Text.ToString().Trim();
+                            string query2 = $@"DELETE FROM Stock WHERE ProductID=@ProductId and SaleID=@SaleID ";
+                            SqlCommand cmd2 = new SqlCommand(query2, connection);
+                            cmd2.Parameters.AddWithValue("@ProductID", id2);
+                            cmd2.Parameters.AddWithValue("@SaleID", PID);
+                            cmd2.ExecuteNonQuery();
+                            connection.Close();
 
 
-                    productDataGridView.Rows.RemoveAt(e.RowIndex);
-                    productIdTextBox.Text = string.Empty;
-                    productTextBox.Text = string.Empty;
-                    currentStockTextBox.Text = string.Empty;
-                    saleQtyTextBox.Text = string.Empty;
-                    priceTextBox.Text = string.Empty;
-                    totalAmountTextBox.Text = string.Empty;
-                    this.ControlBox = false;
-                    closeButton.Enabled = false;
-                    addNewButton.Enabled = false;
-                    updateButton.Enabled = true;
+                            productDataGridView.Rows.RemoveAt(e.RowIndex);
+                            productIdTextBox.Text = string.Empty;
+                            productTextBox.Text = string.Empty;
+                            currentStockTextBox.Text = string.Empty;
+                            saleQtyTextBox.Text = string.Empty;
+                            priceTextBox.Text = string.Empty;
+                            totalAmountTextBox.Text = string.Empty;
+                            this.ControlBox = false;
+                            closeButton.Enabled = false;
+                            addNewButton.Enabled = false;
+                            updateButton.Enabled = true;
+                            totalTextBox.Text = GetTotal().ToString();
+                            AdvanceAmountAndBalaneAmountCalculation();
+                            InstallmentCalculation();
 
 
                     if (e.RowIndex > 0)
-                    {
-                        totalTextBox.Text = GetTotal().ToString();
-                        AdvanceAmountAndBalaneAmountCalculation();
-                        InstallmentCalculation();
-                        
+                            {
+                                totalTextBox.Text = GetTotal().ToString();
+                                AdvanceAmountAndBalaneAmountCalculation();
+                                InstallmentCalculation();
 
+
+                            }
+                            else
+                            {
+                                totalTextBox.Text = string.Empty;
+                                advanceTextBox.Text = string.Empty;
+                                monthTextBox.Text = string.Empty;
+                                balanceTextBox.Text = string.Empty;
+                                installmentTextBox.Text = string.Empty;
+                            }
+                        
                     }
-                    else
-                    {
-                        totalTextBox.Text = string.Empty;
-                        advanceTextBox.Text = string.Empty;
-                        monthTextBox.Text = string.Empty;
-                        balanceTextBox.Text = string.Empty;
-                        installmentTextBox.Text = string.Empty;
-                    }
+                      
                 }
+
                 
-            }
+                
+
+
+
+
+            
             catch (Exception ex)
             {
 
                 MessageBox.Show("Please remove this field from remove button" + ex.Message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                connection.Close();
             }
            
         }
@@ -534,6 +597,12 @@ namespace IMS
             {
                 MessageBox.Show("Please enter any Product for further Processing", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 productIdTextBox.Focus();
+                return;
+            }
+            if (invoiceDateTimePicker.Value.Date==DateTime.Now.Date)
+            {
+                MessageBox.Show("You cannot Insert Previous Date Record", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                customerCodeTextBox.Focus();
                 return;
             }
             try
@@ -867,6 +936,7 @@ namespace IMS
 
                 MessageBox.Show(ex.Message);
                 transaction.Rollback();
+                connection.Close();
             }
             finally
             {
@@ -916,6 +986,13 @@ namespace IMS
                     productDataGridView.DataSource = null;
                 }
                 productIdTextBox.Focus();
+                return;
+            }
+            if (invoiceDateTimePicker.Value.Date!=DateTime.Now.Date)
+            {
+                MessageBox.Show("You cannot Update Previous Date", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                addNewButton.PerformClick();
+                customerCodeTextBox.Focus();
                 return;
             }
             try
@@ -1154,6 +1231,7 @@ namespace IMS
 
                 MessageBox.Show(ex.Message, "Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 transaction.Rollback();
+                connection.Close();
             }
             finally
             {
