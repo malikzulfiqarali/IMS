@@ -594,6 +594,7 @@ namespace IMS
                     cmd3.Parameters.AddWithValue("@VoucherCategoryCode",voucherCatCode);
                     cmd3.Parameters.AddWithValue("@Debit", advanceTextBox.Text.Trim()==string.Empty?(object)DBNull.Value: Convert.ToDecimal(advanceTextBox.Text.Trim()));
                     cmd3.ExecuteNonQuery();
+
                     SqlCommand cmd4 = new SqlCommand("INSERT INTO [dbo].[TransactionTable] (VoucherCode,VoucherType,VoucherDate,Description,VoucherCategoryID,VoucherCategory,VoucherCategoryCode,Debit)VALUES(@VoucherCode,@VoucherType,@VoucherDate,@Description,@VoucherCategoryID,@VoucherCategory,@VoucherCategoryCode,@Debit)", connection, transaction);
                     cmd4.Parameters.AddWithValue("@VoucherCode", Convert.ToInt32(saleNumberTextBox.Text.Trim()));
                     cmd4.Parameters.AddWithValue("@VoucherType", saleNumber.Text.Trim());
@@ -922,12 +923,13 @@ namespace IMS
                 connection.Open();
                 transaction = connection.BeginTransaction();
                 string voucherCatCode = saleNumber.Text.Trim() + " " + saleNumberTextBox.Text.Trim();
-                //int VCodeCash = 10002;
-                //string Description = "Cash";
-                //int installmentSaleCode = 10017;
-                //string installmentSaleDescription = "Installment Sales Revenue";
-                //int salesRevenue = 10004;
-                //string salesRevenueDescription = "Sales Revenue";
+                int VCodeCash = 10002;
+                string Description = "Cash";
+                string creditDescription = customerNameTextBox.Text.Trim();
+                int installmentSaleCode = 10017;
+                string installmentSaleDescription = "Installment Sales Revenue";
+                int salesRevenue = 10004;
+                string salesRevenueDescription = "Sales Revenue";
 
 
                 foreach (DataGridViewRow row in productDataGridView.Rows)
@@ -1016,8 +1018,125 @@ namespace IMS
                         cmd4.ExecuteNonQuery();
                     }
                 }
+                if (saleCategoryComboBox.SelectedIndex == 2)
+                {
+                    string query5 = $@"UPDATE TransactionTable SET VoucherCode=@VoucherCode,
+                                                                   VoucherType=@VoucherType,
+                                                                   VoucherDate=@VoucherDate,
+                                                                   Description=@Description,
+                                                                   VoucherCategoryID=@VoucherCategoryID,
+                                                                   VoucherCategory=@VoucherCategory,
+                                                                   VoucherCategoryCode=@VoucherCategoryCode,
+                                                                   Debit=@Debit WHERE VoucherCode=@VoucherCode AND VoucherType=@VoucherType AND VoucherCategoryID=@VoucherCategoryID ";
+                    SqlCommand cmd5 = new SqlCommand(query5, connection, transaction);
+                    cmd5.Parameters.AddWithValue("@VoucherCode", Convert.ToInt32(saleNumberTextBox.Text.Trim()));
+                    cmd5.Parameters.AddWithValue("@VoucherType", saleNumber.Text.Trim());
+                    cmd5.Parameters.AddWithValue("@VoucherDate", invoiceDateTimePicker.Value);
+                    cmd5.Parameters.AddWithValue("@Description", Description);
+                    cmd5.Parameters.AddWithValue("@VoucherCategoryID", VCodeCash);
+                    cmd5.Parameters.AddWithValue("@VoucherCategory", saleCategoryComboBox.SelectedItem);
+                    cmd5.Parameters.AddWithValue("@VoucherCategoryCode", voucherCatCode);
+                    cmd5.Parameters.AddWithValue("@Debit", advanceTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(advanceTextBox.Text.Trim()));
+                    cmd5.ExecuteNonQuery();
 
-               
+                    string query6 = $@"UPDATE TransactionTable SET VoucherCode=@VoucherCode,VoucherType=@VoucherType,
+                                                                   VoucherDate=@VoucherDate,Description=@Description,
+                                                                   VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,
+                                                                   VoucherCategoryCode=@VoucherCategoryCode,Debit=@Debit WHERE VoucherCode=@VoucherCode AND VoucherType=@VoucherType AND VoucherCategoryID=@VoucherCategoryID ";
+                    SqlCommand cmd6 = new SqlCommand(query6, connection, transaction);
+                    cmd6.Parameters.AddWithValue("@VoucherCode", Convert.ToInt32(saleNumberTextBox.Text.Trim()));
+                    cmd6.Parameters.AddWithValue("@VoucherType", saleNumber.Text.Trim());
+                    cmd6.Parameters.AddWithValue("@VoucherDate", invoiceDateTimePicker.Value);
+                    cmd6.Parameters.AddWithValue("@VoucherCategoryID", Convert.ToInt32(customerCodeTextBox.Text.Trim()));
+                    cmd6.Parameters.AddWithValue("@VoucherCategory", saleCategoryComboBox.SelectedItem);
+                    cmd6.Parameters.AddWithValue("@VoucherCategoryCode", voucherCatCode);
+                    cmd6.Parameters.AddWithValue("@Description", customerNameTextBox.Text.Trim());
+                    cmd6.Parameters.AddWithValue("@Debit", balanceTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(balanceTextBox.Text.Trim()));
+                    cmd6.ExecuteNonQuery();
+
+                    string query7 = $@"UPDATE TransactionTable SET VoucherCode=@VoucherCode,VoucherType=@VoucherType,
+                                                                   VoucherDate=@VoucherDate,Description=@Description,
+                                                                   VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,
+                                                                   VoucherCategoryCode=@VoucherCategoryCode,Credit=@Credit WHERE VoucherCode=@VoucherCode AND VoucherType=@VoucherType AND VoucherCategoryID=@VoucherCategoryID ";
+                    SqlCommand cmd7 = new SqlCommand(query7, connection, transaction);
+                    cmd7.Parameters.AddWithValue("@VoucherCode", Convert.ToInt32(saleNumberTextBox.Text.Trim()));
+                    cmd7.Parameters.AddWithValue("@VoucherType", saleNumber.Text.Trim());
+                    cmd7.Parameters.AddWithValue("@VoucherDate", invoiceDateTimePicker.Value);
+                    cmd7.Parameters.AddWithValue("@VoucherCategoryID", installmentSaleCode);
+                    cmd7.Parameters.AddWithValue("@VoucherCategory", saleCategoryComboBox.SelectedItem);
+                    cmd7.Parameters.AddWithValue("@VoucherCategoryCode", voucherCatCode);
+                    cmd7.Parameters.AddWithValue("@Description", installmentSaleDescription);
+                    cmd7.Parameters.AddWithValue("@Credit", totalTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(totalTextBox.Text.Trim()));
+                    cmd7.ExecuteNonQuery();
+
+
+                }
+                if (saleCategoryComboBox.SelectedIndex == 0)
+                {
+                    string query8= $@"UPDATE TransactionTable SET VoucherCode=@VoucherCode,VoucherType=@VoucherType,
+                                                                   VoucherDate=@VoucherDate,Description=@Description,
+                                                                   VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,
+                                                                   VoucherCategoryCode=@VoucherCategoryCode,Debit=@Debit WHERE VoucherCode=@VoucherCode AND VoucherType=@VoucherType AND VoucherCategoryID=@VoucherCategoryID ";
+                    SqlCommand cmd8 = new SqlCommand(query8, connection, transaction);
+                    cmd8.Parameters.AddWithValue("@VoucherCode", Convert.ToInt32(saleNumberTextBox.Text.Trim()));
+                    cmd8.Parameters.AddWithValue("@VoucherType", saleNumber.Text.Trim());
+                    cmd8.Parameters.AddWithValue("@VoucherDate", invoiceDateTimePicker.Value);
+                    cmd8.Parameters.AddWithValue("@VoucherCategoryID", VCodeCash);
+                    cmd8.Parameters.AddWithValue("@VoucherCategory", saleCategoryComboBox.SelectedItem);
+                    cmd8.Parameters.AddWithValue("@VoucherCategoryCode", voucherCatCode);
+                    cmd8.Parameters.AddWithValue("@Description", Description);
+                    cmd8.Parameters.AddWithValue("@Debit", totalTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(totalTextBox.Text.Trim()));
+                    cmd8.ExecuteNonQuery();
+
+                    string query9 = $@"UPDATE TransactionTable SET VoucherCode=@VoucherCode,VoucherType=@VoucherType,
+                                                                   VoucherDate=@VoucherDate,Description=@Description,
+                                                                   VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,
+                                                                   VoucherCategoryCode=@VoucherCategoryCode,Credit=@Credit WHERE VoucherCode=@VoucherCode AND VoucherType=@VoucherType AND VoucherCategoryID=@VoucherCategoryID ";
+                    SqlCommand cmd9 = new SqlCommand(query9, connection, transaction);
+                    cmd9.Parameters.AddWithValue("@VoucherCode", Convert.ToInt32(saleNumberTextBox.Text.Trim()));
+                    cmd9.Parameters.AddWithValue("@VoucherType", saleNumber.Text.Trim());
+                    cmd9.Parameters.AddWithValue("@VoucherDate", invoiceDateTimePicker.Value);
+                    cmd9.Parameters.AddWithValue("@VoucherCategoryID", salesRevenue);
+                    cmd9.Parameters.AddWithValue("@VoucherCategory", saleCategoryComboBox.SelectedItem);
+                    cmd9.Parameters.AddWithValue("@VoucherCategoryCode", voucherCatCode);
+                    cmd9.Parameters.AddWithValue("@Description", salesRevenueDescription);
+                    cmd9.Parameters.AddWithValue("@Credit", totalTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(totalTextBox.Text.Trim()));
+                    cmd9.ExecuteNonQuery();
+                }
+                if (saleCategoryComboBox.SelectedIndex == 1)
+                {
+                    string query10 = $@"UPDATE TransactionTable SET VoucherCode=@VoucherCode,VoucherType=@VoucherType,
+                                                                   VoucherDate=@VoucherDate,Description=@Description,
+                                                                   VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,
+                                                                   VoucherCategoryCode=@VoucherCategoryCode,Debit=@Debit WHERE VoucherCode=@VoucherCode AND VoucherType=@VoucherType AND VoucherCategoryID=@VoucherCategoryID ";
+                    SqlCommand cmd10 = new SqlCommand(query10, connection, transaction);
+                    cmd10.Parameters.AddWithValue("@VoucherCode", Convert.ToInt32(saleNumberTextBox.Text.Trim()));
+                    cmd10.Parameters.AddWithValue("@VoucherType", saleNumber.Text.Trim());
+                    cmd10.Parameters.AddWithValue("@VoucherDate", invoiceDateTimePicker.Value);
+                    cmd10.Parameters.AddWithValue("@VoucherCategoryID", customerCodeTextBox.Text.Trim());
+                    cmd10.Parameters.AddWithValue("@VoucherCategory", saleCategoryComboBox.SelectedItem);
+                    cmd10.Parameters.AddWithValue("@VoucherCategoryCode", voucherCatCode);
+                    cmd10.Parameters.AddWithValue("@Description", creditDescription);
+                    cmd10.Parameters.AddWithValue("@Debit", totalTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(totalTextBox.Text.Trim()));
+                    cmd10.ExecuteNonQuery();
+
+                    string query11 = $@"UPDATE TransactionTable SET VoucherCode=@VoucherCode,VoucherType=@VoucherType,
+                                                                   VoucherDate=@VoucherDate,Description=@Description,
+                                                                   VoucherCategoryID=@VoucherCategoryID,VoucherCategory=@VoucherCategory,
+                                                                   VoucherCategoryCode=@VoucherCategoryCode,Credit=@Credit WHERE VoucherCode=@VoucherCode AND VoucherType=@VoucherType AND VoucherCategoryID=@VoucherCategoryID ";
+                    SqlCommand cmd11 = new SqlCommand(query11, connection, transaction);
+                    cmd11.Parameters.AddWithValue("@VoucherCode", Convert.ToInt32(saleNumberTextBox.Text.Trim()));
+                    cmd11.Parameters.AddWithValue("@VoucherType", saleNumber.Text.Trim());
+                    cmd11.Parameters.AddWithValue("@VoucherDate", invoiceDateTimePicker.Value);
+                    cmd11.Parameters.AddWithValue("@VoucherCategoryID", salesRevenue);
+                    cmd11.Parameters.AddWithValue("@VoucherCategory", saleCategoryComboBox.SelectedItem);
+                    cmd11.Parameters.AddWithValue("@VoucherCategoryCode", voucherCatCode);
+                    cmd11.Parameters.AddWithValue("@Description", salesRevenueDescription);
+                    cmd11.Parameters.AddWithValue("@Credit", totalTextBox.Text.Trim() == string.Empty ? (object)DBNull.Value : Convert.ToDecimal(totalTextBox.Text.Trim()));
+                    cmd11.ExecuteNonQuery();
+                }
+
+
                 transaction.Commit();
                 MessageBox.Show("The Transaction is successfull", "Sucess", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 connection.Close();
