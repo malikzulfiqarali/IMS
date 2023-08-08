@@ -77,7 +77,6 @@ namespace IMS
             {
                 UpdateBackQuantityInProductTable(); 
             }
-            saveButton.Enabled = true;
             ClearAllData();
             GetMaxNumber();
             AddButtonEnabled();
@@ -259,7 +258,6 @@ namespace IMS
                     command.Parameters.AddWithValue("@ProductID", Convert.ToInt32(productIdTextBox.Text.Trim()));
                     command.ExecuteNonQuery();
                     transaction1.Commit();
-                    //MessageBox.Show("Quantity sold is reduced in stock","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
@@ -330,6 +328,7 @@ namespace IMS
                         
 
                             UpdateBackQuantityInProductTableWithoutForLoop();
+
                             connection.Open();
                             int id1 = Convert.ToInt32(productDataGridView.Rows[e.RowIndex].Cells["SaleID"].Value);
                             string query1 = $@"DELETE FROM Sale WHERE SaleID=@SaleID";
@@ -429,9 +428,6 @@ namespace IMS
                     cmd.Parameters.AddWithValue("@ProductID", id);
                     cmd.ExecuteNonQuery();
 
-                
-
-                //MessageBox.Show("Removed quantity is added back", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
             catch (Exception ex)
@@ -474,8 +470,6 @@ namespace IMS
                     cmd.ExecuteNonQuery();
                     
                 }
-                
-               // MessageBox.Show("Removed quantity is added back","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
 
             }
             catch (Exception ex)
@@ -493,6 +487,7 @@ namespace IMS
         private void advanceTextBox_Leave(object sender, EventArgs e)
         {
             AdvanceAmountAndBalaneAmountCalculation();
+            monthTextBox.Text = "1";
         }
 
         private void AdvanceAmountAndBalaneAmountCalculation()
@@ -512,10 +507,13 @@ namespace IMS
         {
             try
             {
-                if (balanceTextBox.Text != string.Empty)
+                
+
+                if (balanceTextBox.Text != string.Empty && (Convert.ToInt32( (monthTextBox.Text))!=0 || !string.IsNullOrEmpty(monthTextBox.Text.Trim())))
                 {
                     installmentTextBox.Text = (Math.Round((Convert.ToDecimal(balanceTextBox.Text.Trim())) / Convert.ToDecimal(monthTextBox.Text.Trim()), 0)).ToString();
                 }
+               
             }
             catch (Exception ex)
             {
