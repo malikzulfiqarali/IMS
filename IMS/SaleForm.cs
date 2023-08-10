@@ -197,7 +197,6 @@ namespace IMS
                 newRow["Rate"] = priceTextBox.Text.Trim();
                 newRow["Amount"] = totalAmountTextBox.Text.Trim();
 
-                // Set values for the new row, e.g., newRow["Column1"] = value1; newRow["Column2"] = value2;
                 dataTable.Rows.Add(newRow);
                 UpdateStockInProductTable();
                 productIdTextBox.Text = string.Empty;
@@ -236,9 +235,6 @@ namespace IMS
                 saleQtyTextBox.BackColor = Color.Aqua;
                 saleQtyTextBox.Focus();
             }
-           
-            
-            
 
         }
 
