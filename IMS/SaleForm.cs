@@ -25,8 +25,29 @@ namespace IMS
 
         private void closeButton_Click(object sender, EventArgs e)
         {
-           
+            string Number = saleNumberTextBox.Text.Trim();
+            connection.Open();
+            string query = "select COUNT(*) from Sale where SaleCode=@SaleCode";
+            SqlCommand cmd = new SqlCommand(query,connection);
+            cmd.Parameters.AddWithValue("@SaleCode",Number);
+            int count = (int)cmd.ExecuteScalar();
+            connection.Close();
+            if (count > 0)
+            {
+                this.Close();
+            }
+            else
+            {
+                if (productDataGridView.Rows.Count != 0)
+                {
+                    UpdateBackQuantityInProductTable();
+                   
+                    this.Close();
+                }
+            }
+
             this.Close();
+            
         }
 
         private void productIdTextBox_KeyUp(object sender, KeyEventArgs e)
@@ -68,11 +89,26 @@ namespace IMS
 
         private void addNewButton_Click(object sender, EventArgs e)
         {
-
-
-            if (productDataGridView.Rows.Count != 0)
+            string number = saleNumberTextBox.Text.Trim();
+            string query = $@"SELECT COUNT(*) FROM Sale WHERE SaleCode=@SaleCode";
+            connection.Open();
+            SqlCommand cmd = new SqlCommand(query,connection);
+            cmd.Parameters.AddWithValue("@SaleCode",number);
+            int count = (int)cmd.ExecuteScalar();
+            connection.Close();
+            if (count>0)
             {
-                UpdateBackQuantityInProductTable();
+                ClearAndSomeAction();
+            }
+            else
+            {
+                if (productDataGridView.Rows.Count != 0)
+                {
+                    UpdateBackQuantityInProductTable();
+                    ClearAndSomeAction();
+
+                }
+
             }
             ClearAndSomeAction();
         }
@@ -106,6 +142,7 @@ namespace IMS
             GetMaxNumber();
             saveButton.Enabled = true;
             updateButton.Enabled = false;
+            this.ControlBox = false;
         }
 
         private void productIdTextBox_KeyDown(object sender, KeyEventArgs e)
