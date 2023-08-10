@@ -25,10 +25,7 @@ namespace IMS
 
         private void closeButton_Click(object sender, EventArgs e)
         {
-            if (productDataGridView.Rows.Count!=0)
-            {
-                UpdateBackQuantityInProductTable(); 
-            }
+           
             this.Close();
         }
 
@@ -71,12 +68,17 @@ namespace IMS
 
         private void addNewButton_Click(object sender, EventArgs e)
         {
-            
 
-            if (productDataGridView.Rows.Count != 0 )
+
+            if (productDataGridView.Rows.Count != 0)
             {
-                UpdateBackQuantityInProductTable(); 
+                UpdateBackQuantityInProductTable();
             }
+            ClearAndSomeAction();
+        }
+
+        private void ClearAndSomeAction()
+        {
             ClearAllData();
             GetMaxNumber();
             AddButtonEnabled();
@@ -84,6 +86,7 @@ namespace IMS
             saveButton.Enabled = true;
             updateButton.Enabled = false;
         }
+
         private void GetMaxNumber()
         {
             connection.Open();
@@ -758,7 +761,7 @@ namespace IMS
                 transaction.Commit();
                 MessageBox.Show("The Transaction is successfull","Sucess",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 connection.Close();
-                addNewButton.PerformClick();
+                ClearAndSomeAction();
             }
             catch (Exception ex)
             {
