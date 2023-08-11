@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -42,9 +42,15 @@
             this.startDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.endDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.ledgerDataGridView = new System.Windows.Forms.DataGridView();
+            this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Voucher = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Debit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Credit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Balance = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.previewButton = new System.Windows.Forms.Button();
             this.printButton = new System.Windows.Forms.Button();
-            this.addNewButton = new System.Windows.Forms.Button();
+            this.clearButton = new System.Windows.Forms.Button();
             this.closeButton = new System.Windows.Forms.Button();
             this.closingBalanceTextBox = new System.Windows.Forms.TextBox();
             this.openingBalanceTextBox = new System.Windows.Forms.TextBox();
@@ -53,12 +59,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.debitTotalTextBox = new System.Windows.Forms.TextBox();
             this.creditTotalTextBox = new System.Windows.Forms.TextBox();
-            this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Voucher = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Debit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Credit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Balance = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.ledgerDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -153,6 +153,53 @@
             this.ledgerDataGridView.Size = new System.Drawing.Size(1096, 321);
             this.ledgerDataGridView.TabIndex = 3;
             // 
+            // Date
+            // 
+            this.Date.DataPropertyName = "VoucherDate";
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Date.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Date.HeaderText = "Date";
+            this.Date.Name = "Date";
+            // 
+            // Voucher
+            // 
+            this.Voucher.DataPropertyName = "VoucherCode";
+            this.Voucher.HeaderText = "Voucher";
+            this.Voucher.Name = "Voucher";
+            // 
+            // Description
+            // 
+            this.Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Description.DataPropertyName = "Narration";
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Description.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Description.HeaderText = "Description";
+            this.Description.Name = "Description";
+            // 
+            // Debit
+            // 
+            this.Debit.DataPropertyName = "Debit";
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Debit.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Debit.HeaderText = "Debit";
+            this.Debit.Name = "Debit";
+            // 
+            // Credit
+            // 
+            this.Credit.DataPropertyName = "Credit";
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Credit.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Credit.HeaderText = "Credit";
+            this.Credit.Name = "Credit";
+            // 
+            // Balance
+            // 
+            this.Balance.DataPropertyName = "Balance";
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Balance.DefaultCellStyle = dataGridViewCellStyle5;
+            this.Balance.HeaderText = "Balance";
+            this.Balance.Name = "Balance";
+            // 
             // previewButton
             // 
             this.previewButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -174,15 +221,16 @@
             this.printButton.Text = "Print";
             this.printButton.UseVisualStyleBackColor = true;
             // 
-            // addNewButton
+            // clearButton
             // 
-            this.addNewButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addNewButton.Location = new System.Drawing.Point(403, 590);
-            this.addNewButton.Name = "addNewButton";
-            this.addNewButton.Size = new System.Drawing.Size(140, 43);
-            this.addNewButton.TabIndex = 4;
-            this.addNewButton.Text = "Add New";
-            this.addNewButton.UseVisualStyleBackColor = true;
+            this.clearButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.clearButton.Location = new System.Drawing.Point(403, 590);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(140, 43);
+            this.clearButton.TabIndex = 4;
+            this.clearButton.Text = "Clear";
+            this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
             // 
             // closeButton
             // 
@@ -244,7 +292,7 @@
             // debitTotalTextBox
             // 
             this.debitTotalTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.debitTotalTextBox.Location = new System.Drawing.Point(838, 543);
+            this.debitTotalTextBox.Location = new System.Drawing.Point(822, 543);
             this.debitTotalTextBox.Name = "debitTotalTextBox";
             this.debitTotalTextBox.Size = new System.Drawing.Size(94, 29);
             this.debitTotalTextBox.TabIndex = 10;
@@ -252,57 +300,10 @@
             // creditTotalTextBox
             // 
             this.creditTotalTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.creditTotalTextBox.Location = new System.Drawing.Point(939, 543);
+            this.creditTotalTextBox.Location = new System.Drawing.Point(920, 543);
             this.creditTotalTextBox.Name = "creditTotalTextBox";
             this.creditTotalTextBox.Size = new System.Drawing.Size(94, 29);
             this.creditTotalTextBox.TabIndex = 11;
-            // 
-            // Date
-            // 
-            this.Date.DataPropertyName = "VoucherDate";
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Date.DefaultCellStyle = dataGridViewCellStyle6;
-            this.Date.HeaderText = "Date";
-            this.Date.Name = "Date";
-            // 
-            // Voucher
-            // 
-            this.Voucher.DataPropertyName = "VoucherCode";
-            this.Voucher.HeaderText = "Voucher";
-            this.Voucher.Name = "Voucher";
-            // 
-            // Description
-            // 
-            this.Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Description.DataPropertyName = "Narration";
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Description.DefaultCellStyle = dataGridViewCellStyle7;
-            this.Description.HeaderText = "Description";
-            this.Description.Name = "Description";
-            // 
-            // Debit
-            // 
-            this.Debit.DataPropertyName = "Debit";
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Debit.DefaultCellStyle = dataGridViewCellStyle8;
-            this.Debit.HeaderText = "Debit";
-            this.Debit.Name = "Debit";
-            // 
-            // Credit
-            // 
-            this.Credit.DataPropertyName = "Credit";
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Credit.DefaultCellStyle = dataGridViewCellStyle9;
-            this.Credit.HeaderText = "Credit";
-            this.Credit.Name = "Credit";
-            // 
-            // Balance
-            // 
-            this.Balance.DataPropertyName = "Balance";
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Balance.DefaultCellStyle = dataGridViewCellStyle10;
-            this.Balance.HeaderText = "Balance";
-            this.Balance.Name = "Balance";
             // 
             // DataGridViewLedger
             // 
@@ -317,7 +318,7 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.closeButton);
-            this.Controls.Add(this.addNewButton);
+            this.Controls.Add(this.clearButton);
             this.Controls.Add(this.printButton);
             this.Controls.Add(this.previewButton);
             this.Controls.Add(this.ledgerDataGridView);
@@ -355,7 +356,7 @@
         private System.Windows.Forms.DataGridView ledgerDataGridView;
         private System.Windows.Forms.Button previewButton;
         private System.Windows.Forms.Button printButton;
-        private System.Windows.Forms.Button addNewButton;
+        private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.TextBox closingBalanceTextBox;
         private System.Windows.Forms.TextBox openingBalanceTextBox;

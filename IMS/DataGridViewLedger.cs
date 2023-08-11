@@ -78,6 +78,21 @@ namespace IMS
             try
             {
                 connection.Open();
+                SqlCommand cmd1 = new SqlCommand("[SP_OPENING_BALANCE]", connection);
+                cmd1.CommandType = CommandType.StoredProcedure;
+                cmd1.Parameters.AddWithValue("@VoucherCategoryID", codeTextBox.Text.Trim());
+                cmd1.Parameters.AddWithValue("@StartDate", startDateTimePicker.Value.Date);
+                SqlDataAdapter da1 = new SqlDataAdapter(cmd1);
+                DataTable dt1 = new DataTable();
+                da1.Fill(dt1);
+                if (dt1.Rows.Count > 0)
+                {
+                    openingBalanceTextBox.Text = Convert.ToString(dt1.Rows[0][0]);
+                }
+                connection.Close();
+
+
+                connection.Open();
                 SqlCommand cmd = new SqlCommand("[USP_LEDGER]", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@VoucherCategoryID",codeTextBox.Text.Trim());
@@ -87,10 +102,18 @@ namespace IMS
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 ledgerDataGridView.DataSource = null;
-                ledgerDataGridView.Rows.Clear();
                 ledgerDataGridView.DataSource = dt;
                 connection.Close();
-                
+
+                debitTotalTextBox.Text = Convert.ToString (GetDebitTotal());
+                creditTotalTextBox.Text = Convert.ToString (GetCreditTotal());
+                decimal opeing =Convert.ToDecimal( openingBalanceTextBox.Text);
+                decimal debit = Convert.ToDecimal(debitTotalTextBox.Text);
+                decimal credit = Convert.ToDecimal(creditTotalTextBox.Text);
+                decimal closing = opeing + debit - credit;
+                closingBalanceTextBox.Text = closing.ToString();
+
+
 
             }
             catch (Exception ex)
@@ -103,6 +126,34 @@ namespace IMS
             {
                 connection.Close();
             }
+        }
+        decimal debitTotal = 0;
+        private decimal GetDebitTotal()
+        {
+            foreach (DataGridViewRow row in ledgerDataGridView.Rows)
+            {
+                debitTotal +=Convert.ToDecimal( row.Cells["Debit"].Value);
+            }
+            return debitTotal;
+        }
+        decimal creditTotal = 0;
+        private decimal GetCreditTotal()
+        {
+            foreach (DataGridViewRow row in ledgerDataGridView.Rows)
+            {
+                creditTotal += Convert.ToDecimal(row.Cells["Credit"].Value);
+            }
+            return creditTotal;
+        }
+
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            foreach (TextBox textBox in this.Controls.OfType<TextBox>())
+            {
+                textBox.Clear();
+            }
+
+            ledgerDataGridView.DataSource = null;
         }
     }
 
