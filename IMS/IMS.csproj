@@ -95,6 +95,12 @@
     <Compile Include="DashBoard.Designer.cs">
       <DependentUpon>DashBoard.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataGridViewLedger.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataGridViewLedger.Designer.cs">
+      <DependentUpon>DataGridViewLedger.cs</DependentUpon>
+    </Compile>
     <Compile Include="EmployeesDetailForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -175,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DashBoard.resx">
       <DependentUpon>DashBoard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataGridViewLedger.resx">
+      <DependentUpon>DataGridViewLedger.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EmployeesDetailForm.resx">
       <DependentUpon>EmployeesDetailForm.cs</DependentUpon>

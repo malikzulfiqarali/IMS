@@ -98,5 +98,11 @@ namespace IMS
             SaleForm saleForm = new SaleForm();
             saleForm.ShowDialog();
         }
+
+        private void ledgerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DataGridViewLedger dataGridViewLedger = new DataGridViewLedger();
+            dataGridViewLedger.ShowDialog();
+        }
     }
 }

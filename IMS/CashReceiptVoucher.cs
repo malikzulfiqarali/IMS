@@ -417,7 +417,7 @@ namespace IMS
         }
         private void updateButton_Click(object sender, EventArgs e)
         {
-            bool success = false;
+           
             if (crvTextBox.Text.Trim() == string.Empty)
             {
                 MessageBox.Show("Cash Receipt Voucher Field is require", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);

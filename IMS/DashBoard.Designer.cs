@@ -59,6 +59,7 @@
             this.cashFlowStatementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.partialInstallmentReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.installmentOverdueReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ledgerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -173,7 +174,8 @@
             this.purchaseToolStripMenuItem,
             this.salesReturnsToolStripMenuItem,
             this.purchaseReturnsToolStripMenuItem,
-            this.journalVouchersToolStripMenuItem});
+            this.journalVouchersToolStripMenuItem,
+            this.ledgerToolStripMenuItem});
             this.transactionsToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.transactionsToolStripMenuItem.Name = "transactionsToolStripMenuItem";
             this.transactionsToolStripMenuItem.Size = new System.Drawing.Size(128, 29);
@@ -301,6 +303,13 @@
             this.installmentOverdueReportsToolStripMenuItem.Size = new System.Drawing.Size(326, 30);
             this.installmentOverdueReportsToolStripMenuItem.Text = "Installment Overdue Reports";
             // 
+            // ledgerToolStripMenuItem
+            // 
+            this.ledgerToolStripMenuItem.Name = "ledgerToolStripMenuItem";
+            this.ledgerToolStripMenuItem.Size = new System.Drawing.Size(229, 30);
+            this.ledgerToolStripMenuItem.Text = "Ledger";
+            this.ledgerToolStripMenuItem.Click += new System.EventHandler(this.ledgerToolStripMenuItem_Click);
+            // 
             // DashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
@@ -356,6 +365,7 @@
         private System.Windows.Forms.ToolStripMenuItem partialInstallmentReportsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem installmentOverdueReportsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem ledgerToolStripMenuItem;
     }
 }
 
