@@ -86,6 +86,7 @@ namespace IMS
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
+                ledgerDataGridView.DataSource = null;
                 ledgerDataGridView.Rows.Clear();
                 ledgerDataGridView.DataSource = dt;
                 connection.Close();
