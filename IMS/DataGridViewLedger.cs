@@ -36,12 +36,14 @@ namespace IMS
                 e.Handled = true;
 
             }
+           
         }
 
         private void codeTextBox_DoubleClick(object sender, EventArgs e)
         {
             FetchDataForm fetchDataForm = new FetchDataForm();
             fetchDataForm.ShowDialog();
+            
         }
 
         private void codeTextBox_Leave(object sender, EventArgs e)
@@ -103,6 +105,7 @@ namespace IMS
                 da.Fill(dt);
                 ledgerDataGridView.DataSource = null;
                 ledgerDataGridView.Rows.Clear();
+                ledgerDataGridView.AutoGenerateColumns = false;
                 ledgerDataGridView.DataSource = dt;
                 connection.Close();
 
