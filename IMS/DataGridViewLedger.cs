@@ -61,6 +61,9 @@ namespace IMS
         private void DataGridViewLedger_Load(object sender, EventArgs e)
         {
             codeTextBox.Focus();
+            DataGridViewCellStyle headerStyle = new DataGridViewCellStyle();
+            headerStyle.Font = new Font("Arial", 14, FontStyle.Bold);
+            ledgerDataGridView.ColumnHeadersDefaultCellStyle = headerStyle;
         }
 
         private void previewButton_Click(object sender, EventArgs e)
