@@ -92,7 +92,17 @@ namespace IMS
                 da1.Fill(dt1);
                 if (dt1.Rows.Count > 0)
                 {
-                    openingBalanceTextBox.Text = Convert.ToString(dt1.Rows[0][0]);
+                    string openingBalance = Convert.ToString(dt1.Rows[0][0]);
+                    if (string.IsNullOrEmpty(openingBalance))
+                    {
+                        openingBalanceTextBox.Text = "0";
+                    }
+                    else
+                    {
+                        openingBalanceTextBox.Text = openingBalance;
+                    }
+
+                    
                 }
                 connection.Close();
 
