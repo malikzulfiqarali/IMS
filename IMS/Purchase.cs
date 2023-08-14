@@ -52,6 +52,8 @@ namespace IMS
             saveButton.Enabled = true;
             updateButton.Enabled = false;
             addButton.Enabled = false;
+            purchaseDateTimePicker.Value = System.DateTime.Now;
+            
         }
 
         private void companyCodeTextBox_KeyDown(object sender, KeyEventArgs e)
