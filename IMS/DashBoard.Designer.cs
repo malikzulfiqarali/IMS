@@ -50,6 +50,7 @@
             this.salesReturnsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.purchaseReturnsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.journalVouchersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ledgerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customerLedgerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.installmentCustomerLedgerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,7 +60,6 @@
             this.cashFlowStatementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.partialInstallmentReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.installmentOverdueReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ledgerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -219,6 +219,7 @@
             this.purchaseToolStripMenuItem.Name = "purchaseToolStripMenuItem";
             this.purchaseToolStripMenuItem.Size = new System.Drawing.Size(229, 30);
             this.purchaseToolStripMenuItem.Text = "Purchase";
+            this.purchaseToolStripMenuItem.Click += new System.EventHandler(this.purchaseToolStripMenuItem_Click);
             // 
             // salesReturnsToolStripMenuItem
             // 
@@ -238,6 +239,13 @@
             this.journalVouchersToolStripMenuItem.Size = new System.Drawing.Size(229, 30);
             this.journalVouchersToolStripMenuItem.Text = "Journal Vouchers";
             this.journalVouchersToolStripMenuItem.Click += new System.EventHandler(this.journalVouchersToolStripMenuItem_Click);
+            // 
+            // ledgerToolStripMenuItem
+            // 
+            this.ledgerToolStripMenuItem.Name = "ledgerToolStripMenuItem";
+            this.ledgerToolStripMenuItem.Size = new System.Drawing.Size(229, 30);
+            this.ledgerToolStripMenuItem.Text = "Ledger";
+            this.ledgerToolStripMenuItem.Click += new System.EventHandler(this.ledgerToolStripMenuItem_Click);
             // 
             // reportsToolStripMenuItem
             // 
@@ -302,13 +310,6 @@
             this.installmentOverdueReportsToolStripMenuItem.Name = "installmentOverdueReportsToolStripMenuItem";
             this.installmentOverdueReportsToolStripMenuItem.Size = new System.Drawing.Size(326, 30);
             this.installmentOverdueReportsToolStripMenuItem.Text = "Installment Overdue Reports";
-            // 
-            // ledgerToolStripMenuItem
-            // 
-            this.ledgerToolStripMenuItem.Name = "ledgerToolStripMenuItem";
-            this.ledgerToolStripMenuItem.Size = new System.Drawing.Size(229, 30);
-            this.ledgerToolStripMenuItem.Text = "Ledger";
-            this.ledgerToolStripMenuItem.Click += new System.EventHandler(this.ledgerToolStripMenuItem_Click);
             // 
             // DashBoard
             // 

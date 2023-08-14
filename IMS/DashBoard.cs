@@ -104,5 +104,11 @@ namespace IMS
             DataGridViewLedger dataGridViewLedger = new DataGridViewLedger();
             dataGridViewLedger.ShowDialog();
         }
+
+        private void purchaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Purchase purchase = new Purchase();
+            purchase.ShowDialog();
+        }
     }
 }
