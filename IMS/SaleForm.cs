@@ -1327,5 +1327,15 @@ namespace IMS
             saveButton.Enabled = false;
             updateButton.Enabled = true;
         }
+
+        private void currentStockTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void productTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

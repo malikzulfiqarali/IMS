@@ -26,3 +26,4 @@ E:\InstallmentManagementSystem\IMS\IMS\obj\Debug\IMS.FetchCustomers.resources
 E:\InstallmentManagementSystem\IMS\IMS\obj\Debug\IMS.FetchProduct.resources
 E:\InstallmentManagementSystem\IMS\IMS\obj\Debug\IMS.DataGridViewLedger.resources
 E:\InstallmentManagementSystem\IMS\IMS\obj\Debug\IMS.Purchase.resources
+E:\InstallmentManagementSystem\IMS\IMS\obj\Debug\IMS.FetchCompany.resources

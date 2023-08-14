@@ -79,10 +79,10 @@
             this.label13 = new System.Windows.Forms.Label();
             this.fatherTextBox = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.saveButton = new System.Windows.Forms.Button();
-            this.addButton = new System.Windows.Forms.Button();
             this.nextButton = new System.Windows.Forms.Button();
             this.previousButton = new System.Windows.Forms.Button();
+            this.saveButton = new System.Windows.Forms.Button();
+            this.addButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.productDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -286,6 +286,7 @@
             this.productTextBox.ReadOnly = true;
             this.productTextBox.Size = new System.Drawing.Size(169, 22);
             this.productTextBox.TabIndex = 10;
+            this.productTextBox.TextChanged += new System.EventHandler(this.productTextBox_TextChanged);
             // 
             // label2
             // 
@@ -305,6 +306,7 @@
             this.currentStockTextBox.ReadOnly = true;
             this.currentStockTextBox.Size = new System.Drawing.Size(87, 22);
             this.currentStockTextBox.TabIndex = 11;
+            this.currentStockTextBox.TextChanged += new System.EventHandler(this.currentStockTextBox_TextChanged);
             // 
             // label3
             // 
@@ -427,6 +429,7 @@
             // 
             // updateButton
             // 
+            this.updateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.updateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.updateButton.Location = new System.Drawing.Point(192, 607);
             this.updateButton.Name = "updateButton";
@@ -438,6 +441,7 @@
             // 
             // addNewButton
             // 
+            this.addNewButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addNewButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addNewButton.Location = new System.Drawing.Point(355, 607);
             this.addNewButton.Name = "addNewButton";
@@ -449,6 +453,7 @@
             // 
             // closeButton
             // 
+            this.closeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.closeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.closeButton.Location = new System.Drawing.Point(513, 607);
             this.closeButton.Name = "closeButton";
@@ -579,10 +584,31 @@
             this.label14.TabIndex = 29;
             this.label14.Text = "Father";
             // 
+            // nextButton
+            // 
+            this.nextButton.Location = new System.Drawing.Point(275, 16);
+            this.nextButton.Name = "nextButton";
+            this.nextButton.Size = new System.Drawing.Size(54, 26);
+            this.nextButton.TabIndex = 33;
+            this.nextButton.Text = ">";
+            this.nextButton.UseVisualStyleBackColor = true;
+            this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
+            // 
+            // previousButton
+            // 
+            this.previousButton.Location = new System.Drawing.Point(224, 16);
+            this.previousButton.Name = "previousButton";
+            this.previousButton.Size = new System.Drawing.Size(54, 26);
+            this.previousButton.TabIndex = 32;
+            this.previousButton.Text = "<";
+            this.previousButton.UseVisualStyleBackColor = true;
+            this.previousButton.Click += new System.EventHandler(this.previousButton_Click);
+            // 
             // saveButton
             // 
             this.saveButton.BackgroundImage = global::IMS.Properties.Resources.save_button_png_no_background;
             this.saveButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.saveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.saveButton.Location = new System.Drawing.Point(12, 556);
             this.saveButton.Name = "saveButton";
@@ -605,26 +631,6 @@
             this.addButton.TabIndex = 15;
             this.addButton.UseVisualStyleBackColor = false;
             this.addButton.Click += new System.EventHandler(this.addButton_Click);
-            // 
-            // nextButton
-            // 
-            this.nextButton.Location = new System.Drawing.Point(275, 16);
-            this.nextButton.Name = "nextButton";
-            this.nextButton.Size = new System.Drawing.Size(54, 26);
-            this.nextButton.TabIndex = 33;
-            this.nextButton.Text = ">";
-            this.nextButton.UseVisualStyleBackColor = true;
-            this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
-            // 
-            // previousButton
-            // 
-            this.previousButton.Location = new System.Drawing.Point(224, 16);
-            this.previousButton.Name = "previousButton";
-            this.previousButton.Size = new System.Drawing.Size(54, 26);
-            this.previousButton.TabIndex = 32;
-            this.previousButton.Text = "<";
-            this.previousButton.UseVisualStyleBackColor = true;
-            this.previousButton.Click += new System.EventHandler(this.previousButton_Click);
             // 
             // SaleForm
             // 

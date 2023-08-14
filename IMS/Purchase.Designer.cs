@@ -30,7 +30,7 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.purchaseLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -53,7 +53,6 @@
             this.saleQtyTextBox = new System.Windows.Forms.TextBox();
             this.priceTextBox = new System.Windows.Forms.TextBox();
             this.totalAmountTextBox = new System.Windows.Forms.TextBox();
-            this.addButton = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -61,6 +60,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.companyNameLabel = new System.Windows.Forms.Label();
+            this.addButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -86,15 +86,15 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Product Purchase";
             // 
-            // label2
+            // purchaseLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 107);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 20);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "PUR";
+            this.purchaseLabel.AutoSize = true;
+            this.purchaseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.purchaseLabel.Location = new System.Drawing.Point(12, 107);
+            this.purchaseLabel.Name = "purchaseLabel";
+            this.purchaseLabel.Size = new System.Drawing.Size(43, 20);
+            this.purchaseLabel.TabIndex = 1;
+            this.purchaseLabel.Text = "PUR";
             // 
             // label3
             // 
@@ -157,6 +157,10 @@
             this.companyCodeTextBox.Name = "companyCodeTextBox";
             this.companyCodeTextBox.Size = new System.Drawing.Size(166, 26);
             this.companyCodeTextBox.TabIndex = 3;
+            this.companyCodeTextBox.TextChanged += new System.EventHandler(this.companyCodeTextBox_TextChanged);
+            this.companyCodeTextBox.DoubleClick += new System.EventHandler(this.companyCodeTextBox_DoubleClick);
+            this.companyCodeTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.companyCodeTextBox_KeyDown);
+            this.companyCodeTextBox.Leave += new System.EventHandler(this.companyCodeTextBox_Leave);
             // 
             // nextButton
             // 
@@ -254,6 +258,10 @@
             this.productIdTextBox.Name = "productIdTextBox";
             this.productIdTextBox.Size = new System.Drawing.Size(92, 22);
             this.productIdTextBox.TabIndex = 40;
+            this.productIdTextBox.TextChanged += new System.EventHandler(this.productIdTextBox_TextChanged);
+            this.productIdTextBox.DoubleClick += new System.EventHandler(this.productIdTextBox_DoubleClick);
+            this.productIdTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.productIdTextBox_KeyDown);
+            this.productIdTextBox.Leave += new System.EventHandler(this.productIdTextBox_Leave);
             // 
             // productTextBox
             // 
@@ -280,6 +288,7 @@
             this.saleQtyTextBox.Name = "saleQtyTextBox";
             this.saleQtyTextBox.Size = new System.Drawing.Size(87, 22);
             this.saleQtyTextBox.TabIndex = 43;
+            this.saleQtyTextBox.TextChanged += new System.EventHandler(this.saleQtyTextBox_TextChanged);
             // 
             // priceTextBox
             // 
@@ -288,6 +297,7 @@
             this.priceTextBox.Name = "priceTextBox";
             this.priceTextBox.Size = new System.Drawing.Size(98, 22);
             this.priceTextBox.TabIndex = 44;
+            this.priceTextBox.TextChanged += new System.EventHandler(this.priceTextBox_TextChanged);
             // 
             // totalAmountTextBox
             // 
@@ -297,18 +307,7 @@
             this.totalAmountTextBox.ReadOnly = true;
             this.totalAmountTextBox.Size = new System.Drawing.Size(98, 22);
             this.totalAmountTextBox.TabIndex = 45;
-            // 
-            // addButton
-            // 
-            this.addButton.BackColor = System.Drawing.Color.Transparent;
-            this.addButton.BackgroundImage = global::IMS.Properties.Resources.images;
-            this.addButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.addButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.addButton.Location = new System.Drawing.Point(803, 257);
-            this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(83, 64);
-            this.addButton.TabIndex = 46;
-            this.addButton.UseVisualStyleBackColor = false;
+            this.totalAmountTextBox.TextChanged += new System.EventHandler(this.totalAmountTextBox_TextChanged);
             // 
             // label7
             // 
@@ -379,6 +378,20 @@
             this.companyNameLabel.Size = new System.Drawing.Size(122, 20);
             this.companyNameLabel.TabIndex = 53;
             this.companyNameLabel.Text = "Company Name";
+            this.companyNameLabel.TextChanged += new System.EventHandler(this.companyNameLabel_TextChanged);
+            this.companyNameLabel.Click += new System.EventHandler(this.companyNameLabel_Click);
+            // 
+            // addButton
+            // 
+            this.addButton.BackColor = System.Drawing.Color.Transparent;
+            this.addButton.BackgroundImage = global::IMS.Properties.Resources.images;
+            this.addButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.addButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addButton.Location = new System.Drawing.Point(803, 257);
+            this.addButton.Name = "addButton";
+            this.addButton.Size = new System.Drawing.Size(83, 64);
+            this.addButton.TabIndex = 46;
+            this.addButton.UseVisualStyleBackColor = false;
             // 
             // Purchase
             // 
@@ -415,7 +428,7 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.purchaseLabel);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -423,6 +436,7 @@
             this.Name = "Purchase";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Purchase";
+            this.Load += new System.EventHandler(this.Purchase_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -435,7 +449,7 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label purchaseLabel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
