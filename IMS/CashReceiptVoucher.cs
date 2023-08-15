@@ -240,7 +240,7 @@ namespace IMS
 
         private void crvDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            SqlTransaction sqlTransaction = null;
+            //SqlTransaction sqlTransaction = null;
 
             connection.Open();
             try
@@ -250,10 +250,10 @@ namespace IMS
                 {
                     if (dateDateTimePicker.Value.Date == DateTime.Now.Date)
                     {
-                        sqlTransaction = connection.BeginTransaction();
+                        //sqlTransaction = connection.BeginTransaction();
                         int id = Convert.ToInt32(crvDataGridView.Rows[e.RowIndex].Cells["ID"].Value);
                         string query = "DELETE from TransactionTable WHERE VoucherID=@VoucherID ";
-                        SqlCommand cmd = new SqlCommand(query, connection, sqlTransaction);
+                        SqlCommand cmd = new SqlCommand(query, connection);
                         cmd.Parameters.AddWithValue("@VoucherID", id);
                         cmd.ExecuteNonQuery();
 
@@ -261,7 +261,7 @@ namespace IMS
 
                         decimal Total = getCreditTotal();
                         string query1 = "UPDATE TransactionTable SET Narration=@Narration,VoucherCategory=@VoucherCategory,Description=@Description,Debit=@Debit where VoucherType=@VoucherType and VoucherCode=@VoucherCode and VoucherCategoryID=@VoucherCategoryID";
-                        SqlCommand cmd1 = new SqlCommand(query1, connection, sqlTransaction);
+                        SqlCommand cmd1 = new SqlCommand(query1, connection);
                         cmd1.Parameters.AddWithValue("@Narration", narrationTextBox.Text.Trim());
                         cmd1.Parameters.AddWithValue("@VoucherCategory", categoryComboBox.SelectedItem);
                         cmd1.Parameters.AddWithValue("@Description", cashLabel.Text.Trim());
@@ -270,7 +270,7 @@ namespace IMS
                         cmd1.Parameters.AddWithValue("@VoucherCode", crvTextBox.Text.Trim());
                         cmd1.Parameters.AddWithValue("@VoucherCategoryID", cashCodeTextBox.Text.Trim());
                         cmd1.ExecuteNonQuery();
-                        sqlTransaction.Commit();
+                       // sqlTransaction.Commit();
                     }
                     else
                     {
@@ -282,7 +282,7 @@ namespace IMS
             {
 
                 MessageBox.Show("Please remove this field from remove button" + ex.Message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                sqlTransaction.Rollback();
+               //sqlTransaction.Rollback();
                 connection.Close();
 
             }
