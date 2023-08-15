@@ -48,6 +48,7 @@ namespace IMS
 
         private void Purchase_Load(object sender, EventArgs e)
         {
+            ClearAllStuff();
             GetMaxNumber();
             saveButton.Enabled = true;
             updateButton.Enabled = false;
@@ -232,7 +233,89 @@ namespace IMS
             }
             return Math.Round( Total,0);
         }
-	
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            SqlTransaction sqlTransaction = null;
+            if (string.IsNullOrEmpty(purchaseCodeTextBox.Text))
+            {
+                MessageBox.Show("This filed is required","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                purchaseCodeTextBox.Focus();
+                return;
+            }
+            if (string.IsNullOrEmpty(companyCodeTextBox.Text))
+            {
+                MessageBox.Show("Please select company", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                companyCodeTextBox.Focus();
+                return;
+            }
+            if (string.IsNullOrEmpty(narrationTextBox.Text))
+            {
+                MessageBox.Show("Please give narration", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                narrationTextBox.Focus();
+                return;
+            }
+            if (purchaseDataGridView.Rows.Count==0)
+            {
+                MessageBox.Show("Please give some detail or add products for further processing", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                purchaseDataGridView.Focus();
+                return;
+            }
+            try
+            {
+                connection.Open();
+                sqlTransaction = connection.BeginTransaction();
+                string query1 = $@"INSERT INTO Purchase (PuchaseCode,Date,CompanyID,ProductID,PurchaseQty,PurchasePrice,PurchaseAmount)
+                                                        VALUES
+                                                        (@PuchaseCode,@Date,@CompanyID,@ProductID,@PurchaseQty,@PurchasePrice,@PurchaseAmount)";
+                foreach (DataGridViewRow row in purchaseDataGridView.Rows)
+                {
+                    SqlCommand cmd1 = new SqlCommand(query1, connection, sqlTransaction);
+                    cmd1.Parameters.AddWithValue("@PuchaseCode", purchaseCodeTextBox.Text.Trim());
+                    cmd1.Parameters.AddWithValue("@Date", purchaseDateTimePicker.Value);
+                    cmd1.Parameters.AddWithValue("@CompanyID", companyCodeTextBox.Text.Trim()); 
+                    cmd1.Parameters.AddWithValue("@ProductID", row.Cells["ProductID"].Value); 
+                    cmd1.Parameters.AddWithValue("@PurchaseQty", row.Cells["PurchaseQty"].Value); 
+                    cmd1.Parameters.AddWithValue("@PurchasePrice", row.Cells["Price"].Value); 
+                    cmd1.Parameters.AddWithValue("@PurchaseAmount", row.Cells["TotalAmount"].Value);
+                    cmd1.ExecuteNonQuery();
+                    sqlTransaction.Commit();
+                }
+                MessageBox.Show("Records are saved successfully","Success",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                connection.Close();
+                addNewButton.PerformClick();
+                
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+                sqlTransaction.Rollback();
+                connection.Close();
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+        private void ClearAllStuff()
+        {
+            foreach (TextBox textBox in this.Controls.OfType<TextBox>())
+            {
+                textBox.Clear();
+            }
+            purchaseDataGridView.Rows.Clear();
+        }
+
+        private void addNewButton_Click(object sender, EventArgs e)
+        {
+            ClearAllStuff();
+            GetMaxNumber();
+            saveButton.Enabled = true;
+            updateButton.Enabled = false;
+            addButton.Enabled = false;
+            purchaseDateTimePicker.Value = DateTime.Now;
+        }
     }
 
 }
