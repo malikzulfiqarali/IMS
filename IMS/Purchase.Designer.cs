@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.purchaseLabel = new System.Windows.Forms.Label();
@@ -40,7 +41,7 @@
             this.companyCodeTextBox = new System.Windows.Forms.TextBox();
             this.nextButton = new System.Windows.Forms.Button();
             this.previousButton = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.purchaseDataGridView = new System.Windows.Forms.DataGridView();
             this.saveButton = new System.Windows.Forms.Button();
             this.updateButton = new System.Windows.Forms.Button();
             this.addNewButton = new System.Windows.Forms.Button();
@@ -70,7 +71,7 @@
             this.Remove = new System.Windows.Forms.DataGridViewButtonColumn();
             this.PurchaseID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.purchaseDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -147,7 +148,7 @@
             this.purchaseCodeTextBox.Location = new System.Drawing.Point(79, 109);
             this.purchaseCodeTextBox.Name = "purchaseCodeTextBox";
             this.purchaseCodeTextBox.Size = new System.Drawing.Size(100, 26);
-            this.purchaseCodeTextBox.TabIndex = 3;
+            this.purchaseCodeTextBox.TabIndex = 0;
             // 
             // narrationTextBox
             // 
@@ -156,7 +157,7 @@
             this.narrationTextBox.Multiline = true;
             this.narrationTextBox.Name = "narrationTextBox";
             this.narrationTextBox.Size = new System.Drawing.Size(750, 44);
-            this.narrationTextBox.TabIndex = 3;
+            this.narrationTextBox.TabIndex = 4;
             // 
             // companyCodeTextBox
             // 
@@ -175,7 +176,7 @@
             this.nextButton.Location = new System.Drawing.Point(260, 107);
             this.nextButton.Name = "nextButton";
             this.nextButton.Size = new System.Drawing.Size(54, 26);
-            this.nextButton.TabIndex = 35;
+            this.nextButton.TabIndex = 2;
             this.nextButton.Text = ">";
             this.nextButton.UseVisualStyleBackColor = true;
             // 
@@ -184,15 +185,15 @@
             this.previousButton.Location = new System.Drawing.Point(209, 107);
             this.previousButton.Name = "previousButton";
             this.previousButton.Size = new System.Drawing.Size(54, 26);
-            this.previousButton.TabIndex = 34;
+            this.previousButton.TabIndex = 1;
             this.previousButton.Text = "<";
             this.previousButton.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // purchaseDataGridView
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.purchaseDataGridView.AllowUserToAddRows = false;
+            this.purchaseDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.purchaseDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ProductID,
             this.Product,
             this.CurrentStock,
@@ -201,10 +202,10 @@
             this.TotalAmount,
             this.Remove,
             this.PurchaseID});
-            this.dataGridView1.Location = new System.Drawing.Point(26, 327);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(876, 247);
-            this.dataGridView1.TabIndex = 36;
+            this.purchaseDataGridView.Location = new System.Drawing.Point(26, 327);
+            this.purchaseDataGridView.Name = "purchaseDataGridView";
+            this.purchaseDataGridView.Size = new System.Drawing.Size(876, 247);
+            this.purchaseDataGridView.TabIndex = 36;
             // 
             // saveButton
             // 
@@ -213,7 +214,7 @@
             this.saveButton.Location = new System.Drawing.Point(45, 594);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(105, 41);
-            this.saveButton.TabIndex = 37;
+            this.saveButton.TabIndex = 12;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
             // 
@@ -224,7 +225,7 @@
             this.updateButton.Location = new System.Drawing.Point(168, 594);
             this.updateButton.Name = "updateButton";
             this.updateButton.Size = new System.Drawing.Size(105, 41);
-            this.updateButton.TabIndex = 37;
+            this.updateButton.TabIndex = 13;
             this.updateButton.Text = "Update";
             this.updateButton.UseVisualStyleBackColor = true;
             // 
@@ -235,7 +236,7 @@
             this.addNewButton.Location = new System.Drawing.Point(294, 594);
             this.addNewButton.Name = "addNewButton";
             this.addNewButton.Size = new System.Drawing.Size(105, 41);
-            this.addNewButton.TabIndex = 37;
+            this.addNewButton.TabIndex = 14;
             this.addNewButton.Text = "Add New";
             this.addNewButton.UseVisualStyleBackColor = true;
             // 
@@ -246,7 +247,7 @@
             this.closeButton.Location = new System.Drawing.Point(422, 594);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(105, 41);
-            this.closeButton.TabIndex = 37;
+            this.closeButton.TabIndex = 15;
             this.closeButton.Text = "Close";
             this.closeButton.UseVisualStyleBackColor = true;
             this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
@@ -275,7 +276,7 @@
             this.productIdTextBox.Location = new System.Drawing.Point(38, 299);
             this.productIdTextBox.Name = "productIdTextBox";
             this.productIdTextBox.Size = new System.Drawing.Size(92, 22);
-            this.productIdTextBox.TabIndex = 40;
+            this.productIdTextBox.TabIndex = 5;
             this.productIdTextBox.TextChanged += new System.EventHandler(this.productIdTextBox_TextChanged);
             this.productIdTextBox.DoubleClick += new System.EventHandler(this.productIdTextBox_DoubleClick);
             this.productIdTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.productIdTextBox_KeyDown);
@@ -288,7 +289,7 @@
             this.productTextBox.Name = "productTextBox";
             this.productTextBox.ReadOnly = true;
             this.productTextBox.Size = new System.Drawing.Size(169, 22);
-            this.productTextBox.TabIndex = 41;
+            this.productTextBox.TabIndex = 6;
             // 
             // currentStockTextBox
             // 
@@ -297,7 +298,7 @@
             this.currentStockTextBox.Name = "currentStockTextBox";
             this.currentStockTextBox.ReadOnly = true;
             this.currentStockTextBox.Size = new System.Drawing.Size(87, 22);
-            this.currentStockTextBox.TabIndex = 42;
+            this.currentStockTextBox.TabIndex = 7;
             // 
             // saleQtyTextBox
             // 
@@ -305,8 +306,9 @@
             this.saleQtyTextBox.Location = new System.Drawing.Point(440, 299);
             this.saleQtyTextBox.Name = "saleQtyTextBox";
             this.saleQtyTextBox.Size = new System.Drawing.Size(87, 22);
-            this.saleQtyTextBox.TabIndex = 43;
+            this.saleQtyTextBox.TabIndex = 8;
             this.saleQtyTextBox.TextChanged += new System.EventHandler(this.saleQtyTextBox_TextChanged);
+            this.saleQtyTextBox.Leave += new System.EventHandler(this.saleQtyTextBox_Leave);
             // 
             // priceTextBox
             // 
@@ -314,8 +316,9 @@
             this.priceTextBox.Location = new System.Drawing.Point(544, 299);
             this.priceTextBox.Name = "priceTextBox";
             this.priceTextBox.Size = new System.Drawing.Size(98, 22);
-            this.priceTextBox.TabIndex = 44;
+            this.priceTextBox.TabIndex = 9;
             this.priceTextBox.TextChanged += new System.EventHandler(this.priceTextBox_TextChanged);
+            this.priceTextBox.Leave += new System.EventHandler(this.priceTextBox_Leave);
             // 
             // totalAmountTextBox
             // 
@@ -324,7 +327,7 @@
             this.totalAmountTextBox.Name = "totalAmountTextBox";
             this.totalAmountTextBox.ReadOnly = true;
             this.totalAmountTextBox.Size = new System.Drawing.Size(98, 22);
-            this.totalAmountTextBox.TabIndex = 45;
+            this.totalAmountTextBox.TabIndex = 10;
             this.totalAmountTextBox.TextChanged += new System.EventHandler(this.totalAmountTextBox_TextChanged);
             // 
             // label7
@@ -408,8 +411,9 @@
             this.addButton.Location = new System.Drawing.Point(803, 257);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(83, 64);
-            this.addButton.TabIndex = 46;
+            this.addButton.TabIndex = 11;
             this.addButton.UseVisualStyleBackColor = false;
+            this.addButton.Click += new System.EventHandler(this.addButton_Click);
             // 
             // ProductID
             // 
@@ -444,8 +448,15 @@
             // 
             // Remove
             // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Transparent;
+            this.Remove.DefaultCellStyle = dataGridViewCellStyle1;
             this.Remove.HeaderText = "Remove";
             this.Remove.Name = "Remove";
+            this.Remove.Text = "Remove";
+            this.Remove.ToolTipText = "Remove";
+            this.Remove.UseColumnTextForButtonValue = true;
             // 
             // PurchaseID
             // 
@@ -479,7 +490,7 @@
             this.Controls.Add(this.addNewButton);
             this.Controls.Add(this.updateButton);
             this.Controls.Add(this.saveButton);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.purchaseDataGridView);
             this.Controls.Add(this.nextButton);
             this.Controls.Add(this.previousButton);
             this.Controls.Add(this.companyCodeTextBox);
@@ -500,7 +511,7 @@
             this.Load += new System.EventHandler(this.Purchase_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.purchaseDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -520,7 +531,7 @@
         private System.Windows.Forms.TextBox companyCodeTextBox;
         private System.Windows.Forms.Button nextButton;
         private System.Windows.Forms.Button previousButton;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView purchaseDataGridView;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button updateButton;
         private System.Windows.Forms.Button addNewButton;

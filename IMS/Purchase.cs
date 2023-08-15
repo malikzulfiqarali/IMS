@@ -148,5 +148,91 @@ namespace IMS
             currentStockTextBox.Text = FetchProduct.SetQuantity.ToString();
             priceTextBox.Text = FetchProduct.SetPrice.ToString();
         }
+
+        private void saleQtyTextBox_Leave(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(saleQtyTextBox.Text))
+            {
+                decimal PurchasedQty = Convert.ToDecimal(saleQtyTextBox.Text);
+                decimal Price = Convert.ToDecimal(priceTextBox.Text);
+                totalAmountTextBox.Text = (PurchasedQty * Price).ToString();
+            }
+        }
+
+        private void priceTextBox_Leave(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(priceTextBox.Text))
+            {
+                decimal PurchasedQty = Convert.ToDecimal(saleQtyTextBox.Text);
+                decimal Price = Convert.ToDecimal(priceTextBox.Text);
+                totalAmountTextBox.Text = (PurchasedQty * Price).ToString();
+            }
+        }
+
+        private void addButton_Click(object sender, EventArgs e)
+        {
+            if (purchaseDateTimePicker.Value.Date!=DateTime.Now.Date)
+            {
+                MessageBox.Show("You cannot save or update previous date Records","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                companyCodeTextBox.Focus();
+                return;
+            }
+            purchaseDataGridView.DataSource = null;
+            purchaseDataGridView.Rows.Add(productIdTextBox.Text.Trim(), productTextBox.Text.Trim(), currentStockTextBox.Text.Trim(), saleQtyTextBox.Text.Trim(), priceTextBox.Text.Trim(), totalAmountTextBox.Text.Trim());
+            UpdateStockInProductTable();
+            productIdTextBox.Text = string.Empty;
+            productTextBox.Text = string.Empty;
+            currentStockTextBox.Text = string.Empty;
+            saleQtyTextBox.Text = string.Empty;
+            priceTextBox.Text = string.Empty;
+            totalAmountTextBox.Text = string.Empty;
+            grandTotalTextBox.Text = GetGrandTotal().ToString();
+            
+        }
+
+
+        private void UpdateStockInProductTable()
+        {
+            if (!string.IsNullOrEmpty(productIdTextBox.Text.Trim()))
+            {
+                SqlTransaction transaction1 = null;
+                try
+                {
+                    int increasedQuantity = Convert.ToInt32(currentStockTextBox.Text.Trim()) + Convert.ToInt32(saleQtyTextBox.Text.Trim());
+                    connection.Open();
+                    transaction1 = connection.BeginTransaction();
+                    string query = "UPDATE Product SET Quantity=@Quantity WHERE ProductID=@ProductID";
+                    SqlCommand command = new SqlCommand(query, connection, transaction1);
+                    command.Parameters.AddWithValue("@Quantity", increasedQuantity);
+                    command.Parameters.AddWithValue("@ProductID", Convert.ToInt32(productIdTextBox.Text.Trim()));
+                    command.ExecuteNonQuery();
+                    transaction1.Commit();
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show(ex.Message);
+                    transaction1.Rollback();
+                    connection.Close();
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
+            }
+        }
+        
+        private decimal GetGrandTotal()
+        {
+            decimal Total = 0;
+            foreach (DataGridViewRow row in purchaseDataGridView.Rows)
+            {
+                Total +=Convert.ToDecimal( row.Cells["TotalAmount"].Value);
+            }
+            return Math.Round( Total,0);
+        }
+	
     }
+
 }
