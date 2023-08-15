@@ -56,7 +56,7 @@ namespace IMS
                     da.Fill(dt);
                     if (dt.Rows.Count > 0)
                     {
-                        if (((DateTime)dt.Rows[0]["Date"]).Date == dateDateTimePicker.Value.Date)
+                        if (dateDateTimePicker.Value.Date==DateTime.Now.Date)
                         {
                             connection.Open();
                             SqlCommand cmd = new SqlCommand("[SP_UPDATE_CHART_OF_ACCOUNTS]", connection);
@@ -83,6 +83,7 @@ namespace IMS
                         else
                         {
                             MessageBox.Show("You cannot update Previouse date Record", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            clearButton.PerformClick();
                             connection.Close();
 
                         }
@@ -149,6 +150,7 @@ namespace IMS
         {
             LoadData();
             clearButton.PerformClick();
+            dateDateTimePicker.Value = DateTime.Now;
             
         }
 
@@ -174,6 +176,7 @@ namespace IMS
             //accountCategoryComboBox.SelectedIndex = -1;
             saveButton.Text = "Save";
             GetMaxNumber();
+            dateDateTimePicker.Value = DateTime.Now;
         }
 
         private void ClearAllTexBoxes()

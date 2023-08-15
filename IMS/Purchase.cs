@@ -79,6 +79,7 @@ namespace IMS
                 companyCodeTextBox.Text = FetchCompany.SetCode.ToString();
                 companyNameLabel.Text = FetchCompany.SetName;
             }
+            narrationTextBox.Text = "Stock Received";
         }
         private void CheckTextBoxes()
         {
@@ -236,6 +237,11 @@ namespace IMS
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            string stockPurchaseCode = "10013";
+            string description = "Stock Purchases";
+            string category = "Purchases";
+            string voucherCatCode = purchaseLabel.Text+" "+ purchaseCodeTextBox.Text;
+
             SqlTransaction sqlTransaction = null;
             if (string.IsNullOrEmpty(purchaseCodeTextBox.Text))
             {
@@ -279,8 +285,56 @@ namespace IMS
                     cmd1.Parameters.AddWithValue("@PurchasePrice", row.Cells["Price"].Value); 
                     cmd1.Parameters.AddWithValue("@PurchaseAmount", row.Cells["TotalAmount"].Value);
                     cmd1.ExecuteNonQuery();
-                    sqlTransaction.Commit();
+                    
                 }
+
+                string query2 = $@"INSERT INTO Stock (PurchaseID,Date,ProductID,CompanyID,PurchasedQuantity)
+                                               VALUES
+                                               (@PurchaseID,@Date,@ProductID,@CompanyID,@PurchasedQuantity)";
+                foreach (DataGridViewRow row in purchaseDataGridView.Rows)
+                {
+                    SqlCommand cmd2 = new SqlCommand(query2,connection,sqlTransaction);
+                    cmd2.Parameters.AddWithValue("@PurchaseID", purchaseCodeTextBox.Text.Trim());
+                    cmd2.Parameters.AddWithValue("@Date", purchaseDateTimePicker.Value);
+                    cmd2.Parameters.AddWithValue("@ProductID", row.Cells["ProductID"].Value);
+                    cmd2.Parameters.AddWithValue("@CompanyID", companyCodeTextBox.Text.Trim());
+                    cmd2.Parameters.AddWithValue("@PurchasedQuantity", row.Cells["PurchaseQty"].Value);
+                    cmd2.ExecuteNonQuery();
+                }
+
+                string query3 = $@"INSERT INTO TransactionTable (VoucherCode,VoucherType,VoucherDate,Narration,VoucherCategoryID,VoucherCategory,VoucherCategoryCode,Description,Debit)
+                                                                VALUES
+                                                                (@VoucherCode,@VoucherType,@VoucherDate,@Narration,@VoucherCategoryID,@VoucherCategory,@VoucherCategoryCode,@Description,@Debit)";
+                SqlCommand cmd3 = new SqlCommand(query3,connection,sqlTransaction);
+                cmd3.Parameters.AddWithValue("@VoucherCode", purchaseCodeTextBox.Text.Trim());
+                cmd3.Parameters.AddWithValue("@VoucherType", purchaseLabel.Text.Trim());
+                cmd3.Parameters.AddWithValue("@VoucherDate", purchaseDateTimePicker.Value);
+                cmd3.Parameters.AddWithValue("@Narration", narrationTextBox.Text.Trim());
+                cmd3.Parameters.AddWithValue("@VoucherCategoryID", stockPurchaseCode);
+                cmd3.Parameters.AddWithValue("@VoucherCategory", category);
+                cmd3.Parameters.AddWithValue("@VoucherCategoryCode", voucherCatCode);
+                cmd3.Parameters.AddWithValue("@Description", description);
+                cmd3.Parameters.AddWithValue("@Debit", grandTotalTextBox.Text);
+                cmd3.ExecuteNonQuery();
+
+                string query4 = $@"INSERT INTO TransactionTable (VoucherCode,VoucherType,VoucherDate,Narration,VoucherCategoryID,VoucherCategory,VoucherCategoryCode,Description,Credit)
+                                                                VALUES
+                                                                (@VoucherCode,@VoucherType,@VoucherDate,@Narration,@VoucherCategoryID,@VoucherCategory,@VoucherCategoryCode,@Description,@Credit)";
+                SqlCommand cmd4 = new SqlCommand(query4, connection, sqlTransaction);
+                cmd4.Parameters.AddWithValue("@VoucherCode", purchaseCodeTextBox.Text.Trim());
+                cmd4.Parameters.AddWithValue("@VoucherType", purchaseLabel.Text.Trim());
+                cmd4.Parameters.AddWithValue("@VoucherDate", purchaseDateTimePicker.Value);
+                cmd4.Parameters.AddWithValue("@Narration", narrationTextBox.Text.Trim());
+                cmd4.Parameters.AddWithValue("@VoucherCategoryID", companyCodeTextBox.Text);
+                cmd4.Parameters.AddWithValue("@VoucherCategory", category);
+                cmd4.Parameters.AddWithValue("@VoucherCategoryCode", voucherCatCode);
+                cmd4.Parameters.AddWithValue("@Description", companyNameLabel.Text);
+                cmd4.Parameters.AddWithValue("@Credit", grandTotalTextBox.Text);
+                cmd4.ExecuteNonQuery();
+
+
+                sqlTransaction.Commit();
+
                 MessageBox.Show("Records are saved successfully","Success",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 connection.Close();
                 addNewButton.PerformClick();
