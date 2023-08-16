@@ -207,7 +207,7 @@ namespace IMS
         {
             
             connection.Open();
-            SqlTransaction transaction = null;
+            
             try
             {
                 if (jrvDataGridView.Columns[e.ColumnIndex].Name == "RemoveColumnButton")
@@ -216,13 +216,12 @@ namespace IMS
 
                     if (dateDateTimePicker.Value.Date==DateTime.Now.Date)
                     {
-                        transaction = connection.BeginTransaction();
+                       
                         int id = Convert.ToInt32(jrvDataGridView.Rows[e.RowIndex].Cells["ID"].Value);
                         string query = "DELETE from TransactionTable WHERE VoucherID=@VoucherID ";
-                        SqlCommand cmd = new SqlCommand(query, connection, transaction);
+                        SqlCommand cmd = new SqlCommand(query, connection);
                         cmd.Parameters.AddWithValue("@VoucherID", id);
                         cmd.ExecuteNonQuery();
-                        transaction.Commit();
                         jrvDataGridView.Rows.RemoveAt(e.RowIndex);
                         clearButton.Enabled = false;
                         closeButton.Enabled = false;
@@ -243,7 +242,6 @@ namespace IMS
             {
 
                 MessageBox.Show("Please remove this field from remove button" + ex.Message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                transaction.Rollback();
                 connection.Close();
                 
             }
