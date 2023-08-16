@@ -30,7 +30,7 @@ namespace IMS
             try
             {
                 connection.Open();
-                string query = $@"select distinct max(PuchaseCode) from [dbo].[Purchase]";
+                string query = $@"select distinct max(PurchaseCode) from [dbo].[Purchase]";
                 SqlDataAdapter da = new SqlDataAdapter(query,connection);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -43,6 +43,7 @@ namespace IMS
             {
 
                 MessageBox.Show(ex.Message);
+                connection.Close();
             }
         }
 
@@ -271,13 +272,13 @@ namespace IMS
             {
                 connection.Open();
                 sqlTransaction = connection.BeginTransaction();
-                string query1 = $@"INSERT INTO Purchase (PuchaseCode,Date,CompanyID,ProductID,PurchaseQty,PurchasePrice,PurchaseAmount)
+                string query1 = $@"INSERT INTO Purchase (PurchaseCode,Date,CompanyID,ProductID,PurchaseQty,PurchasePrice,PurchaseAmount)
                                                         VALUES
-                                                        (@PuchaseCode,@Date,@CompanyID,@ProductID,@PurchaseQty,@PurchasePrice,@PurchaseAmount)";
+                                                        (@PurchaseCode,@Date,@CompanyID,@ProductID,@PurchaseQty,@PurchasePrice,@PurchaseAmount)";
                 foreach (DataGridViewRow row in purchaseDataGridView.Rows)
                 {
                     SqlCommand cmd1 = new SqlCommand(query1, connection, sqlTransaction);
-                    cmd1.Parameters.AddWithValue("@PuchaseCode", purchaseCodeTextBox.Text.Trim());
+                    cmd1.Parameters.AddWithValue("@PurchaseCode", purchaseCodeTextBox.Text.Trim());
                     cmd1.Parameters.AddWithValue("@Date", purchaseDateTimePicker.Value);
                     cmd1.Parameters.AddWithValue("@CompanyID", companyCodeTextBox.Text.Trim()); 
                     cmd1.Parameters.AddWithValue("@ProductID", row.Cells["ProductID"].Value); 
@@ -289,8 +290,8 @@ namespace IMS
                 }
 
                 string query2 = $@"INSERT INTO Stock (PurchaseID,Date,ProductID,CompanyID,PurchasedQuantity)
-                                               VALUES
-                                               (@PurchaseID,@Date,@ProductID,@CompanyID,@PurchasedQuantity)";
+                                                      VALUES
+                                                    (@PurchaseID,@Date,@ProductID,@CompanyID,@PurchasedQuantity)";
                 foreach (DataGridViewRow row in purchaseDataGridView.Rows)
                 {
                     SqlCommand cmd2 = new SqlCommand(query2,connection,sqlTransaction);
@@ -358,6 +359,8 @@ namespace IMS
             {
                 textBox.Clear();
             }
+            purchaseDataGridView.DataSource = null;
+            purchaseDataGridView.Refresh();
             purchaseDataGridView.Rows.Clear();
         }
 
@@ -369,6 +372,71 @@ namespace IMS
             updateButton.Enabled = false;
             addButton.Enabled = false;
             purchaseDateTimePicker.Value = DateTime.Now;
+        }
+
+        private void purchaseCodeTextBox_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                connection.Open();
+                string query1 = $@"select pr.ProductID as ProductID,pr.ProductDescription as Product, pr.Quantity as Quantity,p.PurchaseQty as PurchasedQty,p.PurchasePrice as Price,p.PurchaseAmount as Amount,p.PurchaseID as PurchaseID  from Purchase p 
+                                join Product pr on p.ProductID=pr.ProductID
+                                where p.PurchaseCode=@PCode";
+                SqlCommand cmd1 = new SqlCommand(query1,connection);
+                cmd1.Parameters.AddWithValue("@PCode", purchaseCodeTextBox.Text.Trim());
+                SqlDataAdapter da1 = new SqlDataAdapter(cmd1);
+                DataTable dt1 = new DataTable();
+                da1.Fill(dt1);
+                purchaseDataGridView.DataSource = null;
+                purchaseDataGridView.AutoGenerateColumns = false;
+                purchaseDataGridView.DataSource = dt1;
+                connection.Close();
+
+                connection.Open();
+                string query2 = $@"select v.VID,v.Company,t.Narration,t.Credit from VendorDetail v 
+                                    join TransactionTable t on v.VID=t.VoucherCategoryID
+                                    where t.VoucherCode=@Vcode";
+                SqlCommand cmd2 = new SqlCommand(query2,connection);
+                cmd2.Parameters.AddWithValue("@Vcode",purchaseCodeTextBox.Text);
+                SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+                DataTable dt2 = new DataTable();
+                da2.Fill(dt2);
+                if (dt2.Rows.Count>0)
+                {
+                    companyCodeTextBox.Text = dt2.Rows[0]["VID"].ToString();
+                    companyNameLabel.Text = dt2.Rows[0]["Company"].ToString();
+                    narrationTextBox.Text = dt2.Rows[0]["Narration"].ToString();
+                    grandTotalTextBox.Text = dt2.Rows[0]["Credit"].ToString();
+                }
+                connection.Close();
+
+
+                connection.Open();
+                string Number = purchaseCodeTextBox.Text.Trim();
+                string query3 = "select COUNT(*) from Purchase where PurchaseCode=@PurchaseCode";
+                SqlCommand cmd3 = new SqlCommand(query3, connection);
+                cmd3.Parameters.AddWithValue("@PurchaseCode", Number);
+                int count = (int)cmd3.ExecuteScalar();
+                
+                if (count > 0)
+                {
+                    saveButton.Enabled = false;
+                    updateButton.Enabled = true;
+                }
+
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+                connection.Close();
+            }
+            finally
+            {
+                connection.Close();
+            }
+            
         }
     }
 
