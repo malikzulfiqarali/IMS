@@ -438,6 +438,26 @@ namespace IMS
             }
             
         }
+
+        private void previousButton_Click(object sender, EventArgs e)
+        {
+            int voucherNumber = Convert.ToInt32(purchaseCodeTextBox.Text.Trim());
+            int newNumber = voucherNumber - 1;
+            purchaseCodeTextBox.Text = newNumber.ToString();
+            purchaseCodeTextBox_Leave(sender, e);
+            saveButton.Enabled = false;
+            updateButton.Enabled = true;
+        }
+
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            int voucherNumber = Convert.ToInt32(purchaseCodeTextBox.Text.Trim());
+            int newNumber = voucherNumber + 1;
+            purchaseCodeTextBox.Text = newNumber.ToString();
+            purchaseCodeTextBox_Leave(sender, e);
+            saveButton.Enabled = false;
+            updateButton.Enabled = true;
+        }
     }
 
 }
