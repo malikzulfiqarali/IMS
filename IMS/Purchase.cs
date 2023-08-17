@@ -182,7 +182,7 @@ namespace IMS
             }
             purchaseDataGridView.DataSource = null;
             purchaseDataGridView.Rows.Add(productIdTextBox.Text.Trim(), productTextBox.Text.Trim(), currentStockTextBox.Text.Trim(), saleQtyTextBox.Text.Trim(), priceTextBox.Text.Trim(), totalAmountTextBox.Text.Trim());
-            UpdateStockInProductTable();
+           // UpdateStockInProductTable();
             productIdTextBox.Text = string.Empty;
             productTextBox.Text = string.Empty;
             currentStockTextBox.Text = string.Empty;
@@ -332,6 +332,22 @@ namespace IMS
                 cmd4.Parameters.AddWithValue("@Description", companyNameLabel.Text);
                 cmd4.Parameters.AddWithValue("@Credit", grandTotalTextBox.Text);
                 cmd4.ExecuteNonQuery();
+
+                // for update Stock in Product Table on save Button
+
+
+
+                foreach (DataGridViewRow row in purchaseDataGridView.Rows)
+                {
+                    int currentQty =Convert.ToInt32( row.Cells["CurrentStock"].Value);
+                    int purchasedQty = Convert.ToInt32(row.Cells["PurchaseQty"].Value);
+                    int updatedQty = currentQty + purchasedQty;
+                    string query5 = $@"UPDATE Product SET Quantity=@Quantity where ProductID=@ProductID ";
+                    SqlCommand cmd5 = new SqlCommand(query5, connection, sqlTransaction);
+                    cmd5.Parameters.AddWithValue("@Quantity", updatedQty); 
+                    cmd5.Parameters.AddWithValue("@ProductID", row.Cells["ProductID"].Value);
+                    cmd5.ExecuteNonQuery();
+                }
 
 
                 sqlTransaction.Commit();
