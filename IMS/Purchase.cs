@@ -409,7 +409,7 @@ namespace IMS
                 connection.Close();
 
                 connection.Open();
-                string query2 = $@"select v.VID,v.Company,t.Narration,t.Credit from VendorDetail v 
+                string query2 = $@"select v.VID,v.Company,t.VoucherDate,t.Narration,t.Credit from VendorDetail v 
                                     join TransactionTable t on v.VID=t.VoucherCategoryID
                                     where t.VoucherCode=@Vcode";
                 SqlCommand cmd2 = new SqlCommand(query2,connection);
@@ -421,6 +421,7 @@ namespace IMS
                 {
                     companyCodeTextBox.Text = dt2.Rows[0]["VID"].ToString();
                     companyNameLabel.Text = dt2.Rows[0]["Company"].ToString();
+                    purchaseDateTimePicker.Value = (DateTime)dt2.Rows[0]["VoucherDate"];
                     narrationTextBox.Text = dt2.Rows[0]["Narration"].ToString();
                     grandTotalTextBox.Text = dt2.Rows[0]["Credit"].ToString();
                 }
