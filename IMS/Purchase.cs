@@ -181,16 +181,44 @@ namespace IMS
                 companyCodeTextBox.Focus();
                 return;
             }
-            purchaseDataGridView.DataSource = null;
-            purchaseDataGridView.Rows.Add(productIdTextBox.Text.Trim(), productTextBox.Text.Trim(), currentStockTextBox.Text.Trim(), saleQtyTextBox.Text.Trim(), priceTextBox.Text.Trim(), totalAmountTextBox.Text.Trim());
-           // UpdateStockInProductTable();
-            productIdTextBox.Text = string.Empty;
-            productTextBox.Text = string.Empty;
-            currentStockTextBox.Text = string.Empty;
-            saleQtyTextBox.Text = string.Empty;
-            priceTextBox.Text = string.Empty;
-            totalAmountTextBox.Text = string.Empty;
-            grandTotalTextBox.Text = GetGrandTotal().ToString();
+            connection.Open();
+            string Number = purchaseCodeTextBox.Text.Trim();
+            string query1 = "select COUNT(*) from Purchase where PurchaseCode=@PurchaseCode";
+            SqlCommand cmd1 = new SqlCommand(query1, connection);
+            cmd1.Parameters.AddWithValue("@PurchaseCode", Number);
+            int count = (int)cmd1.ExecuteScalar();
+            connection.Close();
+
+            if (count > 0)
+            {
+                DataTable dataTable = (DataTable)purchaseDataGridView.DataSource;
+                DataRow newRow = dataTable.NewRow();
+                newRow["ProductID"] = productIdTextBox.Text.Trim();
+                newRow["Product"] = productTextBox.Text.Trim();
+                newRow["Quantity"] = currentStockTextBox.Text.Trim();
+                newRow["PurchasedQty"] = saleQtyTextBox.Text.Trim();
+                newRow["Price"] = priceTextBox.Text.Trim();
+                newRow["Amount"] = totalAmountTextBox.Text.Trim();
+                dataTable.Rows.Add(newRow);
+                grandTotalTextBox.Text = GetGrandTotal().ToString();
+                return;
+            }
+            else
+            {
+                purchaseDataGridView.DataSource = null;
+
+                purchaseDataGridView.Rows.Add(productIdTextBox.Text.Trim(), productTextBox.Text.Trim(), currentStockTextBox.Text.Trim(), saleQtyTextBox.Text.Trim(), priceTextBox.Text.Trim(), totalAmountTextBox.Text.Trim());
+                // UpdateStockInProductTable();
+                productIdTextBox.Text = string.Empty;
+                productTextBox.Text = string.Empty;
+                currentStockTextBox.Text = string.Empty;
+                saleQtyTextBox.Text = string.Empty;
+                priceTextBox.Text = string.Empty;
+                totalAmountTextBox.Text = string.Empty;
+                grandTotalTextBox.Text = GetGrandTotal().ToString();
+            }
+
+            
             
         }
 
