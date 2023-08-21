@@ -16,6 +16,7 @@ namespace IMS
     public partial class Purchase : Form
     {
         SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
+       // private static int rowIndex;
         public Purchase()
         {
             InitializeComponent();
@@ -474,6 +475,54 @@ namespace IMS
             purchaseCodeTextBox_Leave(sender, e);
             saveButton.Enabled = false;
             updateButton.Enabled = true;
+        }
+        
+        private void purchaseDataGridView_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            //if (e.RowIndex >= 0)
+            //{
+            //   int rowIndex = e.RowIndex;
+               
+            //}
+        }
+
+        private void purchaseDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (purchaseDateTimePicker.Value.Date!=DateTime.Now.Date)
+            {
+                MessageBox.Show("You cannot delete previous date record","Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                return;
+            }
+            if (e.KeyCode==Keys.Delete)
+            {
+                object PurchaseID = purchaseDataGridView.CurrentRow.Cells["PurchaseID"].Value == null || purchaseDataGridView.CurrentRow.Cells["PurchaseID"].Value == DBNull.Value || string.IsNullOrEmpty(purchaseDataGridView.CurrentRow.Cells["PurchaseID"].Value.ToString()) ? Convert.ToInt32(0) : Convert.ToInt32(purchaseDataGridView.CurrentRow.Cells["PurchaseID"].Value);
+                int ID = Convert.ToInt32(PurchaseID);
+                connection.Open();
+                int id1 = Convert.ToInt32(purchaseDataGridView.CurrentRow.Cells["PurchaseID"].Value);
+                string deleteQuery1 = $@"delete from Purchase where PurchaseID=@PurchaseID";
+                SqlCommand cmd1 = new SqlCommand(deleteQuery1,connection);
+                cmd1.Parameters.AddWithValue("@PurchaseID",id1);
+
+                if (ID!=0)
+                {
+                    cmd1.ExecuteNonQuery(); 
+                }
+
+                connection.Close();
+
+                connection.Open();
+                string deleteQuery2 = $@"delete from Stock where ProductID=@ProductID and PurchaseID=@PurchaseID";
+                SqlCommand cmd2 = new SqlCommand(deleteQuery2,connection);
+                int id2 = Convert.ToInt32(purchaseDataGridView.CurrentRow.Cells["ProductID"].Value);
+                cmd2.Parameters.AddWithValue("@ProductID",id2);
+                cmd2.Parameters.AddWithValue("@PurchaseID",id1);
+                if (ID!=0)
+                {
+                    cmd2.ExecuteNonQuery();
+                }
+                connection.Close();
+
+            }
         }
     }
 
