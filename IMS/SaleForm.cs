@@ -236,8 +236,9 @@ namespace IMS
                 newRow["SoldStock"] = saleQtyTextBox.Text.Trim();
                 newRow["Rate"] = priceTextBox.Text.Trim();
                 newRow["Amount"] = totalAmountTextBox.Text.Trim();
-
                 dataTable.Rows.Add(newRow);
+
+
                 UpdateStockInProductTable();
                 productIdTextBox.Text = string.Empty;
                 productTextBox.Text = string.Empty;

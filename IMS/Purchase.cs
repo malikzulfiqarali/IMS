@@ -424,7 +424,7 @@ namespace IMS
                     companyNameLabel.Text = dt2.Rows[0]["Company"].ToString();
                     purchaseDateTimePicker.Value = (DateTime)dt2.Rows[0]["VoucherDate"];
                     narrationTextBox.Text = dt2.Rows[0]["Narration"].ToString();
-                    grandTotalTextBox.Text = dt2.Rows[0]["Credit"].ToString();
+                    grandTotalTextBox.Text = GetGrandTotal().ToString(); 
                 }
                 connection.Close();
 
@@ -495,6 +495,7 @@ namespace IMS
             }
             if (e.KeyCode==Keys.Delete)
             {
+                UpdateBackQuantityInProductTable();
                 object PurchaseID = purchaseDataGridView.CurrentRow.Cells["PurchaseID"].Value == null || purchaseDataGridView.CurrentRow.Cells["PurchaseID"].Value == DBNull.Value || string.IsNullOrEmpty(purchaseDataGridView.CurrentRow.Cells["PurchaseID"].Value.ToString()) ? Convert.ToInt32(0) : Convert.ToInt32(purchaseDataGridView.CurrentRow.Cells["PurchaseID"].Value);
                 int ID = Convert.ToInt32(PurchaseID);
                 connection.Open();
@@ -515,14 +516,56 @@ namespace IMS
                 SqlCommand cmd2 = new SqlCommand(deleteQuery2,connection);
                 int id2 = Convert.ToInt32(purchaseDataGridView.CurrentRow.Cells["ProductID"].Value);
                 cmd2.Parameters.AddWithValue("@ProductID",id2);
-                cmd2.Parameters.AddWithValue("@PurchaseID",id1);
+                cmd2.Parameters.AddWithValue("@PurchaseID",Convert.ToInt32( purchaseCodeTextBox.Text));
                 if (ID!=0)
                 {
                     cmd2.ExecuteNonQuery();
                 }
+                grandTotalTextBox.Text = GetGrandTotal().ToString();
                 connection.Close();
 
             }
+            
+        }
+        private void UpdateBackQuantityInProductTable()
+        {
+            connection.Open();
+            try
+            {
+
+                string query1 = "SELECT ProductID,Quantity FROM Product WHERE ProductID=@ProductID";
+                string query2 = "UPDATE Product SET Quantity=@Quantity WHERE ProductID=@ProductID";
+
+
+                SqlCommand command = new SqlCommand(query1, connection);
+                command.Parameters.AddWithValue("@ProductID", Convert.ToInt32(purchaseDataGridView.CurrentRow.Cells["ProductID"].Value));
+                SqlDataAdapter da = new SqlDataAdapter(command);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+
+                int id = Convert.ToInt32(dt.Rows[0][0]);
+                int qty = Convert.ToInt32(dt.Rows[0][1]);
+                int decreasedQty = qty - Convert.ToInt32(purchaseDataGridView.CurrentRow.Cells["PurchaseQty"].Value);
+
+                SqlCommand cmd = new SqlCommand(query2, connection);
+                cmd.Parameters.AddWithValue("@Quantity", decreasedQty);
+                cmd.Parameters.AddWithValue("@ProductID", id);
+                cmd.ExecuteNonQuery();
+
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+                connection.Close();
+            }
+            finally
+            {
+                connection.Close();
+            }
+
         }
     }
 
