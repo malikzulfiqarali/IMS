@@ -523,6 +523,13 @@ namespace IMS
             }
             if (e.KeyCode==Keys.Delete)
             {
+                purchaseDataGridView.RefreshEdit();
+                purchaseDataGridView.RowsRemoved += PurchaseDataGridView_RowsRemoved;
+                
+
+
+
+
                 UpdateBackQuantityInProductTable();
                 object PurchaseID = purchaseDataGridView.CurrentRow.Cells["PurchaseID"].Value == null || purchaseDataGridView.CurrentRow.Cells["PurchaseID"].Value == DBNull.Value || string.IsNullOrEmpty(purchaseDataGridView.CurrentRow.Cells["PurchaseID"].Value.ToString()) ? Convert.ToInt32(0) : Convert.ToInt32(purchaseDataGridView.CurrentRow.Cells["PurchaseID"].Value);
                 int ID = Convert.ToInt32(PurchaseID);
@@ -534,10 +541,15 @@ namespace IMS
 
                 if (ID!=0)
                 {
-                    cmd1.ExecuteNonQuery(); 
+                    cmd1.ExecuteNonQuery();
+                    
                 }
 
                 connection.Close();
+                
+                
+               
+
 
                 connection.Open();
                 string deleteQuery2 = $@"delete from Stock where ProductID=@ProductID and PurchaseID=@PurchaseID";
@@ -552,8 +564,9 @@ namespace IMS
                 connection.Close();
 
                 purchaseDataGridView.RefreshEdit();
-                
-                UpdateTransactionTableOnDeletion();
+               
+
+
 
             }
             
@@ -602,14 +615,15 @@ namespace IMS
         {
             try
             {
-                purchaseDataGridView.RowsRemoved += PurchaseDataGridView_RowsRemoved;
-                grandTotalTextBox.Text = GetGrandTotal().ToString();
+
+
+                
                 connection.Open();
                 string updateQuery1 = $@"update TransactionTable set Debit=@Debit where VoucherCode=@VCode and VoucherType=@VType and VoucherCategoryID=@VCID";
                 SqlCommand cmd1 = new SqlCommand(updateQuery1,connection);
                 cmd1.Parameters.AddWithValue("@VCode", purchaseCodeTextBox.Text);
                 cmd1.Parameters.AddWithValue("@VType", purchaseLabel.Text);
-                cmd1.Parameters.AddWithValue("@Debit", grandTotalTextBox.Text);
+                cmd1.Parameters.AddWithValue("@Debit", GetGrandTotal().ToString());
                 cmd1.Parameters.AddWithValue("@VCID", stockPurchaseCode);
                 cmd1.ExecuteNonQuery();
                 connection.Close();
@@ -619,7 +633,7 @@ namespace IMS
                 SqlCommand cmd2 = new SqlCommand(updateQuery2, connection);
                 cmd2.Parameters.AddWithValue("@VCode", purchaseCodeTextBox.Text);
                 cmd2.Parameters.AddWithValue("@VType", purchaseLabel.Text);
-                cmd2.Parameters.AddWithValue("@Credit", grandTotalTextBox.Text);
+                cmd2.Parameters.AddWithValue("@Credit", GetGrandTotal().ToString());
                 cmd2.Parameters.AddWithValue("@VCID", companyCodeTextBox.Text);
                 cmd2.ExecuteNonQuery();
                 connection.Close();
@@ -640,7 +654,10 @@ namespace IMS
 
         private void PurchaseDataGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
+            purchaseDataGridView.Refresh();
+            GetGrandTotal();
             grandTotalTextBox.Text = GetGrandTotal().ToString();
+            UpdateTransactionTableOnDeletion();
         }
 
         private void purchaseDataGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
