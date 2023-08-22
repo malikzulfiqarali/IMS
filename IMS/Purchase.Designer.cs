@@ -207,6 +207,7 @@
             this.purchaseDataGridView.Size = new System.Drawing.Size(876, 247);
             this.purchaseDataGridView.TabIndex = 36;
             this.purchaseDataGridView.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.purchaseDataGridView_RowHeaderMouseClick);
+            this.purchaseDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.purchaseDataGridView_RowsRemoved);
             this.purchaseDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.purchaseDataGridView_KeyDown);
             // 
             // ProductID

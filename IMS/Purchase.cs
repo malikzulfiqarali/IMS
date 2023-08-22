@@ -16,7 +16,7 @@ namespace IMS
     public partial class Purchase : Form
     {
         SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ConnectionString);
-       // private static int rowIndex;
+        string stockPurchaseCode = "10013";
         public Purchase()
         {
             InitializeComponent();
@@ -167,8 +167,8 @@ namespace IMS
         {
             if (!string.IsNullOrEmpty(priceTextBox.Text))
             {
-                decimal PurchasedQty = Convert.ToDecimal(saleQtyTextBox.Text);
-                decimal Price = Convert.ToDecimal(priceTextBox.Text);
+                decimal PurchasedQty =string.IsNullOrEmpty(saleQtyTextBox.Text)?Convert.ToDecimal( 0): Convert.ToDecimal(saleQtyTextBox.Text);
+                decimal Price = string.IsNullOrEmpty(priceTextBox.Text)?Convert.ToDecimal(0) :Convert.ToDecimal(priceTextBox.Text);
                 totalAmountTextBox.Text = (PurchasedQty * Price).ToString();
             }
         }
@@ -267,7 +267,7 @@ namespace IMS
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            string stockPurchaseCode = "10013";
+            
             string description = "Stock Purchases";
             string category = "Purchases";
             string voucherCatCode = purchaseLabel.Text+" "+ purchaseCodeTextBox.Text;
@@ -549,8 +549,11 @@ namespace IMS
                 {
                     cmd2.ExecuteNonQuery();
                 }
-                grandTotalTextBox.Text = GetGrandTotal().ToString();
                 connection.Close();
+
+                purchaseDataGridView.RefreshEdit();
+                
+                UpdateTransactionTableOnDeletion();
 
             }
             
@@ -594,6 +597,55 @@ namespace IMS
                 connection.Close();
             }
 
+        }
+        private void UpdateTransactionTableOnDeletion()
+        {
+            try
+            {
+                purchaseDataGridView.RowsRemoved += PurchaseDataGridView_RowsRemoved;
+                grandTotalTextBox.Text = GetGrandTotal().ToString();
+                connection.Open();
+                string updateQuery1 = $@"update TransactionTable set Debit=@Debit where VoucherCode=@VCode and VoucherType=@VType and VoucherCategoryID=@VCID";
+                SqlCommand cmd1 = new SqlCommand(updateQuery1,connection);
+                cmd1.Parameters.AddWithValue("@VCode", purchaseCodeTextBox.Text);
+                cmd1.Parameters.AddWithValue("@VType", purchaseLabel.Text);
+                cmd1.Parameters.AddWithValue("@Debit", grandTotalTextBox.Text);
+                cmd1.Parameters.AddWithValue("@VCID", stockPurchaseCode);
+                cmd1.ExecuteNonQuery();
+                connection.Close();
+
+                connection.Open();
+                string updateQuery2 = $@"update TransactionTable set Credit=@Credit where VoucherCode=@VCode and VoucherType=@VType and VoucherCategoryID=@VCID ";
+                SqlCommand cmd2 = new SqlCommand(updateQuery2, connection);
+                cmd2.Parameters.AddWithValue("@VCode", purchaseCodeTextBox.Text);
+                cmd2.Parameters.AddWithValue("@VType", purchaseLabel.Text);
+                cmd2.Parameters.AddWithValue("@Credit", grandTotalTextBox.Text);
+                cmd2.Parameters.AddWithValue("@VCID", companyCodeTextBox.Text);
+                cmd2.ExecuteNonQuery();
+                connection.Close();
+
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+                connection.Close();
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        private void PurchaseDataGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            grandTotalTextBox.Text = GetGrandTotal().ToString();
+        }
+
+        private void purchaseDataGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+           // grandTotalTextBox.Text = GetGrandTotal().ToString();
         }
     }
 
