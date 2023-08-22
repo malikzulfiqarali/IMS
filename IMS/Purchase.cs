@@ -664,6 +664,11 @@ namespace IMS
         {
            // grandTotalTextBox.Text = GetGrandTotal().ToString();
         }
+
+        private void updateButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }
