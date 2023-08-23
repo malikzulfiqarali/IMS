@@ -718,15 +718,15 @@ namespace IMS
                     {
                         string query1 = $@"INSERT INTO Purchase (PurchaseCode,Date,CompanyID,ProductID,PurchaseQty,PurchasePrice,PurchaseAmount)
                                                         VALUES
-                                                        (@PurchaseCode,@Date,@CompanyID,@ProductID,@PurchaseQty,@PurchasePrice,@PurchaseAmount)";
+                                                        (@PurchaseCode,@Date,@CompanyID,@ProductID,@PurchaseQty,@PurchasePrice,@PurchaseAmount)  ";
                         SqlCommand cmd1 = new SqlCommand(query1, connection, sqlTransaction);
                         cmd1.Parameters.AddWithValue("@PurchaseCode", purchaseCodeTextBox.Text.Trim());
                         cmd1.Parameters.AddWithValue("@Date", purchaseDateTimePicker.Value);
-                        cmd1.Parameters.AddWithValue("@CompanyID", companyCodeTextBox.Text.Trim());
-                        cmd1.Parameters.AddWithValue("@ProductID", row.Cells["ProductID"].Value);
-                        cmd1.Parameters.AddWithValue("@PurchaseQty", row.Cells["PurchaseQty"].Value);
-                        cmd1.Parameters.AddWithValue("@PurchasePrice", row.Cells["Price"].Value);
-                        cmd1.Parameters.AddWithValue("@PurchaseAmount", row.Cells["TotalAmount"].Value);
+                        cmd1.Parameters.AddWithValue("@CompanyID",Convert.ToInt32( companyCodeTextBox.Text.Trim()));
+                        cmd1.Parameters.AddWithValue("@ProductID",Convert.ToInt32( row.Cells["ProductID"].Value));
+                        cmd1.Parameters.AddWithValue("@PurchaseQty",Convert.ToInt32( row.Cells["PurchaseQty"].Value));
+                        cmd1.Parameters.AddWithValue("@PurchasePrice",Convert.ToDecimal( row.Cells["Price"].Value));
+                        cmd1.Parameters.AddWithValue("@PurchaseAmount",Convert.ToDecimal( row.Cells["TotalAmount"].Value));
                         cmd1.ExecuteNonQuery();
 
                     }
@@ -736,16 +736,17 @@ namespace IMS
                                                        CompanyID=@CompanyID,ProductID=@ProductID,
                                                        PurchaseQty=@PurchaseQty,PurchasePrice=@PurchasePrice,PurchaseAmount=@PurchaseAmount
                                                        WHERE
-                                                       PurchaseID=PurchaseID";
+                                                       PurchaseID=@PurchaseID";
                         SqlCommand cmd12 = new SqlCommand(query12, connection, sqlTransaction);
-                        cmd12.Parameters.AddWithValue("@PurchaseID",Convert.ToInt32( row.Cells["PurchaseID"].Value));
                         cmd12.Parameters.AddWithValue("@PurchaseCode", purchaseCodeTextBox.Text.Trim());
                         cmd12.Parameters.AddWithValue("@Date", purchaseDateTimePicker.Value);
-                        cmd12.Parameters.AddWithValue("@CompanyID", companyCodeTextBox.Text.Trim());
-                        cmd12.Parameters.AddWithValue("@ProductID", row.Cells["ProductID"].Value);
-                        cmd12.Parameters.AddWithValue("@PurchaseQty", row.Cells["PurchaseQty"].Value);
-                        cmd12.Parameters.AddWithValue("@PurchasePrice", row.Cells["Price"].Value);
-                        cmd12.Parameters.AddWithValue("@PurchaseAmount", row.Cells["TotalAmount"].Value);
+                        cmd12.Parameters.AddWithValue("@CompanyID",Convert.ToInt32( companyCodeTextBox.Text.Trim()));
+                        cmd12.Parameters.AddWithValue("@ProductID", Convert.ToInt32( row.Cells["ProductID"].Value));
+                        cmd12.Parameters.AddWithValue("@PurchaseQty",Convert.ToInt32( row.Cells["PurchaseQty"].Value));
+                        cmd12.Parameters.AddWithValue("@PurchasePrice",Convert.ToDecimal( row.Cells["Price"].Value));
+                        cmd12.Parameters.AddWithValue("@PurchaseAmount",Convert.ToDecimal( row.Cells["TotalAmount"].Value));
+                        cmd12.Parameters.AddWithValue("@PurchaseID", ID);
+
                         cmd12.ExecuteNonQuery();
                     }
                 }
@@ -760,11 +761,11 @@ namespace IMS
                                                       VALUES
                                                     (@PurchaseID,@Date,@ProductID,@CompanyID,@PurchasedQuantity)";
                         SqlCommand cmd2 = new SqlCommand(query2, connection, sqlTransaction);
-                        cmd2.Parameters.AddWithValue("@PurchaseID", purchaseCodeTextBox.Text.Trim());
+                        cmd2.Parameters.AddWithValue("@PurchaseID",Convert.ToInt32( purchaseCodeTextBox.Text.Trim()));
                         cmd2.Parameters.AddWithValue("@Date", purchaseDateTimePicker.Value);
-                        cmd2.Parameters.AddWithValue("@ProductID", row.Cells["ProductID"].Value);
-                        cmd2.Parameters.AddWithValue("@CompanyID", companyCodeTextBox.Text.Trim());
-                        cmd2.Parameters.AddWithValue("@PurchasedQuantity", row.Cells["PurchaseQty"].Value);
+                        cmd2.Parameters.AddWithValue("@ProductID",Convert.ToInt32( row.Cells["ProductID"].Value));
+                        cmd2.Parameters.AddWithValue("@CompanyID",Convert.ToInt32( companyCodeTextBox.Text.Trim()));
+                        cmd2.Parameters.AddWithValue("@PurchasedQuantity",Convert.ToInt32( row.Cells["PurchaseQty"].Value));
                         cmd2.ExecuteNonQuery(); 
                     }
                     if (ID != 0)
@@ -774,11 +775,11 @@ namespace IMS
                                                       WHERE 
                                                       PurchaseID=@PurchaseID AND ProductID=@ProductID";
                         SqlCommand cmd22 = new SqlCommand(query22, connection, sqlTransaction);
-                        cmd22.Parameters.AddWithValue("@PurchaseID", purchaseCodeTextBox.Text.Trim());
+                        cmd22.Parameters.AddWithValue("@PurchaseID",Convert.ToInt32( purchaseCodeTextBox.Text.Trim()));
                         cmd22.Parameters.AddWithValue("@Date", purchaseDateTimePicker.Value);
-                        cmd22.Parameters.AddWithValue("@ProductID", row.Cells["ProductID"].Value);
-                        cmd22.Parameters.AddWithValue("@CompanyID", companyCodeTextBox.Text.Trim());
-                        cmd22.Parameters.AddWithValue("@PurchasedQuantity", row.Cells["PurchaseQty"].Value);
+                        cmd22.Parameters.AddWithValue("@ProductID",Convert.ToInt32( row.Cells["ProductID"].Value));
+                        cmd22.Parameters.AddWithValue("@CompanyID",Convert.ToInt32( companyCodeTextBox.Text.Trim()));
+                        cmd22.Parameters.AddWithValue("@PurchasedQuantity",Convert.ToInt32( row.Cells["PurchaseQty"].Value));
                         cmd22.ExecuteNonQuery();
                     }
                 }
@@ -838,7 +839,7 @@ namespace IMS
                         string query5 = $@"UPDATE Product SET Quantity=@Quantity where ProductID=@ProductID ";
                         SqlCommand cmd5 = new SqlCommand(query5, connection, sqlTransaction);
                         cmd5.Parameters.AddWithValue("@Quantity", updatedQty);
-                        cmd5.Parameters.AddWithValue("@ProductID", row.Cells["ProductID"].Value);
+                        cmd5.Parameters.AddWithValue("@ProductID",Convert.ToInt32( row.Cells["ProductID"].Value));
                         cmd5.ExecuteNonQuery(); 
                     }
                 }
