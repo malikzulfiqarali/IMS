@@ -667,8 +667,201 @@ namespace IMS
 
         private void updateButton_Click(object sender, EventArgs e)
         {
+            string description = "Stock Purchases";
+            string category = "Purchases";
+            string voucherCatCode = purchaseLabel.Text + " " + purchaseCodeTextBox.Text;
+            SqlTransaction sqlTransaction = null;
 
+            if (purchaseDateTimePicker.Value.Date!=DateTime.Now.Date)
+            {
+                MessageBox.Show("You cannot update previouse date records", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                purchaseCodeTextBox.Focus();
+                return;
+            }
+            if (string.IsNullOrEmpty(purchaseCodeTextBox.Text))
+            {
+                MessageBox.Show("This filed is required", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                purchaseCodeTextBox.Focus();
+                return;
+            }
+            if (string.IsNullOrEmpty(companyCodeTextBox.Text))
+            {
+                MessageBox.Show("Please select company", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                companyCodeTextBox.Focus();
+                return;
+            }
+            if (string.IsNullOrEmpty(narrationTextBox.Text))
+            {
+                MessageBox.Show("Please give narration", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                narrationTextBox.Focus();
+                return;
+            }
+            if (purchaseDataGridView.Rows.Count == 0)
+            {
+                MessageBox.Show("Please give some detail or add products for further processing", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                purchaseDataGridView.Focus();
+                return;
+            }
+            try
+            {
+                connection.Open();
+                sqlTransaction = connection.BeginTransaction();
+                
+               
+                
+                foreach (DataGridViewRow row in purchaseDataGridView.Rows)
+                {
+                    object PurchaseID = row.Cells["PurchaseID"].Value == null || row.Cells["PurchaseID"].Value == DBNull.Value || string.IsNullOrEmpty(row.Cells["PurchaseID"].Value.ToString()) ? Convert.ToInt32(0) : Convert.ToInt32(row.Cells["PurchaseID"].Value);
+                    int ID = Convert.ToInt32(PurchaseID);
+
+                    if (ID == 0)
+                    {
+                        string query1 = $@"INSERT INTO Purchase (PurchaseCode,Date,CompanyID,ProductID,PurchaseQty,PurchasePrice,PurchaseAmount)
+                                                        VALUES
+                                                        (@PurchaseCode,@Date,@CompanyID,@ProductID,@PurchaseQty,@PurchasePrice,@PurchaseAmount)";
+                        SqlCommand cmd1 = new SqlCommand(query1, connection, sqlTransaction);
+                        cmd1.Parameters.AddWithValue("@PurchaseCode", purchaseCodeTextBox.Text.Trim());
+                        cmd1.Parameters.AddWithValue("@Date", purchaseDateTimePicker.Value);
+                        cmd1.Parameters.AddWithValue("@CompanyID", companyCodeTextBox.Text.Trim());
+                        cmd1.Parameters.AddWithValue("@ProductID", row.Cells["ProductID"].Value);
+                        cmd1.Parameters.AddWithValue("@PurchaseQty", row.Cells["PurchaseQty"].Value);
+                        cmd1.Parameters.AddWithValue("@PurchasePrice", row.Cells["Price"].Value);
+                        cmd1.Parameters.AddWithValue("@PurchaseAmount", row.Cells["TotalAmount"].Value);
+                        cmd1.ExecuteNonQuery();
+
+                    }
+                    if (ID!=0)
+                    {
+                        string query12 = $@"UPDATE Purchase SET PurchaseCode=@PurchaseCode,Date=@Date,
+                                                       CompanyID=@CompanyID,ProductID=@ProductID,
+                                                       PurchaseQty=@PurchaseQty,PurchasePrice=@PurchasePrice,PurchaseAmount=@PurchaseAmount
+                                                       WHERE
+                                                       PurchaseID=PurchaseID";
+                        SqlCommand cmd12 = new SqlCommand(query12, connection, sqlTransaction);
+                        cmd12.Parameters.AddWithValue("@PurchaseID",Convert.ToInt32( row.Cells["PurchaseID"].Value));
+                        cmd12.Parameters.AddWithValue("@PurchaseCode", purchaseCodeTextBox.Text.Trim());
+                        cmd12.Parameters.AddWithValue("@Date", purchaseDateTimePicker.Value);
+                        cmd12.Parameters.AddWithValue("@CompanyID", companyCodeTextBox.Text.Trim());
+                        cmd12.Parameters.AddWithValue("@ProductID", row.Cells["ProductID"].Value);
+                        cmd12.Parameters.AddWithValue("@PurchaseQty", row.Cells["PurchaseQty"].Value);
+                        cmd12.Parameters.AddWithValue("@PurchasePrice", row.Cells["Price"].Value);
+                        cmd12.Parameters.AddWithValue("@PurchaseAmount", row.Cells["TotalAmount"].Value);
+                        cmd12.ExecuteNonQuery();
+                    }
+                }
+                foreach (DataGridViewRow row in purchaseDataGridView.Rows)
+                {
+                    object PurchaseID = row.Cells["PurchaseID"].Value == null || row.Cells["PurchaseID"].Value == DBNull.Value || string.IsNullOrEmpty(row.Cells["PurchaseID"].Value.ToString()) ? Convert.ToInt32(0) : Convert.ToInt32(row.Cells["PurchaseID"].Value);
+                    int ID = Convert.ToInt32(PurchaseID);
+
+                    if (ID==0)
+                    {
+                        string query2 = $@"INSERT INTO Stock (PurchaseID,Date,ProductID,CompanyID,PurchasedQuantity)
+                                                      VALUES
+                                                    (@PurchaseID,@Date,@ProductID,@CompanyID,@PurchasedQuantity)";
+                        SqlCommand cmd2 = new SqlCommand(query2, connection, sqlTransaction);
+                        cmd2.Parameters.AddWithValue("@PurchaseID", purchaseCodeTextBox.Text.Trim());
+                        cmd2.Parameters.AddWithValue("@Date", purchaseDateTimePicker.Value);
+                        cmd2.Parameters.AddWithValue("@ProductID", row.Cells["ProductID"].Value);
+                        cmd2.Parameters.AddWithValue("@CompanyID", companyCodeTextBox.Text.Trim());
+                        cmd2.Parameters.AddWithValue("@PurchasedQuantity", row.Cells["PurchaseQty"].Value);
+                        cmd2.ExecuteNonQuery(); 
+                    }
+                    if (ID != 0)
+                    {
+                        string query22 = $@"UPDATE Stock SET PurchaseID=@PurchaseID,Date=@Date,ProductID=@ProductID,
+                                                      CompanyID=@CompanyID,PurchasedQuantity=@PurchasedQuantity 
+                                                      WHERE 
+                                                      PurchaseID=@PurchaseID AND ProductID=@ProductID";
+                        SqlCommand cmd22 = new SqlCommand(query22, connection, sqlTransaction);
+                        cmd22.Parameters.AddWithValue("@PurchaseID", purchaseCodeTextBox.Text.Trim());
+                        cmd22.Parameters.AddWithValue("@Date", purchaseDateTimePicker.Value);
+                        cmd22.Parameters.AddWithValue("@ProductID", row.Cells["ProductID"].Value);
+                        cmd22.Parameters.AddWithValue("@CompanyID", companyCodeTextBox.Text.Trim());
+                        cmd22.Parameters.AddWithValue("@PurchasedQuantity", row.Cells["PurchaseQty"].Value);
+                        cmd22.ExecuteNonQuery();
+                    }
+                }
+
+
+
+                string query3 = $@"UPDATE TransactionTable SET VoucherCode=@VoucherCode,VoucherType=@VoucherType,VoucherDate=@VoucherDate,
+                                                               Narration=@Narration,VoucherCategoryID=VoucherCategoryID,
+                                                               VoucherCategory=@VoucherCategory,VoucherCategoryCode=@VoucherCategoryCode,
+                                                               Description=@Description,Debit=@Debit
+                                                                WHERE
+                                                               VoucherCode=@VoucherCode AND VoucherType=@VoucherType AND VoucherCategoryID=@VoucherCategoryID";
+                SqlCommand cmd3 = new SqlCommand(query3, connection, sqlTransaction);
+                cmd3.Parameters.AddWithValue("@VoucherCode", purchaseCodeTextBox.Text.Trim());
+                cmd3.Parameters.AddWithValue("@VoucherType", purchaseLabel.Text.Trim());
+                cmd3.Parameters.AddWithValue("@VoucherDate", purchaseDateTimePicker.Value);
+                cmd3.Parameters.AddWithValue("@Narration", narrationTextBox.Text.Trim());
+                cmd3.Parameters.AddWithValue("@VoucherCategoryID", stockPurchaseCode);
+                cmd3.Parameters.AddWithValue("@VoucherCategory", category);
+                cmd3.Parameters.AddWithValue("@VoucherCategoryCode", voucherCatCode);
+                cmd3.Parameters.AddWithValue("@Description", description);
+                cmd3.Parameters.AddWithValue("@Debit", grandTotalTextBox.Text);
+                cmd3.ExecuteNonQuery();
+
+                string query4 = $@"UPDATE TransactionTable SET VoucherCode=@VoucherCode,VoucherType=@VoucherType,VoucherDate=@VoucherDate,
+                                                               Narration=@Narration,VoucherCategoryID=VoucherCategoryID,
+                                                               VoucherCategory=@VoucherCategory,VoucherCategoryCode=@VoucherCategoryCode,
+                                                               Description=@Description,Credit=@Credit
+                                                                WHERE
+                                                               VoucherCode=@VoucherCode AND VoucherType=@VoucherType AND VoucherCategoryID=@VoucherCategoryID";
+                SqlCommand cmd4 = new SqlCommand(query4, connection, sqlTransaction);
+                cmd4.Parameters.AddWithValue("@VoucherCode", purchaseCodeTextBox.Text.Trim());
+                cmd4.Parameters.AddWithValue("@VoucherType", purchaseLabel.Text.Trim());
+                cmd4.Parameters.AddWithValue("@VoucherDate", purchaseDateTimePicker.Value);
+                cmd4.Parameters.AddWithValue("@Narration", narrationTextBox.Text.Trim());
+                cmd4.Parameters.AddWithValue("@VoucherCategoryID", companyCodeTextBox.Text);
+                cmd4.Parameters.AddWithValue("@VoucherCategory", category);
+                cmd4.Parameters.AddWithValue("@VoucherCategoryCode", voucherCatCode);
+                cmd4.Parameters.AddWithValue("@Description", companyNameLabel.Text);
+                cmd4.Parameters.AddWithValue("@Credit", grandTotalTextBox.Text);
+                cmd4.ExecuteNonQuery();
+
+                // for update Stock in Product Table on save Button
+
+
+
+                foreach (DataGridViewRow row in purchaseDataGridView.Rows)
+                {
+                    object PurchaseID = row.Cells["PurchaseID"].Value == null || row.Cells["PurchaseID"].Value == DBNull.Value || string.IsNullOrEmpty(row.Cells["PurchaseID"].Value.ToString()) ? Convert.ToInt32(0) : Convert.ToInt32(row.Cells["PurchaseID"].Value);
+                    int ID = Convert.ToInt32(PurchaseID);
+
+                    if (ID==0)
+                    {
+                        int currentQty = Convert.ToInt32(row.Cells["CurrentStock"].Value);
+                        int purchasedQty = Convert.ToInt32(row.Cells["PurchaseQty"].Value);
+                        int updatedQty = currentQty + purchasedQty;
+                        string query5 = $@"UPDATE Product SET Quantity=@Quantity where ProductID=@ProductID ";
+                        SqlCommand cmd5 = new SqlCommand(query5, connection, sqlTransaction);
+                        cmd5.Parameters.AddWithValue("@Quantity", updatedQty);
+                        cmd5.Parameters.AddWithValue("@ProductID", row.Cells["ProductID"].Value);
+                        cmd5.ExecuteNonQuery(); 
+                    }
+                }
+
+
+                sqlTransaction.Commit();
+
+                MessageBox.Show("Records are updated successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                connection.Close();
+                addNewButton.PerformClick();
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+                sqlTransaction.Rollback();
+                connection.Close();
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
     }
-
 }
